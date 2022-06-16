@@ -1,0 +1,21 @@
+multiassayexperiment package
+============================
+
+Submodules
+----------
+
+multiassayexperiment.MultiAssayExperiment module
+------------------------------------------------
+
+.. automodule:: multiassayexperiment.MultiAssayExperiment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: multiassayexperiment
+   :members:
+   :undoc-members:
+   :show-inheritance:

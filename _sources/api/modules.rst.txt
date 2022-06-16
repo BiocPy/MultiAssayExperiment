@@ -1,0 +1,7 @@
+multiassayexperiment
+====================
+
+.. toctree::
+   :maxdepth: 4
+
+   multiassayexperiment
