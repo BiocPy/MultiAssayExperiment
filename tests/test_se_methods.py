@@ -106,22 +106,19 @@ def test_MAE_creation_with_alts():
     assert mae is not None
     assert isinstance(mae, MultiAssayExperiment)
 
-
-def test_MAE_creation_fails():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, rowData=df_gr, colData=colData_sce
-    )
-
-    tse2 = SummarizedExperiment(
-        assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
-        colData=colData_sce.copy(),
-    )
+    assert mae.experiments is not None
+    assert mae.experiment("sce") is not None
+    assert mae.assays is not None
+    assert mae.colData is not None
+    assert mae.sampleMap is not None
 
     with pytest.raises(Exception):
-        mae = MultiAssayExperiment(
-            experiments={"sce": tsce, "se": tse2},
-            colData=sample_data,
-            sampleMap=sample_map,
-            metadata={"could be": "anything"},
-        )
+        mae.colData = None
+
+    with pytest.raises(Exception):
+        mae.sampleMap = None
+
+    assert mae.metadata is not None
+    mae.metadata = None
+    assert mae.metadata is None
+

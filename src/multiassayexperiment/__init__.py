@@ -22,3 +22,4 @@ finally:
     del version, PackageNotFoundError
 
 from .MultiAssayExperiment import MultiAssayExperiment
+from .io.anndata import readH5AD, fromAnnData
