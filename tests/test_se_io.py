@@ -43,5 +43,7 @@ def test_MAE_fromMuData():
 
     mdata = MuData({"A": adata, "B": adata2})
 
-    assert mdata is not None
-    assert isinstance(mdata, mae.MultiAssayExperiment)
+    muMAE = mae.fromMuData(mudata=mdata)
+
+    assert muMAE is not None
+    assert isinstance(muMAE, mae.MultiAssayExperiment)

@@ -28,7 +28,7 @@ def fromMuData(mudata: mudata.MuData) -> MultiAssayExperiment:
     sampleMap = pd.DataFrame()
     samples = []
 
-    for asy, adata in experiments.mod:
+    for asy, adata in mudata.mod.items():
         experiments[asy] = fromAnnData(adata)
 
         colnames = None
