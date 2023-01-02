@@ -22,8 +22,7 @@ def fromAnnData(adata: anndata.AnnData) -> MultiAssayExperiment:
 
     experiments = {"unknown": scexpt}
 
-    coldata = pd.DataFrame()
-    coldata["samples"] = ["unknown_sample"]
+    coldata = pd.DataFrame({"samples": ["unknown_sample"]}, index=["unknown_sample"])
 
     sampleMap = pd.DataFrame()
     colnames = None

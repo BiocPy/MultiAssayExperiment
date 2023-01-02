@@ -42,7 +42,6 @@ df_gr = pd.DataFrame(
 gr = genomicranges.fromPandas(df_gr)
 
 colData_sce = pd.DataFrame({"treatment": ["ChIP", "Input"] * 3,}, index=["sce"] * 6,)
-
 colData_se = pd.DataFrame({"treatment": ["ChIP", "Input"] * 3,}, index=["se"] * 6,)
 
 sample_map = pd.DataFrame(
@@ -53,7 +52,9 @@ sample_map = pd.DataFrame(
     }
 )
 
-sample_data = pd.DataFrame({"samples": ["sample1", "sample2"]})
+sample_data = pd.DataFrame(
+    {"samples": ["sample1", "sample2"]}, index=["sample1", "sample2"]
+)
 
 
 def test_MAE_creation():

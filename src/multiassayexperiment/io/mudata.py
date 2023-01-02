@@ -50,8 +50,7 @@ def fromMuData(mudata: mudata.MuData) -> MultiAssayExperiment:
         sampleMap = pd.concat([sampleMap, asy_df])
         samples.append(asy_sample)
 
-    coldata = pd.DataFrame()
-    coldata["samples"] = samples
+    coldata = pd.DataFrame({"samples": samples}, index=samples)
 
     return MultiAssayExperiment(
         experiments=experiments,

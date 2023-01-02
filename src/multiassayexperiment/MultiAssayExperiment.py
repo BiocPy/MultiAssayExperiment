@@ -76,11 +76,24 @@ class MultiAssayExperiment:
             )
 
         # check if unique samples is same as in sample data
-        smap_uniq_length = len(set(list(self._sampleMap["primary"])))
+        smaps_list = list(self._sampleMap["primary"])
+        smap_uniq_length = len(set(smaps_list))
 
         if self._coldata.shape[0] != smap_uniq_length:
             raise ValueError(
                 f"SampleMap and SampleData do not match: provided {smap_uniq_length}, needs to be {self._coldata.shape[0]}"
+            )
+
+        # check if coldata has index
+        if self._coldata.index is None:
+            raise ValueError(
+                "SampleData must contain an index with all sample names (primary column) from SampleMap"
+            )
+
+        missing = set(smaps_list).difference(set(self._coldata.index.tolist()))
+        if len(missing) > 0:
+            raise ValueError(
+                f"SampleData contains missing samples from SampleMap: {missing}"
             )
 
         # check if all assay names are in experiments
