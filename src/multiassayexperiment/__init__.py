@@ -24,3 +24,4 @@ finally:
 from .MultiAssayExperiment import MultiAssayExperiment
 from .io.anndata import readH5AD, fromAnnData
 from .io.mudata import fromMuData
+from .io.interface import makeMAE

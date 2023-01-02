@@ -1,8 +1,10 @@
 from typing import Union, MutableMapping, Optional
+
 from singlecellexperiment.SingleCellExperiment import SingleCellExperiment
 from summarizedexperiment.SummarizedExperiment import SummarizedExperiment
 from summarizedexperiment.RangeSummarizedExperiment import RangeSummarizedExperiment
 from biocframe import BiocFrame
+
 import pandas as pd
 
 __author__ = "jkanche"
@@ -26,9 +28,12 @@ class MultiAssayExperiment:
         """Class for managing multi-modal and multi-sample genomic experiments
 
         Args:
-            experiments (MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]): dictionary of experiments
+            experiments (MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]): 
+                dictionary of experiments
             colData (pd.DataFrame]): sample data. 
-            sampleMap (pd.DataFrame): Mappings between sample data across experiments.
+            sampleMap (pd.DataFrame): Mappings between sample data across experiments. 
+                Must contain columns `assay`, `primary` and `colname`.
+                For more info, checkout [MAE docs](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
             metadata (MutableMapping, optional): study level metadata. Defaults to None.
         """
         self._experiments = experiments
@@ -108,7 +113,7 @@ class MultiAssayExperiment:
         str,
         Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,],
     ]:
-        """Access experiments
+        """Get experiments.
 
         Returns:
             MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]: all experiments
@@ -126,7 +131,7 @@ class MultiAssayExperiment:
             ],
         ],
     ):
-        """Set new experiments
+        """Set new experiments.
 
         Args:
             expts (MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]): new experiments dictionary to set.
@@ -140,7 +145,7 @@ class MultiAssayExperiment:
     def experiment(
         self, name: str
     ) -> Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]:
-        """Access an experiment by name
+        """Get experiment by name
 
         Args:
             name (str): experiment name
@@ -158,7 +163,7 @@ class MultiAssayExperiment:
 
     @property
     def sampleMap(self) -> pd.DataFrame:
-        """Access sample map between experiments and sample metadata
+        """Get sample map between experiments and sample metadata
 
         Returns:
             pd.DataFrame: sample map dataframe
@@ -167,7 +172,7 @@ class MultiAssayExperiment:
 
     @sampleMap.setter
     def sampleMap(self, sampleMap: pd.DataFrame):
-        """set new sample map
+        """Set new sample map
         """
         if not isinstance(sampleMap, pd.DataFrame):
             raise TypeError("sample mapping must be a pandas dataframe")
@@ -177,7 +182,7 @@ class MultiAssayExperiment:
 
     @property
     def colData(self) -> pd.DataFrame:
-        """Access sample metadata
+        """Get sample metadata
 
         Returns:
             pd.DataFrame: sample metadata
@@ -186,7 +191,7 @@ class MultiAssayExperiment:
 
     @colData.setter
     def colData(self, colData: pd.DataFrame):
-        """set new sample metadata
+        """Set new sample metadata
         """
         if not isinstance(colData, pd.DataFrame):
             raise TypeError("sample metadata must be a pandas dataframe")
@@ -201,7 +206,7 @@ class MultiAssayExperiment:
         str,
         Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,],
     ]:
-        """Access experiments
+        """Get experiments
 
         Returns:
             MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]: all experiments
@@ -210,7 +215,7 @@ class MultiAssayExperiment:
 
     @property
     def metadata(self) -> Optional[MutableMapping]:
-        """Access metadata
+        """Get metadata.
 
         Returns:
             Optional[MutableMapping]: metadata if available
@@ -219,7 +224,7 @@ class MultiAssayExperiment:
 
     @metadata.setter
     def metadata(self, metadata: MutableMapping):
-        """Set metadata
+        """Set metadata.
 
         Args:
             metadata (MutableMapping): new metadata tobject
