@@ -20,6 +20,7 @@ def test_MAE_fromH5AD():
     assert tse.colData is not None
 
 
+# credit: MuData docs
 def test_MAE_fromMuData():
     np.random.seed(1)
 

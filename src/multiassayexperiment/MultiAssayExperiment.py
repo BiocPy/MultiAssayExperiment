@@ -1,4 +1,4 @@
-from typing import Union, MutableMapping, Optional
+from typing import Union, MutableMapping, Optional, Tuple, Sequence
 
 from singlecellexperiment.SingleCellExperiment import SingleCellExperiment
 from summarizedexperiment.SummarizedExperiment import SummarizedExperiment
@@ -6,6 +6,7 @@ from summarizedexperiment.RangeSummarizedExperiment import RangeSummarizedExperi
 from biocframe import BiocFrame
 
 import pandas as pd
+from collections import OrderedDict
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -243,3 +244,190 @@ class MultiAssayExperiment:
             metadata (MutableMapping): new metadata tobject
         """
         self._metadata = metadata
+
+    def _subsetExpt(
+        self, subset: Union[str, Sequence[str]]
+    ) -> MutableMapping[
+        str,
+        Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,],
+    ]:
+        """Internal method to subset experiments.
+
+        Args:
+            subset (Sequence[str]): list of experiments to keep.
+
+        Returns:
+            MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]: a dictionary with subset experiments
+        """
+        if isinstance(subset, str):
+            subset = [subset]
+
+        if not all([isinstance(x, str) for x in subset]):
+            raise ValueError("all experiment slices must be strings")
+
+        new_expt = OrderedDict()
+
+        for texpt in subset:
+            if texpt not in self._experiments:
+                raise ValueError(
+                    f"experiment {texpt} does not exist. should be {list(self._experiments.keys())}"
+                )
+            new_expt[texpt] = self._experiments[texpt]
+
+        return new_expt
+
+    def _slice(
+        self,
+        args: Tuple[
+            Union[Sequence[int], slice],
+            Optional[Union[Sequence[int], slice]],
+            Optional[Sequence[str]],
+        ],
+    ) -> Tuple[
+        MutableMapping[
+            str,
+            Union[
+                SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,
+            ],
+        ],
+        pd.DataFrame,
+        pd.DataFrame,
+    ]:
+        """Internal method to slice `MAE` by index.
+
+        Args:
+            args (Tuple[Union[Sequence[int], slice], Optional[Union[Sequence[int], slice]], Optional[Sequence[str]]]): indices to slice. tuple can
+                contains slices along dimensions (rows, columns, experiments).
+
+        Raises:
+            ValueError: Too many slices
+
+        Returns:
+             Tuple[MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]], pd.DataFrame, pd.DataFrame]: 
+                sliced row, cols and assays.
+        """
+
+        if len(args) == 0:
+            raise ValueError("Arguments must contain atleast one slice")
+
+        print(args)
+
+        rowIndices = args[0]
+        colIndices = None
+        exptIndices = None
+
+        print(len(args))
+
+        if len(args) > 1:
+            colIndices = args[1]
+        
+        if len(args) > 2:
+            print("in exptindices")
+            exptIndices = args[2]
+
+            if exptIndices is not None:
+                if isinstance(exptIndices, str):
+                    exptIndices = [exptIndices]
+
+                if not all([isinstance(x, str) for x in exptIndices]):
+                    raise ValueError("all assay slices must be strings")
+        
+        if len(args) > 3:
+            raise ValueError("contains too many slices")
+
+        subset_expts = self._experiments.copy()
+
+        print(rowIndices, colIndices, exptIndices)
+
+        if exptIndices is not None:
+            subset_expts = self._subsetExpt(exptIndices)
+
+        if rowIndices is not None:
+            for expname, expt in subset_expts.items():
+                subset_expts[expname] = expt[rowIndices, :]
+
+        if colIndices is not None:
+            for expname, expt in subset_expts.items():
+                subset_expts[expname] = expt[:, colIndices]
+
+        subset_colnames = []
+        for expname, expt in subset_expts.items():
+            subset_colnames.extend(expt.colnames)
+
+        # filter sampleMap
+        subset_sampleMap = self._sampleMap[
+            (self._sampleMap["assay"].isin(list(subset_expts.keys())))
+            & (self._sampleMap["colname"].isin(subset_colnames))
+        ]
+
+        # filter coldata
+        subset_coldata = self._coldata[
+            self._coldata.index.isin(subset_sampleMap["primary"].unique().tolist())
+        ]
+
+        return (subset_expts, subset_sampleMap, subset_coldata)
+
+    def subsetByExperiments(
+        self, subset: Union[str, Sequence[str]]
+    ) -> "MultiAssayExperiment":
+        """Subset by experiment(s).
+
+        Args:
+            subset (Union[str, Sequence[str]]): experiment or experiments list to subset
+
+        Returns:
+            MultiAssayExperiment: a new MAE with the subset.
+        """
+        expt, smap, sdata = self._slice(args=(None, None, subset))
+        return MultiAssayExperiment(expt, sdata, smap, self._metadata)
+
+    def subsetByRow(
+        self, subset: Tuple[Union[Sequence[int], slice]]
+    ) -> "MultiAssayExperiment":
+        """Subset by rows.
+
+        Args:
+            subset (Tuple[Union[Sequence[int], slice]]): row indices or slice to subset.
+
+        Returns:
+            MultiAssayExperiment: a new MAE with the subset.
+        """
+        expt, smap, sdata = self._slice(args=(subset, None, None))
+        return MultiAssayExperiment(expt, sdata, smap, self._metadata)
+
+    def subsetByColumn(
+        self, subset: Tuple[Union[Sequence[int], slice]]
+    ) -> "MultiAssayExperiment":
+        """Subset by column.
+
+        Args:
+            subset (Tuple[Union[Sequence[int], slice]]): column indices or slice to subset.
+
+        Returns:
+            MultiAssayExperiment: a new MAE with the subset.
+        """
+        expt, smap, sdata = self._slice(args=(None, subset, None))
+        return MultiAssayExperiment(expt, sdata, smap, self._metadata)
+
+    def __getitem__(
+        self,
+        args: Tuple[
+            Union[Sequence[int], slice],
+            Optional[Union[Sequence[int], slice]],
+            Optional[Sequence[str]],
+        ],
+    ) -> "MultiAssayExperiment":
+        """Subset a `MultiAssayExperiment`. supports a tuple specifying slices along (rows, columns and experiments).
+
+        Args:
+            args (Tuple[Union[Sequence[int], slice], Optional[Union[Sequence[int], slice]], Optional[str]]): indices to slice. tuple can
+                contains slices along dimensions (row, column, experiments)
+
+        Raises:
+            ValueError: Too many slices
+
+        Returns:
+            MultiAssayExperiment: new sliced `MultiAssayExperiment` object
+        """
+        expt, smap, sdata = self._slice(args=args)
+        return MultiAssayExperiment(expt, sdata, smap, self._metadata)
