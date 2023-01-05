@@ -77,12 +77,12 @@ class MultiAssayExperiment:
             )
 
         # check if unique samples is same as in sample data
-        smaps_list = list(self._sampleMap["primary"])
-        smap_uniq_length = len(set(smaps_list))
+        smapsList = list(self._sampleMap["primary"])
+        smapUniqLength = len(set(smapsList))
 
-        if self._coldata.shape[0] != smap_uniq_length:
+        if self._coldata.shape[0] != smapUniqLength:
             raise ValueError(
-                f"SampleMap and SampleData do not match: provided {smap_uniq_length}, needs to be {self._coldata.shape[0]}"
+                f"SampleMap and SampleData do not match: provided {smapUniqLength}, needs to be {self._coldata.shape[0]}"
             )
 
         # check if coldata has index
@@ -91,18 +91,18 @@ class MultiAssayExperiment:
                 "SampleData must contain an index with all sample names (primary column) from SampleMap"
             )
 
-        missing = set(smaps_list).difference(set(self._coldata.index.tolist()))
+        missing = set(smapsList).difference(set(self._coldata.index.tolist()))
         if len(missing) > 0:
             raise ValueError(
                 f"SampleData contains missing samples from SampleMap: {missing}"
             )
 
         # check if all assay names are in experiments
-        smap_unique_assaynames = set(self._sampleMap["assay"])
+        smapUniqueAssaynames = set(self._sampleMap["assay"])
 
-        if not smap_unique_assaynames.issubset(set(list(self._experiments.keys()))):
+        if not smapUniqueAssaynames.issubset(set(list(self._experiments.keys()))):
             raise ValueError(
-                f"Not all assays {smap_unique_assaynames} in sampleMap map to experiments: {list(self._experiments.keys())}"
+                f"Not all assays {smapUniqueAssaynames} in sampleMap map to experiments: {list(self._experiments.keys())}"
             )
 
         # check if colnames exist
@@ -265,22 +265,32 @@ class MultiAssayExperiment:
         if not all([isinstance(x, str) for x in subset]):
             raise ValueError("all experiment slices must be strings")
 
-        new_expt = OrderedDict()
+        newExpt = OrderedDict()
 
         for texpt in subset:
             if texpt not in self._experiments:
                 raise ValueError(
                     f"experiment {texpt} does not exist. should be {list(self._experiments.keys())}"
                 )
-            new_expt[texpt] = self._experiments[texpt]
+            newExpt[texpt] = self._experiments[texpt]
 
-        return new_expt
+        return newExpt
 
     def _slice(
         self,
         args: Tuple[
-            Union[Sequence[int], slice],
-            Optional[Union[Sequence[int], slice]],
+            Optional[
+                Union[
+                    MutableMapping[str, Union[Sequence[int], slice]],
+                    Union[Sequence[int], slice],
+                ]
+            ],
+            Optional[
+                Union[
+                    MutableMapping[str, Union[Sequence[int], slice]],
+                    Union[Sequence[int], slice],
+                ]
+            ],
             Optional[Sequence[str]],
         ],
     ) -> Tuple[
@@ -310,19 +320,14 @@ class MultiAssayExperiment:
         if len(args) == 0:
             raise ValueError("Arguments must contain atleast one slice")
 
-        print(args)
-
         rowIndices = args[0]
         colIndices = None
         exptIndices = None
 
-        print(len(args))
-
         if len(args) > 1:
             colIndices = args[1]
-        
+
         if len(args) > 2:
-            print("in exptindices")
             exptIndices = args[2]
 
             if exptIndices is not None:
@@ -331,41 +336,84 @@ class MultiAssayExperiment:
 
                 if not all([isinstance(x, str) for x in exptIndices]):
                     raise ValueError("all assay slices must be strings")
-        
+
         if len(args) > 3:
             raise ValueError("contains too many slices")
 
-        subset_expts = self._experiments.copy()
-
-        print(rowIndices, colIndices, exptIndices)
+        subsetExpts = self._experiments.copy()
 
         if exptIndices is not None:
-            subset_expts = self._subsetExpt(exptIndices)
+            subsetExpts = self._subsetExpt(exptIndices)
 
         if rowIndices is not None:
-            for expname, expt in subset_expts.items():
-                subset_expts[expname] = expt[rowIndices, :]
+            if isinstance(rowIndices, dict):
+                incorrect = set(list(rowIndices.keys())).difference(
+                    list(subsetExpts.keys())
+                )
+                if len(incorrect) > 0:
+                    raise ValueError(f"Incorrect experiment name provided: {incorrect}")
+
+                for expname, expt in subsetExpts.items():
+                    if expname in rowIndices:
+                        subsetExpts[expname] = expt[rowIndices[expname], :]
+                    else:
+                        subsetExpts[expname] = expt
+
+            elif isinstance(rowIndices, slice) or all(
+                isinstance(x, int) for x in rowIndices
+            ):
+                for expname, expt in subsetExpts.items():
+                    subsetExpts[expname] = expt[rowIndices, :]
+            else:
+                raise TypeError(
+                    "slice for rows is not an expected type. It should be either a dict"
+                )
 
         if colIndices is not None:
-            for expname, expt in subset_expts.items():
-                subset_expts[expname] = expt[:, colIndices]
+            if isinstance(colIndices, dict):
+                incorrect = set(list(colIndices.keys())).difference(
+                    list(subsetExpts.keys())
+                )
+                if len(incorrect) > 0:
+                    raise ValueError(f"Incorrect experiment name provided: {incorrect}")
 
-        subset_colnames = []
-        for expname, expt in subset_expts.items():
-            subset_colnames.extend(expt.colnames)
+                for expname, expt in subsetExpts.items():
+                    if expname in colIndices:
+                        subsetExpts[expname] = expt[:, colIndices[expname]]
+                    else:
+                        subsetExpts[expname] = expt
+
+            elif isinstance(colIndices, slice) or all(
+                isinstance(x, int) for x in colIndices
+            ):
+                for expname, expt in subsetExpts.items():
+                    subsetExpts[expname] = expt[:, colIndices]
+            else:
+                raise TypeError(
+                    "slice for columns is not an expected type. It should be either a dict"
+                )
 
         # filter sampleMap
-        subset_sampleMap = self._sampleMap[
-            (self._sampleMap["assay"].isin(list(subset_expts.keys())))
-            & (self._sampleMap["colname"].isin(subset_colnames))
-        ]
+        subsetColnames = []
+        subsetSampleMap = pd.DataFrame()
+        for expname, expt in subsetExpts.items():
+            subsetColnames.extend(expt.colnames)
+            subsetSampleMap = pd.concat(
+                [
+                    subsetSampleMap,
+                    self._sampleMap[
+                        (self._sampleMap["assay"] == expname)
+                        & (self._sampleMap["colname"].isin(expt.colnames))
+                    ],
+                ]
+            )
 
         # filter coldata
-        subset_coldata = self._coldata[
-            self._coldata.index.isin(subset_sampleMap["primary"].unique().tolist())
+        subsetColdata = self._coldata[
+            self._coldata.index.isin(subsetSampleMap["primary"].unique().tolist())
         ]
 
-        return (subset_expts, subset_sampleMap, subset_coldata)
+        return (subsetExpts, subsetSampleMap, subsetColdata)
 
     def subsetByExperiments(
         self, subset: Union[str, Sequence[str]]
@@ -376,35 +424,47 @@ class MultiAssayExperiment:
             subset (Union[str, Sequence[str]]): experiment or experiments list to subset
 
         Returns:
-            MultiAssayExperiment: a new MAE with the subset.
+            MultiAssayExperiment: a new `MultiAssayExperiment` with the subset.
         """
         expt, smap, sdata = self._slice(args=(None, None, subset))
         return MultiAssayExperiment(expt, sdata, smap, self._metadata)
 
     def subsetByRow(
-        self, subset: Tuple[Union[Sequence[int], slice]]
+        self,
+        subset: Tuple[
+            Union[
+                MutableMapping[str, Union[Sequence[int], slice]],
+                Union[Sequence[int], slice],
+            ]
+        ],
     ) -> "MultiAssayExperiment":
         """Subset by rows.
 
         Args:
-            subset (Tuple[Union[Sequence[int], slice]]): row indices or slice to subset.
+            subset (Tuple[Union[MutableMapping[str, Union[Sequence[int], slice]], Union[Sequence[int], slice],]]): column indices or slice to subset.
 
         Returns:
-            MultiAssayExperiment: a new MAE with the subset.
+            MultiAssayExperiment: a new `MultiAssayExperiment` with the subset.
         """
         expt, smap, sdata = self._slice(args=(subset, None, None))
         return MultiAssayExperiment(expt, sdata, smap, self._metadata)
 
     def subsetByColumn(
-        self, subset: Tuple[Union[Sequence[int], slice]]
+        self,
+        subset: Tuple[
+            Union[
+                MutableMapping[str, Union[Sequence[int], slice]],
+                Union[Sequence[int], slice],
+            ]
+        ],
     ) -> "MultiAssayExperiment":
         """Subset by column.
 
         Args:
-            subset (Tuple[Union[Sequence[int], slice]]): column indices or slice to subset.
+            subset (Tuple[Union[MutableMapping[str, Union[Sequence[int], slice]], Union[Sequence[int], slice],]]): column indices or slice to subset.
 
         Returns:
-            MultiAssayExperiment: a new MAE with the subset.
+            MultiAssayExperiment: a new `MultiAssayExperiment` with the subset.
         """
         expt, smap, sdata = self._slice(args=(None, subset, None))
         return MultiAssayExperiment(expt, sdata, smap, self._metadata)
@@ -412,15 +472,25 @@ class MultiAssayExperiment:
     def __getitem__(
         self,
         args: Tuple[
-            Union[Sequence[int], slice],
-            Optional[Union[Sequence[int], slice]],
+            Optional[
+                Union[
+                    MutableMapping[str, Union[Sequence[int], slice]],
+                    Union[Sequence[int], slice],
+                ]
+            ],
+            Optional[
+                Union[
+                    MutableMapping[str, Union[Sequence[int], slice]],
+                    Union[Sequence[int], slice],
+                ]
+            ],
             Optional[Sequence[str]],
         ],
     ) -> "MultiAssayExperiment":
         """Subset a `MultiAssayExperiment`. supports a tuple specifying slices along (rows, columns and experiments).
 
         Args:
-            args (Tuple[Union[Sequence[int], slice], Optional[Union[Sequence[int], slice]], Optional[str]]): indices to slice. tuple can
+            args (Tuple[Optional[Union[MutableMapping[str, Union[Sequence[int], slice]], Union[Sequence[int], slice]]], Optional[Union[MutableMapping[str, Union[Sequence[int], slice]], Union[Sequence[int], slice]]], Optional[str]]): indices to slice. tuple can
                 contains slices along dimensions (row, column, experiments)
 
         Raises:
@@ -431,3 +501,54 @@ class MultiAssayExperiment:
         """
         expt, smap, sdata = self._slice(args=args)
         return MultiAssayExperiment(expt, sdata, smap, self._metadata)
+
+    def __str__(self) -> str:
+        pattern = """
+        Class MultiAssayExperiment with {} experiments and {} samples
+            experiments: 
+                {}
+        """
+        return pattern.format(
+            len(self._experiments.keys()),
+            len(self._coldata),
+            [f"{expname}: {str(expt)}" for expname, expt in self._experiments.items()],
+        )
+
+    def completeCases(self) -> Sequence[bool]:
+        """Identify samples that have data across all experiments.
+
+        Returns:
+            Sequence[bool]: a list of True if sample is present in all experiments.
+        """
+        vec = []
+        for x in self._coldata.index.tolist():
+            subset = self._sampleMap[self._sampleMap["primary"] == x]
+
+            vec.append(len(subset["assay"].unique()) == len(self._experiments.keys()))
+
+        return vec
+
+    def replicated(self) -> MutableMapping[str, MutableMapping[str, Sequence[bool]]]:
+        """Identify samples with replicates within each experiment.
+
+        Returns:
+            MutableMapping[str, MutableMapping[str, Sequence[bool]]]: return true for replicates
+        """
+        replicates = {}
+        allSamples = self._coldata.index.tolist()
+        for expname, expt in self._experiments.items():
+            if expname not in replicates:
+                replicates[expname] = {}
+
+                for s in allSamples:
+                    replicates[expname][s] = []
+
+            colnames = expt.colnames
+            smap = self._sampleMap[self._sampleMap["assay"] == expname]
+
+            for x in colnames:
+                colmap = smap[smap["colname"] == x]
+                for s in allSamples:
+                    replicates[expname][s].append(s in colmap["primary"])
+
+        return replicates

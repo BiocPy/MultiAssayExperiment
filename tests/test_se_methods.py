@@ -1,12 +1,14 @@
 import pytest
 
 from multiassayexperiment import MultiAssayExperiment
+import multiassayexperiment
 from singlecellexperiment import SingleCellExperiment
 import numpy as np
 from random import random
 import pandas as pd
 import genomicranges
 from summarizedexperiment import SummarizedExperiment
+from anndata import AnnData
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -123,3 +125,61 @@ def test_MAE_creation_with_alts():
     mae.metadata = None
     assert mae.metadata is None
 
+
+def test_MAE_completedcases():
+    tsce = SingleCellExperiment(
+        assays={"counts": counts}, rowData=df_gr, colData=colData_sce
+    )
+
+    tse2 = SummarizedExperiment(
+        assays={"counts": counts.copy()},
+        rowData=df_gr.copy(),
+        colData=colData_se.copy(),
+    )
+
+    mae = MultiAssayExperiment(
+        experiments={"sce": tsce, "se": tse2},
+        colData=sample_data,
+        sampleMap=sample_map,
+        metadata={"could be": "anything"},
+    )
+
+    assert mae is not None
+    assert isinstance(mae, MultiAssayExperiment)
+
+    completed = mae.completeCases()
+
+    assert completed is not None
+    assert len(completed) == len(mae.experiments.keys())
+    assert completed == [False, False]
+
+
+def test_MAE_replicated():
+    np.random.seed(1)
+    n, d, k = 1000, 100, 10
+
+    z = np.random.normal(loc=np.arange(k), scale=np.arange(k) * 2, size=(n, k))
+    w = np.random.normal(size=(d, k))
+    y = np.dot(z, w.T)
+
+    adata = AnnData(y)
+    adata.obs_names = [f"obs_{i+1}" for i in range(n)]
+    adata.var_names = [f"var_{j+1}" for j in range(d)]
+
+    d2 = 50
+    w2 = np.random.normal(size=(d2, k))
+    y2 = np.dot(z, w2.T)
+
+    adata2 = AnnData(y2)
+    adata2.obs_names = [f"obs_{i+1}" for i in range(n)]
+    adata2.var_names = [f"var2_{j+1}" for j in range(d2)]
+
+    mae = multiassayexperiment.makeMAE(experiments={"rna": adata, "spatial": adata2})
+
+    assert mae is not None
+    assert isinstance(mae, MultiAssayExperiment)
+
+    repls = mae.replicated()
+
+    assert repls is not None
+    assert len(repls) == len(mae.experiments.keys())
