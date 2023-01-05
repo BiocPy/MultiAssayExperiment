@@ -1,6 +1,14 @@
 multiassayexperiment package
 ============================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   multiassayexperiment.io
+
 Submodules
 ----------
 

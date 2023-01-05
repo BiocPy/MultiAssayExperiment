@@ -1,10 +1,16 @@
 # Tutorial
 
-`MultiAssayExperiment` is a container class to represent multiple experiments represented as `SingleCellExperiment`, `SummarizedExperiment` or `RangeSummarizedExperiment`. For more detailed description checkout the [Bioc MultiAssayExperiment R package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html))
+Container class to represent multiple experiments and assays performed over a set of samples. For more detailed description checkout the [MultiAssayExperiment Bioc/R package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html))
 
-## Mock data 
+# Construct an `MultiAssayExperiment`
 
-we first create a mock dataset of 200 rows and 6 columns, also adding a cell annotations, sample mapping and sample data across experiments.
+An MAE contains three main entities
+
+- Primary information (`coldata`): Bio-specimen information on which experiments were run. represented as a Pandas `DataFrame`.
+- Experiments (`experiments`): genomic data from each experiment. represented as `SingleCellExperiment`, `SummarizedExperiment`, `RangeSummarizedExperiment`.
+- Sample Mapping (`sampleMap`): Mapping from biospecimens to samples/columns in each experiment. in the context of single cell, these are cells.
+
+Lets create these objects
 
 ```python
 import pandas as pd
@@ -64,10 +70,7 @@ sample_map = pd.DataFrame(
 sample_data = pd.DataFrame({"samples": ["sample1", "sample2"]})
 ```
 
-### `MultiAssayExperiment`
-
-
-Lets first create various experiment classes
+Then, create various experiment classes,
 
 ```python
 from singlecellexperiment import SingleCellExperiment
@@ -90,7 +93,7 @@ Now that we have all the pieces together, we can now create an MAE,
 ```python
 from multiassayexperiment import MultiAssayExperiment
 
-mae = MultiAssayExperiment(
+maeObj = MultiAssayExperiment(
     experiments={"sce": tsce, "se": tse2},
     colData=sample_data,
     sampleMap=sample_map,
@@ -98,26 +101,126 @@ mae = MultiAssayExperiment(
 )
 ```
 
-### Accessors
+To make your life easier, we also provide methods to naively create sample mapping from experiments. 
+
+***This is not a recommended approach, but if you don't have sample mapping, then it doesn't matter.***
+
+```python
+maeObj = mae.makeMAE(experiments={"sce": tsce, "se": tse2})
+```
+
+# Import `MuData` and `AnnData` as `MultiAssayExperiment`
+
+If you have a dataset stored as `MuData`, these can be easily converted to an MAE using the `fromMuData` method.
+
+Lets first construct AnnData objects and then an MAE
+
+
+```python
+import multiassayexperiment as mae
+import numpy as np
+from anndata import AnnData
+
+np.random.seed(1)
+
+n, d, k = 1000, 100, 10
+
+z = np.random.normal(loc=np.arange(k), scale=np.arange(k) * 2, size=(n, k))
+w = np.random.normal(size=(d, k))
+y = np.dot(z, w.T)
+
+adata = AnnData(y)
+adata.obs_names = [f"obs_{i+1}" for i in range(n)]
+adata.var_names = [f"var_{j+1}" for j in range(d)]
+
+d2 = 50
+w2 = np.random.normal(size=(d2, k))
+y2 = np.dot(z, w2.T)
+
+adata2 = AnnData(y2)
+adata2.obs_names = [f"obs_{i+1}" for i in range(n)]
+adata2.var_names = [f"var2_{j+1}" for j in range(d2)]
+```
+
+we can now construct a `MuData` object and convert that to an MAE
+
+```python
+mdata = MuData({"rna": adata, "spatial": adata2})
+
+maeObj = mae.fromMuData(mudata=mdata)
+```
+
+Methods are also available to convert an `AnnData` object to `MAE`.
+
+```python
+maeObj = mae.readH5AD("tests/data/adata.h5ad")
+```
+
+# Accessors
 
 Multiple methods are available to access various slots of a `MultiAssayExperiment` object
 
 ```python
-tse.assays()
-tse.colData()
-tse.SampleMap()
-tse.experiments()
-tse.metadata()
+maeObj.assays
+maeObj.colData
+maeObj.sampleMap
+maeObj.experiments
+maeObj.metadata
+
+# access a specific experiment
+maeObj.experiment(experiment name)
 ```
 
-### Access specific sets
+# Slice a `MultiAssayExperiment`
 
-You can also specify a specific experiment to access
+`MultiAssayExperiment` allows subsetting by `rows`, `columns`, and `experiments`. Samples are automatically sliced during this operation.
+
+The structure for slicing,
+
+```
+maeObj[rows, columns, experiments]
+```
+
+- rows, columns: accepts either a slice, list of indices or a dictionary to specify slices per experiment.
+- experiments: accepts a list of experiment names to subset to.
+
+## Slice by row and column slices
 
 ```python
-tse.experiment("sce")
+maeObj[1:5, 0:4]
 ```
 
-## Export and import AnnData objects
+## Slice by rows, columns, experiments
 
-coming soon...
+
+```python
+maeObj[1:5, 0:4, ["spatial"]]
+```
+
+## Specify slices per experiment
+
+You can specify slices by experiment, rest of the experiments are not sliced.
+
+```python
+maeObj[{"rna": slice(0,10)}, {"spatial": slice(0,5)}, ["spatial"]]
+```
+
+Checkout other methods that perform similar operations - `subsetByRows`, `subsetByColumns` & `subsetByExperiments`.
+
+# Helper methods
+
+## completedCases
+
+This method returns a boolean vector that specifies which biospecimens have data across all experiments.
+
+```python
+maeObj.completedCases()
+```
+
+## replicated
+
+replicated identifies biospecimens that have multiple observations per experiment.
+
+```python
+maeObj.replicated()
+```

@@ -1,0 +1,37 @@
+multiassayexperiment.io package
+===============================
+
+Submodules
+----------
+
+multiassayexperiment.io.anndata module
+--------------------------------------
+
+.. automodule:: multiassayexperiment.io.anndata
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+multiassayexperiment.io.interface module
+----------------------------------------
+
+.. automodule:: multiassayexperiment.io.interface
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+multiassayexperiment.io.mudata module
+-------------------------------------
+
+.. automodule:: multiassayexperiment.io.mudata
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: multiassayexperiment.io
+   :members:
+   :undoc-members:
+   :show-inheritance:
