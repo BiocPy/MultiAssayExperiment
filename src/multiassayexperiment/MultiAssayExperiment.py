@@ -38,7 +38,7 @@ class MultiAssayExperiment:
             metadata (MutableMapping, optional): study level metadata. Defaults to None.
         """
         self._experiments = experiments
-        self._coldata = colData
+        self._colData = colData
         self._sampleMap = sampleMap
         self._metadata = metadata
 
@@ -62,8 +62,8 @@ class MultiAssayExperiment:
             )
 
         if not (
-            isinstance(self._coldata, BiocFrame)
-            or isinstance(self._coldata, pd.DataFrame)
+            isinstance(self._colData, BiocFrame)
+            or isinstance(self._colData, pd.DataFrame)
         ):
             raise TypeError(
                 "colData must be either a pandas dataframe or a biocframe object"
@@ -80,29 +80,30 @@ class MultiAssayExperiment:
         smapsList = list(self._sampleMap["primary"])
         smapUniqLength = len(set(smapsList))
 
-        if self._coldata.shape[0] != smapUniqLength:
+        if self._colData.shape[0] != smapUniqLength:
             raise ValueError(
-                f"SampleMap and SampleData do not match: provided {smapUniqLength}, needs to be {self._coldata.shape[0]}"
+                f"SampleMap and SampleData do not match: provided {smapUniqLength}, needs to be {self._colData.shape[0]}"
             )
 
         # check if coldata has index
-        if self._coldata.index is None:
+        if self._colData.index is None:
             raise ValueError(
                 "SampleData must contain an index with all sample names (primary column) from SampleMap"
             )
 
-        missing = set(smapsList).difference(set(self._coldata.index.tolist()))
+        missing = set(smapsList).difference(set(self._colData.index.tolist()))
         if len(missing) > 0:
             raise ValueError(
                 f"SampleData contains missing samples from SampleMap: {missing}"
             )
 
         # check if all assay names are in experiments
-        smapUniqueAssaynames = set(self._sampleMap["assay"])
+        smapUniqueAssaynames = set(self._sampleMap["assay"].unique())
+        UniqueExperimentname = set(list(self._experiments.keys()))
 
-        if not smapUniqueAssaynames.issubset(set(list(self._experiments.keys()))):
+        if not UniqueExperimentname.issubset(smapUniqueAssaynames):
             raise ValueError(
-                f"Not all assays {smapUniqueAssaynames} in sampleMap map to experiments: {list(self._experiments.keys())}"
+                f"Not all primary assays {smapUniqueAssaynames} in `sampleMap` map to experiments: {list(self._experiments.keys())}"
             )
 
         # check if colnames exist
@@ -201,7 +202,7 @@ class MultiAssayExperiment:
         Returns:
             pd.DataFrame: sample metadata
         """
-        return self._coldata
+        return self._colData
 
     @colData.setter
     def colData(self, colData: pd.DataFrame):
@@ -210,7 +211,7 @@ class MultiAssayExperiment:
         if not isinstance(colData, pd.DataFrame):
             raise TypeError("sample metadata must be a pandas dataframe")
 
-        self._coldata = colData
+        self._colData = colData
         self._validate()
 
     @property
@@ -409,8 +410,8 @@ class MultiAssayExperiment:
             )
 
         # filter coldata
-        subsetColdata = self._coldata[
-            self._coldata.index.isin(subsetSampleMap["primary"].unique().tolist())
+        subsetColdata = self._colData[
+            self._colData.index.isin(subsetSampleMap["primary"].unique().tolist())
         ]
 
         return (subsetExpts, subsetSampleMap, subsetColdata)
@@ -510,7 +511,7 @@ class MultiAssayExperiment:
         """
         return pattern.format(
             len(self._experiments.keys()),
-            len(self._coldata),
+            len(self._colData),
             [f"{expname}: {str(expt)}" for expname, expt in self._experiments.items()],
         )
 
@@ -521,7 +522,7 @@ class MultiAssayExperiment:
             Sequence[bool]: a list of True if sample is present in all experiments.
         """
         vec = []
-        for x in self._coldata.index.tolist():
+        for x in self._colData.index.tolist():
             subset = self._sampleMap[self._sampleMap["primary"] == x]
 
             vec.append(len(subset["assay"].unique()) == len(self._experiments.keys()))
@@ -535,7 +536,7 @@ class MultiAssayExperiment:
             MutableMapping[str, MutableMapping[str, Sequence[bool]]]: return true for replicates
         """
         replicates = {}
-        allSamples = self._coldata.index.tolist()
+        allSamples = self._colData.index.tolist()
         for expname, expt in self._experiments.items():
             if expname not in replicates:
                 replicates[expname] = {}
@@ -552,3 +553,36 @@ class MultiAssayExperiment:
                     replicates[expname][s].append(s in colmap["primary"])
 
         return replicates
+
+    def addExperiment(
+        self,
+        name: str,
+        experiment: Union[
+            SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,
+        ],
+        sampleMap: pd.DataFrame,
+        colData: Optional[pd.DataFrame] = None,
+    ):
+        """Add an new experiment to MAE. 
+            Note: you have to provide information about new samples and a sample map.
+
+        Args:
+            name (str): Name of the experiment
+            experiment (Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment, ]): The experiment to add
+            sampleMap (pd.DataFrame): sample map to append to the MAE
+            colData (pd.DataFrame, optional): Sample data to append to the MAE. Defaults to None.
+        """
+
+        if name in self._experiments:
+            raise ValueError(
+                f"an experiment with {name} already exists, provide a different name"
+            )
+
+        self._experiments[name] = experiment
+        self._sampleMap = pd.concat([self._sampleMap, sampleMap], axis=0)
+
+        if colData is not None:
+            self._colData = pd.concat([self._colData, colData], axis=0)
+
+        self._validate()
+
