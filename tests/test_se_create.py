@@ -7,6 +7,7 @@ from random import random
 import pandas as pd
 import genomicranges
 from summarizedexperiment import SummarizedExperiment
+from mudata import MuData
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -126,3 +127,29 @@ def test_MAE_creation_fails():
             sampleMap=sample_map,
             metadata={"could be": "anything"},
         )
+
+def test_MAE_save():
+    tsce = SingleCellExperiment(
+        assays={"counts": counts}, rowData=df_gr, colData=colData_sce
+    )
+
+    tse2 = SummarizedExperiment(
+        assays={"counts": counts.copy()},
+        rowData=df_gr.copy(),
+        colData=colData_se.copy(),
+    )
+
+    mae = MultiAssayExperiment(
+        experiments={"sce": tsce, "se": tse2},
+        colData=sample_data,
+        sampleMap=sample_map,
+        metadata={"could be": "anything"},
+    )
+
+    assert mae is not None
+    assert isinstance(mae, MultiAssayExperiment)
+
+    mdata = mae.toMuData()
+
+    assert mdata is not None
+    assert len(mdata.mod.keys()) == 2

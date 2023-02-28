@@ -7,6 +7,7 @@ from biocframe import BiocFrame
 
 import pandas as pd
 from collections import OrderedDict
+from mudata import MuData
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -586,3 +587,27 @@ class MultiAssayExperiment:
 
         self._validate()
 
+    def toMuData(self) -> MuData:
+        """Transform `SingleCellExperiment` object to `MuData`.
+
+        Returns:
+            MuData: MuData representation
+        """
+
+        exptsList = OrderedDict()
+
+        for expname, expt in self._experiments.items():
+            if isinstance(expt, SingleCellExperiment):
+                obj, adatas = expt.toAnnData(alts=True)
+
+                exptsList[expname] = obj
+
+                if adatas is not None:
+                    for aname, aexpt in adatas.items():
+                        exptsList[f"{expname}_{aname}"] = aexpt
+            elif isinstance(expt, SummarizedExperiment):
+                exptsList[expname] = expt.toAnnData()
+            else:
+                print(f"Experiment: {expname} is not supported!")
+
+        return MuData(exptsList)
