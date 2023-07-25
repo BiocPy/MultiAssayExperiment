@@ -1,9 +1,10 @@
-from ..MultiAssayExperiment import MultiAssayExperiment
+from collections import OrderedDict
 
 import mudata
-from collections import OrderedDict
 import pandas as pd
 from singlecellexperiment import fromAnnData
+
+from ..MultiAssayExperiment import MultiAssayExperiment
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -11,13 +12,13 @@ __license__ = "MIT"
 
 
 def fromMuData(mudata: mudata.MuData) -> MultiAssayExperiment:
-    """Transform MuData object to MAE representation
+    """Transform MuData object to MAE representation.
 
     Args:
-        mudata (mudata.MuData): MuData object
+        mudata (mudata.MuData): MuData object.
 
     Returns:
-        MultiAssayExperiment: MAE representation
+        MultiAssayExperiment: MAE representation.
     """
 
     if mudata.isbacked:

@@ -1,8 +1,8 @@
-from ..MultiAssayExperiment import MultiAssayExperiment
-
-import singlecellexperiment as sce
 import anndata
 import pandas as pd
+import singlecellexperiment as sce
+
+from ..MultiAssayExperiment import MultiAssayExperiment
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -10,13 +10,13 @@ __license__ = "MIT"
 
 
 def fromAnnData(adata: anndata.AnnData) -> MultiAssayExperiment:
-    """Transform AnnData object to MAE representation
+    """Transform AnnData object to MAE representation.
 
     Args:
-        data (AnnData): MuData object
+        data (AnnData): MuData object.
 
     Returns:
-        MultiAssayExperiment: MAE from AnnData
+        MultiAssayExperiment: MAE from AnnData.
     """
     scexpt = sce.fromAnnData(adata=adata)
 
