@@ -204,11 +204,13 @@ class MultiAssayExperiment:
         self._validate_sampleMap_with_Expts(self._sampleMap, experiments)
         self._experiments = experiments
 
-    def experiment(self, name: str) -> BaseSE:
+    def experiment(self, name: str, with_sampleData: bool = False) -> BaseSE:
         """Get experiment by name.
 
         Args:
             name (str): experiment name.
+            with_sampleData (bool, optional): include sample data in returned object? 
+                Defaults to False.
 
         Raises:
             ValueError: if experiment name does not exist.
@@ -219,7 +221,17 @@ class MultiAssayExperiment:
         if name not in self._experiments:
             raise ValueError(f"Experiment {name} does not exist")
 
-        return self._experiments[name]
+        expt = self._experiments[name]
+
+        if with_sampleData is True:
+            subset_map = self.sampleMap[self.sampleMap["assay"] == name]
+            subset_map = subset_map.set_index("colname")
+
+            expt_colData = expt.colData
+            new_colData = pd.concat([subset_map, expt_colData], axis=1)
+            expt.colData = new_colData
+
+        return expt
 
     @property
     def sampleMap(self) -> pd.DataFrame:
