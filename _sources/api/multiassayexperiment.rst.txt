@@ -20,6 +20,14 @@ multiassayexperiment.MultiAssayExperiment module
    :undoc-members:
    :show-inheritance:
 
+multiassayexperiment.types module
+---------------------------------
+
+.. automodule:: multiassayexperiment.types
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
