@@ -1,5 +1,6 @@
 from collections import OrderedDict
-from typing import MutableMapping, Optional, Sequence, Tuple, Union
+from copy import deepcopy
+from typing import MutableMapping, Optional, Sequence
 
 import pandas as pd
 from mudata import MuData
@@ -204,12 +205,14 @@ class MultiAssayExperiment:
         self._validate_sampleMap_with_Expts(self._sampleMap, experiments)
         self._experiments = experiments
 
-    def experiment(self, name: str, with_sampleData: bool = False) -> BaseSE:
+    def experiment(self, name: str, withSampleData: bool = False) -> BaseSE:
         """Get experiment by name.
+
+        if withSampleData is True, a copy of the experiment object is returned.
 
         Args:
             name (str): experiment name.
-            with_sampleData (bool, optional): include sample data in returned object? 
+            with_sampleData (bool, optional): include sample data in returned object?
                 Defaults to False.
 
         Raises:
@@ -223,7 +226,9 @@ class MultiAssayExperiment:
 
         expt = self._experiments[name]
 
-        if with_sampleData is True:
+        if withSampleData is True:
+            expt = deepcopy(self._experiments[name])
+
             subset_map = self.sampleMap[self.sampleMap["assay"] == name]
             subset_map = subset_map.set_index("colname")
 
