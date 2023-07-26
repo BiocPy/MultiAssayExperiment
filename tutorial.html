@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="License" href="license.html" /><link rel="prev" title="MultiAssayExperiment" href="readme.html" />
 
     <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
-        <title>Tutorial - MultiAssayExperiment 0.2.3 documentation</title>
+        <title>Tutorial - MultiAssayExperiment 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">MultiAssayExperiment 0.2.3 documentation</div></a>
+      <a href="index.html"><div class="brand">MultiAssayExperiment 0.2.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.2.3 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.2.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -158,7 +158,6 @@
 <li class="toctree-l1"><a class="reference internal" href="readme.html">Overview</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#construct-an-multiassayexperiment">Construct an <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="#import-mudata-and-anndata-as-multiassayexperiment">Import <code class="docutils literal notranslate"><span class="pre">MuData</span></code> and <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> as <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="#accessors">Accessors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#slice-a-multiassayexperiment">Slice a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="#helper-methods">Helper methods</a></li>
@@ -303,13 +302,12 @@
 </pre></div>
 </div>
 <p>To make your life easier, we also provide methods to naively create sample mapping from experiments.</p>
-<p><em><strong>This is not a recommended approach, but if you don’t have sample mapping, then it doesn’t matter.</strong></em></p>
+<p><strong><em>This is not a recommended approach, but if you don’t have sample mapping, then it doesn’t matter.</em></strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span> <span class="o">=</span> <span class="n">mae</span><span class="o">.</span><span class="n">makeMAE</span><span class="p">(</span><span class="n">experiments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;sce&quot;</span><span class="p">:</span> <span class="n">tsce</span><span class="p">,</span> <span class="s2">&quot;se&quot;</span><span class="p">:</span> <span class="n">tse2</span><span class="p">})</span>
 </pre></div>
 </div>
-</section>
 <section id="import-mudata-and-anndata-as-multiassayexperiment">
-<h1>Import <code class="docutils literal notranslate"><span class="pre">MuData</span></code> and <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> as <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code><a class="headerlink" href="#import-mudata-and-anndata-as-multiassayexperiment" title="Permalink to this heading">#</a></h1>
+<h2>Import <code class="docutils literal notranslate"><span class="pre">MuData</span></code> and <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> as <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code><a class="headerlink" href="#import-mudata-and-anndata-as-multiassayexperiment" title="Permalink to this heading">#</a></h2>
 <p>If you have a dataset stored as <code class="docutils literal notranslate"><span class="pre">MuData</span></code>, these can be easily converted to an MAE using the <code class="docutils literal notranslate"><span class="pre">fromMuData</span></code> method.</p>
 <p>Lets first construct AnnData objects and then an MAE</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiassayexperiment</span> <span class="k">as</span> <span class="nn">mae</span>
@@ -348,6 +346,7 @@
 </pre></div>
 </div>
 </section>
+</section>
 <section id="accessors">
 <h1>Accessors<a class="headerlink" href="#accessors" title="Permalink to this heading">#</a></h1>
 <p>Multiple methods are available to access various slots of a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object</p>
@@ -356,11 +355,21 @@
 <span class="n">maeObj</span><span class="o">.</span><span class="n">sampleMap</span>
 <span class="n">maeObj</span><span class="o">.</span><span class="n">experiments</span>
 <span class="n">maeObj</span><span class="o">.</span><span class="n">metadata</span>
-
-<span class="c1"># access a specific experiment</span>
-<span class="n">maeObj</span><span class="o">.</span><span class="n">experiment</span><span class="p">(</span><span class="n">experiment</span> <span class="n">name</span><span class="p">)</span>
 </pre></div>
 </div>
+<section id="access-experiments">
+<h2>Access experiments<a class="headerlink" href="#access-experiments" title="Permalink to this heading">#</a></h2>
+<p>if you want to access a specific experiment</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># access a specific experiment</span>
+<span class="n">maeObj</span><span class="o">.</span><span class="n">experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This does not include the sample data stored in the MAE. If you want to include this information</p>
+<p><em><strong>Note: This creates a copy of the experiment object.</strong></em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expt_with_sampleData</span> <span class="o">=</span> <span class="n">maeObj</span><span class="o">.</span><span class="n">experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="p">,</span> <span class="n">withSampleData</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="slice-a-multiassayexperiment">
 <h1>Slice a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code><a class="headerlink" href="#slice-a-multiassayexperiment" title="Permalink to this heading">#</a></h1>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
-        <title>multiassayexperiment.MultiAssayExperiment - MultiAssayExperiment 0.2.3 documentation</title>
+        <title>multiassayexperiment.MultiAssayExperiment - MultiAssayExperiment 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">MultiAssayExperiment 0.2.3 documentation</div></a>
+      <a href="../../index.html"><div class="brand">MultiAssayExperiment 0.2.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.2.3 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.2.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -157,7 +157,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html#construct-an-multiassayexperiment">Construct an <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html#import-mudata-and-anndata-as-multiassayexperiment">Import <code class="docutils literal notranslate"><span class="pre">MuData</span></code> and <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> as <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html#accessors">Accessors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html#slice-a-multiassayexperiment">Slice a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html#helper-methods">Helper methods</a></li>
@@ -206,7 +205,8 @@
         <article role="main">
           <h1>Source code for multiassayexperiment.MultiAssayExperiment</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">mudata</span> <span class="kn">import</span> <span class="n">MuData</span>
@@ -411,11 +411,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_sampleMap_with_Expts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sampleMap</span><span class="p">,</span> <span class="n">experiments</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span> <span class="o">=</span> <span class="n">experiments</span>
 
-<div class="viewcode-block" id="MultiAssayExperiment.experiment"><a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment">[docs]</a>    <span class="k">def</span> <span class="nf">experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseSE</span><span class="p">:</span>
+<div class="viewcode-block" id="MultiAssayExperiment.experiment"><a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment">[docs]</a>    <span class="k">def</span> <span class="nf">experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">withSampleData</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseSE</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get experiment by name.</span>
+
+<span class="sd">        if withSampleData is True, a copy of the experiment object is returned.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            name (str): experiment name.</span>
+<span class="sd">            with_sampleData (bool, optional): include sample data in returned object?</span>
+<span class="sd">                Defaults to False.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            ValueError: if experiment name does not exist.</span>
@@ -426,7 +430,19 @@
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Experiment </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not exist&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
+        <span class="n">expt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">withSampleData</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">expt</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+
+            <span class="n">subset_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampleMap</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sampleMap</span><span class="p">[</span><span class="s2">&quot;assay&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
+            <span class="n">subset_map</span> <span class="o">=</span> <span class="n">subset_map</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;colname&quot;</span><span class="p">)</span>
+
+            <span class="n">expt_colData</span> <span class="o">=</span> <span class="n">expt</span><span class="o">.</span><span class="n">colData</span>
+            <span class="n">new_colData</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">subset_map</span><span class="p">,</span> <span class="n">expt_colData</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">expt</span><span class="o">.</span><span class="n">colData</span> <span class="o">=</span> <span class="n">new_colData</span>
+
+        <span class="k">return</span> <span class="n">expt</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sampleMap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>

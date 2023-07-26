@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="multiassayexperiment.io package" href="multiassayexperiment.io.html" /><link rel="prev" title="multiassayexperiment" href="modules.html" />
 
     <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
-        <title>multiassayexperiment package - MultiAssayExperiment 0.2.3 documentation</title>
+        <title>multiassayexperiment package - MultiAssayExperiment 0.2.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">MultiAssayExperiment 0.2.3 documentation</div></a>
+      <a href="../index.html"><div class="brand">MultiAssayExperiment 0.2.4 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.2.3 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.2.4 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -158,7 +158,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html#construct-an-multiassayexperiment">Construct an <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html#import-mudata-and-anndata-as-multiassayexperiment">Import <code class="docutils literal notranslate"><span class="pre">MuData</span></code> and <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> as <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html#accessors">Accessors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html#slice-a-multiassayexperiment">Slice a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html#helper-methods">Helper methods</a></li>
@@ -306,11 +305,16 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment">
-<span class="sig-name descname"><span class="pre">experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseSE</span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">withSampleData</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseSE</span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment" title="Permalink to this definition">#</a></dt>
 <dd><p>Get experiment by name.</p>
+<p>if withSampleData is True, a copy of the experiment object is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – experiment name.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – experiment name.</p></li>
+<li><p><strong>with_sampleData</strong> (<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – include sample data in returned object?
+Defaults to False.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.9/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – if experiment name does not exist.</p>
