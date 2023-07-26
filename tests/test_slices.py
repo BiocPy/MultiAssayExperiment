@@ -1,8 +1,7 @@
+import anndata
 import multiassayexperiment as mae
 import numpy as np
 from anndata import AnnData
-from mudata import MuData
-import anndata
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
