@@ -12,7 +12,7 @@ pip install multiassayexperiment
 
 ## Usage
 
-First create mock sample data 
+First create mock sample data
 
 ```python
 import pandas as pd
@@ -72,7 +72,7 @@ sample_map = pd.DataFrame(
 sample_data = pd.DataFrame({"samples": ["sample1", "sample2"]})
 ```
 
-Now we can create an instance of an MAE - 
+Now we can create an instance of an MAE -
 
 ```python
 from multiassayexperiment import MultiAssayExperiment
@@ -103,5 +103,5 @@ For more use cases, checkout the [documentation](https://biocpy.github.io/MultiA
 
 ## Note
 
-This project has been set up using PyScaffold 4.1.1. For details and usage
+This project has been set up using PyScaffold 4.5. For details and usage
 information on PyScaffold see https://pyscaffold.org/.
