@@ -45,7 +45,7 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = GenomicRanges.fromPandas(df_gr)
+gr = GenomicRanges.from_pandas(df_gr)
 
 col_data_sce = pd.DataFrame(
     {
@@ -80,12 +80,12 @@ from singlecellexperiment import SingleCellExperiment
 from summarizedExperiment import SummarizedExperiment
 
 tsce = SingleCellExperiment(
-    assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
+    assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
 )
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
-    rowData=df_gr.copy(),
+    row_data=df_gr.copy(),
     col_data=col_data_se.copy(),
 )
 

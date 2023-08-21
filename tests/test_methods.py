@@ -42,7 +42,7 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.fromPandas(df_gr)
+gr = genomicranges.from_pandas(df_gr)
 
 col_data_sce = pd.DataFrame(
     {
@@ -72,12 +72,12 @@ sample_data = pd.DataFrame(
 
 def test_MAE_creation():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
+        row_data=df_gr.copy(),
         col_data=col_data_se.copy(),
     )
 
@@ -94,19 +94,19 @@ def test_MAE_creation():
 
 def test_MAE_creation_with_alts():
     tse = SummarizedExperiment(
-        assays={"counts": counts}, rowData=df_gr, col_data=col_data_se
+        assays={"counts": counts}, row_data=df_gr, col_data=col_data_se
     )
 
     tsce = SingleCellExperiment(
         assays={"counts": counts},
-        rowData=df_gr,
+        row_data=df_gr,
         col_data=col_data_sce,
-        altExps={"alt": tse},
+        alternative_experiments={"alt": tse},
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
+        row_data=df_gr.copy(),
         col_data=col_data_se.copy(),
     )
 
@@ -139,12 +139,12 @@ def test_MAE_creation_with_alts():
 
 def test_MAE_completedcases():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
+        row_data=df_gr.copy(),
         col_data=col_data_se.copy(),
     )
 
@@ -185,7 +185,7 @@ def test_MAE_replicated():
     adata2.obs_names = [f"obs_{i+1}" for i in range(n)]
     adata2.var_names = [f"var2_{j+1}" for j in range(d2)]
 
-    mae = multiassayexperiment.makeMAE(experiments={"rna": adata, "spatial": adata2})
+    mae = multiassayexperiment.make_mae(experiments={"rna": adata, "spatial": adata2})
 
     assert mae is not None
     assert isinstance(mae, MultiAssayExperiment)

@@ -7,7 +7,7 @@ from mudata import MuData
 from pandas import DataFrame, concat
 from singlecellexperiment import SingleCellExperiment
 from summarizedexperiment import SummarizedExperiment
-from summarizedexperiment._type_checks import is_bioc_or_pandas_frame, is_list_of_type
+from summarizedexperiment.type_checks import is_bioc_or_pandas_frame, is_list_of_type
 
 from .types import SlicerArgTypes, SlicerResult, SlicerTypes, StrOrListStr
 
@@ -701,7 +701,7 @@ class MultiAssayExperiment:
 
         for expname, expt in self.experiments.items():
             if isinstance(expt, SingleCellExperiment):
-                obj, adatas = expt.toAnnData(alts=True)
+                obj, adatas = expt.to_anndata(alts=True)
 
                 exptsList[expname] = obj
 
@@ -709,7 +709,7 @@ class MultiAssayExperiment:
                     for aname, aexpt in adatas.items():
                         exptsList[f"{expname}_{aname}"] = aexpt
             elif isinstance(expt, SummarizedExperiment):
-                exptsList[expname] = expt.toAnnData()
+                exptsList[expname] = expt.to_anndata()
             else:
                 print(f"Experiment: '{expname}' is not supported!")
 

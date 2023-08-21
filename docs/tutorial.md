@@ -43,7 +43,7 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = GenomicRanges.fromPandas(df_gr)
+gr = GenomicRanges.from_pandas(df_gr)
 
 col_data_sce = pd.DataFrame(
     {
@@ -77,12 +77,12 @@ from singlecellexperiment import SingleCellExperiment
 from summarizedExperiment import SummarizedExperiment
 
 tsce = SingleCellExperiment(
-    assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
+    assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
 )
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
-    rowData=df_gr.copy(),
+    row_data=df_gr.copy(),
     col_data=col_data_se.copy(),
 )
 ```
@@ -105,12 +105,12 @@ To make your life easier, we also provide methods to naively create sample mappi
 **_This is not a recommended approach, but if you don't have sample mapping, then it doesn't matter._**
 
 ```python
-maeObj = mae.makeMAE(experiments={"sce": tsce, "se": tse2})
+maeObj = mae.make_mae(experiments={"sce": tsce, "se": tse2})
 ```
 
 ## Import `MuData` and `AnnData` as `MultiAssayExperiment`
 
-If you have a dataset stored as `MuData`, these can be easily converted to an MAE using the `fromMuData` method.
+If you have a dataset stored as `MuData`, these can be easily converted to an MAE using the `from_mudata` method.
 
 Lets first construct AnnData objects and then an MAE
 
@@ -145,13 +145,13 @@ we can now construct a `MuData` object and convert that to an MAE
 ```python
 mdata = MuData({"rna": adata, "spatial": adata2})
 
-maeObj = mae.fromMuData(mudata=mdata)
+maeObj = mae.from_mudata(mudata=mdata)
 ```
 
 Methods are also available to convert an `AnnData` object to `MAE`.
 
 ```python
-maeObj = mae.readH5AD("tests/data/adata.h5ad")
+maeObj = mae.read_h5ad("tests/data/adata.h5ad")
 ```
 
 # Accessors
@@ -180,7 +180,7 @@ This does not include the sample data stored in the MAE. If you want to include 
 ***Note: This creates a copy of the experiment object.***
 
 ```python
-expt_with_sampleData = maeObj.experiment(experiment_name, withSampleData=True)
+expt_with_sampleData = maeObj.experiment(experiment_name, with_sample_data=True)
 ```
 
 # Slice a `MultiAssayExperiment`

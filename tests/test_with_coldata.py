@@ -38,7 +38,7 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.fromPandas(df_gr)
+gr = genomicranges.from_pandas(df_gr)
 
 col_data_sce = pd.DataFrame(
     {
@@ -79,12 +79,12 @@ sample_data = pd.DataFrame(
 )
 
 tsce = SingleCellExperiment(
-    assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
+    assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
 )
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
-    rowData=df_gr.copy(),
+    row_data=df_gr.copy(),
     col_data=col_data_se.copy(),
 )
 
@@ -102,7 +102,7 @@ def test_access_expt_with_col_data():
     se = mae.experiment("se")
     assert se.shape == tse2.shape
 
-    sce = mae.experiment("sce", withSampleData=True)
+    sce = mae.experiment("sce", with_sample_data=True)
     assert sce.shape == tsce.shape
 
     assert len(sce.col_data.columns) >= len(tsce.col_data.columns)

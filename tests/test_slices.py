@@ -31,7 +31,7 @@ adata3 = anndata.read_h5ad("tests/data/adata.h5ad")
 
 
 def test_MAE_slice():
-    muMAE = mae.makeMAE(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
+    muMAE = mae.make_mae(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
 
     assert muMAE is not None
     assert isinstance(muMAE, mae.MultiAssayExperiment)
@@ -81,7 +81,7 @@ def test_MAE_slice():
 
 
 def test_MAE_slice_dict():
-    muMAE = mae.makeMAE(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
+    muMAE = mae.make_mae(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
 
     sliced_MAE_assay = muMAE[
         {"rna": slice(0, 5)}, {"spatial": slice(0, 10)}, ["rna", "spatial"]
@@ -99,7 +99,7 @@ def test_MAE_slice_dict():
 
 
 def test_MAE_subset_by_row():
-    muMAE = mae.makeMAE(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
+    muMAE = mae.make_mae(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
 
     assert muMAE is not None
     assert isinstance(muMAE, mae.MultiAssayExperiment)
@@ -125,7 +125,7 @@ def test_MAE_subset_by_row():
 
 
 def test_MAE_subset_by_column():
-    muMAE = mae.makeMAE(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
+    muMAE = mae.make_mae(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
 
     assert muMAE is not None
     assert isinstance(muMAE, mae.MultiAssayExperiment)
@@ -151,7 +151,7 @@ def test_MAE_subset_by_column():
 
 
 def test_MAE_subsetByExpt():
-    muMAE = mae.makeMAE(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
+    muMAE = mae.make_mae(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
 
     assert muMAE is not None
     assert isinstance(muMAE, mae.MultiAssayExperiment)

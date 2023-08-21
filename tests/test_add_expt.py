@@ -39,7 +39,7 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.fromPandas(df_gr)
+gr = genomicranges.from_pandas(df_gr)
 
 col_data_sce = pd.DataFrame(
     {
@@ -78,7 +78,7 @@ sample_col_data_se = pd.DataFrame({"samples": ["sample2"]}, index=["sample2"])
 
 def test_MAE_addExpt():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
     )
 
     mae = MultiAssayExperiment(
@@ -93,7 +93,7 @@ def test_MAE_addExpt():
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
+        row_data=df_gr.copy(),
         col_data=col_data_se,
     )
 

@@ -40,7 +40,7 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.fromPandas(df_gr)
+gr = genomicranges.from_pandas(df_gr)
 
 col_data_sce = pd.DataFrame(
     {
@@ -70,12 +70,12 @@ sample_data = pd.DataFrame(
 
 def test_MAE_creation():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
+        row_data=df_gr.copy(),
         col_data=col_data_se.copy(),
     )
 
@@ -92,19 +92,19 @@ def test_MAE_creation():
 
 def test_MAE_creation_with_alts():
     tse = SummarizedExperiment(
-        assays={"counts": counts}, rowData=df_gr, col_data=col_data_se
+        assays={"counts": counts}, row_data=df_gr, col_data=col_data_se
     )
 
     tsce = SingleCellExperiment(
         assays={"counts": counts},
-        rowData=df_gr,
+        row_data=df_gr,
         col_data=col_data_sce,
-        altExps={"alt": tse},
+        alternative_experiments={"alt": tse},
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
+        row_data=df_gr.copy(),
         col_data=col_data_se.copy(),
     )
 
@@ -121,12 +121,12 @@ def test_MAE_creation_with_alts():
 
 def test_MAE_creation_fails():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
+        row_data=df_gr.copy(),
         col_data=col_data_sce.copy(),
     )
 
@@ -141,12 +141,12 @@ def test_MAE_creation_fails():
 
 def test_MAE_save():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
+        row_data=df_gr.copy(),
         col_data=col_data_se.copy(),
     )
 
@@ -160,7 +160,7 @@ def test_MAE_save():
     assert mae is not None
     assert isinstance(mae, MultiAssayExperiment)
 
-    mdata = mae.toMuData()
+    mdata = mae.to_mudata()
 
     assert mdata is not None
     assert len(mdata.mod.keys()) == 2
