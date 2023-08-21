@@ -1,6 +1,6 @@
 # MultiAssayExperiment
 
-Container class to represent multiple experiments and assays performed over a set of samples. follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
+Container class for representing and managing multi-omics genomic experiments. follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
 
 ## Install
 

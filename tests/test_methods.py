@@ -158,7 +158,7 @@ def test_MAE_completedcases():
     assert mae is not None
     assert isinstance(mae, MultiAssayExperiment)
 
-    completed = mae.completeCases()
+    completed = mae.complete_cases()
 
     assert completed is not None
     assert len(completed) == len(mae.experiments.keys())

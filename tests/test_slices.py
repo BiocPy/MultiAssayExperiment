@@ -98,7 +98,7 @@ def test_MAE_slice_dict():
     assert sliced_MAE_assay.sample_map.shape[0] == 1010
 
 
-def test_MAE_subsetByRow():
+def test_MAE_subset_by_row():
     muMAE = mae.makeMAE(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
 
     assert muMAE is not None
@@ -111,7 +111,7 @@ def test_MAE_subsetByRow():
     assert len(muMAE.sample_map["assay"].unique()) == 3
     assert len(muMAE.sample_map["primary"].unique()) == 3
 
-    sliced_MAE = muMAE.subsetByRow(subset=[10, 2, 5])
+    sliced_MAE = muMAE.subset_by_row(subset=[10, 2, 5])
     assert sliced_MAE is not None
     assert isinstance(sliced_MAE, mae.MultiAssayExperiment)
 
@@ -124,7 +124,7 @@ def test_MAE_subsetByRow():
     assert sliced_MAE.sample_map.shape == (2030, 3)
 
 
-def test_MAE_subsetByColumn():
+def test_MAE_subset_by_column():
     muMAE = mae.makeMAE(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
 
     assert muMAE is not None
@@ -137,7 +137,7 @@ def test_MAE_subsetByColumn():
     assert len(muMAE.sample_map["assay"].unique()) == 3
     assert len(muMAE.sample_map["primary"].unique()) == 3
 
-    sliced_MAE = muMAE.subsetByColumn(subset=[10, 2, 5])
+    sliced_MAE = muMAE.subset_by_column(subset=[10, 2, 5])
     assert sliced_MAE is not None
     assert isinstance(sliced_MAE, mae.MultiAssayExperiment)
 
@@ -163,7 +163,7 @@ def test_MAE_subsetByExpt():
     assert len(muMAE.sample_map["assay"].unique()) == 3
     assert len(muMAE.sample_map["primary"].unique()) == 3
 
-    sliced_MAE = muMAE.subsetByExperiments(subset=["rna", "spatial"])
+    sliced_MAE = muMAE.subset_by_experiments(subset=["rna", "spatial"])
     assert sliced_MAE is not None
     assert isinstance(sliced_MAE, mae.MultiAssayExperiment)
 

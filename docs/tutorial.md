@@ -1,6 +1,6 @@
 # Tutorial
 
-Container class to represent multiple experiments and assays performed over a set of samples. For more detailed description checkout the [MultiAssayExperiment Bioc/R package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html))
+Container class for representing and managing multi-omics genomic experiments For more detailed description checkout the [MultiAssayExperiment Bioc/R package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html))
 
 # Construct an `MultiAssayExperiment`
 
@@ -216,7 +216,7 @@ You can specify slices by experiment, rest of the experiments are not sliced.
 maeObj[{"rna": slice(0,10)}, {"spatial": slice(0,5)}, ["spatial"]]
 ```
 
-Checkout other methods that perform similar operations - `subsetByRows`, `subsetByColumns` & `subsetByExperiments`.
+Checkout other methods that perform similar operations - `subset_by_rows`, `subset_by_columns` & `subset_by_experiments`.
 
 # Helper methods
 

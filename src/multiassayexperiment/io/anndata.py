@@ -57,7 +57,7 @@ def from_anndata(adata: AnnData, name: str = "unknown") -> MultiAssayExperiment:
 
 def read_h5ad(path: str) -> MultiAssayExperiment:
     """Read a H5ad file into a
-    :py:class:`~:py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment``.
+    ~:py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
 
     This function reads the h5ad at the ``path`` using :py:func:`~anndata.read_h5ad` and converts
     it into an MAE using :py:func:`~multiassayexperiment.io.anndata.from_anndata`.

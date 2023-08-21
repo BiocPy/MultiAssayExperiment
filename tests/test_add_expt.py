@@ -97,7 +97,7 @@ def test_MAE_addExpt():
         col_data=col_data_se,
     )
 
-    mae.addExperiment(
+    mae.add_experiment(
         name="se",
         experiment=tse2,
         sample_map=sample_map_se,
