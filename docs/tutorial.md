@@ -89,7 +89,6 @@ tse2 = SummarizedExperiment(
 
 Now that we have all the pieces together, we can now create an MAE,
 
-
 ```python
 from multiassayexperiment import MultiAssayExperiment
 
@@ -101,20 +100,19 @@ maeObj = MultiAssayExperiment(
 )
 ```
 
-To make your life easier, we also provide methods to naively create sample mapping from experiments. 
+To make your life easier, we also provide methods to naively create sample mapping from experiments.
 
-***This is not a recommended approach, but if you don't have sample mapping, then it doesn't matter.***
+**_This is not a recommended approach, but if you don't have sample mapping, then it doesn't matter._**
 
 ```python
 maeObj = mae.makeMAE(experiments={"sce": tsce, "se": tse2})
 ```
 
-# Import `MuData` and `AnnData` as `MultiAssayExperiment`
+## Import `MuData` and `AnnData` as `MultiAssayExperiment`
 
 If you have a dataset stored as `MuData`, these can be easily converted to an MAE using the `fromMuData` method.
 
 Lets first construct AnnData objects and then an MAE
-
 
 ```python
 import multiassayexperiment as mae
@@ -166,9 +164,23 @@ maeObj.colData
 maeObj.sampleMap
 maeObj.experiments
 maeObj.metadata
+```
 
+## Access experiments
+
+if you want to access a specific experiment
+
+```python
 # access a specific experiment
-maeObj.experiment(experiment name)
+maeObj.experiment(experiment_name)
+```
+
+This does not include the sample data stored in the MAE. If you want to include this information
+
+***Note: This creates a copy of the experiment object.***
+
+```python
+expt_with_sampleData = maeObj.experiment(experiment_name, withSampleData=True)
 ```
 
 # Slice a `MultiAssayExperiment`
@@ -191,7 +203,6 @@ maeObj[1:5, 0:4]
 ```
 
 ## Slice by rows, columns, experiments
-
 
 ```python
 maeObj[1:5, 0:4, ["spatial"]]

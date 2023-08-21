@@ -1,13 +1,15 @@
-from typing import Union, MutableMapping, Optional, Tuple, Sequence
-
-from singlecellexperiment.SingleCellExperiment import SingleCellExperiment
-from summarizedexperiment.SummarizedExperiment import SummarizedExperiment
-from summarizedexperiment.RangeSummarizedExperiment import RangeSummarizedExperiment
-from biocframe import BiocFrame
+from collections import OrderedDict
+from copy import deepcopy
+from typing import MutableMapping, Optional, Sequence
 
 import pandas as pd
-from collections import OrderedDict
 from mudata import MuData
+from singlecellexperiment import SingleCellExperiment
+from summarizedexperiment import SummarizedExperiment
+from summarizedexperiment._type_checks import is_bioc_or_pandas_frame, is_list_of_type
+from summarizedexperiment.BaseSE import BaseSE
+
+from .types import SlicerArgTypes, SlicerResult, SlicerTypes, StrOrListStr
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -17,12 +19,7 @@ __license__ = "MIT"
 class MultiAssayExperiment:
     def __init__(
         self,
-        experiments: MutableMapping[
-            str,
-            Union[
-                SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,
-            ],
-        ],
+        experiments: MutableMapping[str, BaseSE],
         colData: pd.DataFrame,
         sampleMap: pd.DataFrame,
         metadata: Optional[MutableMapping] = None,
@@ -30,90 +27,108 @@ class MultiAssayExperiment:
         """Class for managing multi-modal and multi-sample genomic experiments
 
         Args:
-            experiments (MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]): 
+            experiments (MutableMapping[str, BaseSE]):
                 dictionary of experiments
-            colData (pd.DataFrame]): sample data. 
-            sampleMap (pd.DataFrame): Mappings between sample data across experiments. 
+            colData (pd.DataFrame]): sample data.
+            sampleMap (pd.DataFrame): Mappings between sample data across experiments.
                 Must contain columns `assay`, `primary` and `colname`.
                 For more info, checkout [MAE docs](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
             metadata (MutableMapping, optional): study level metadata. Defaults to None.
         """
-        self._experiments = experiments
-        self._colData = colData
+        self._validate_experiments(experiments)
+        self._validate_sampleMap(
+            sampleMap=sampleMap, colData=colData, experiments=experiments
+        )
         self._sampleMap = sampleMap
+        self._colData = colData
+        self._experiments = experiments
+
         self._metadata = metadata
 
-        self._validate()
-
-    def _validate(self):
-        """Internal method to validate the object
+    def _validate_experiments(self, experiments: MutableMapping[str, BaseSE]):
+        """Internal method to validate experiments.
 
         Raises:
-            ValueError: when attributes don't match expectations
+            TypeError: if experiments is not a dict.
         """
-        if not isinstance(self._experiments, dict):
+        if not isinstance(experiments, dict):
             raise TypeError("experiments must be an instance of dict")
 
-        if not (
-            isinstance(self._sampleMap, BiocFrame)
-            or isinstance(self._sampleMap, pd.DataFrame)
-        ):
-            raise TypeError(
-                "sampleMap must be either a pandas dataframe or a biocframe object"
-            )
+    def _validate_colData(self, colData: pd.DataFrame):
+        """Internal method to validate coldata.
 
-        if not (
-            isinstance(self._colData, BiocFrame)
-            or isinstance(self._colData, pd.DataFrame)
-        ):
+        Args:
+            colData (pd.DataFrame): column data.
+
+        Raises:
+            TypeError: if object is neither a dataframe nor biocframe.
+        """
+        if not is_bioc_or_pandas_frame(colData):
             raise TypeError(
                 "colData must be either a pandas dataframe or a biocframe object"
             )
 
-        if not set(["assay", "primary", "colname"]).issubset(
-            set(list(self._sampleMap.columns))
-        ):
-            raise ValueError(
-                f"Sample data does not contain required columns: `assay`, `primary` and `colname`"
-            )
+    def _validate_sampleMap_with_colData(
+        self, sampleMap: pd.DataFrame, colData: pd.DataFrame
+    ):
+        """Internal method to validate sample mapping and coldata.
 
+        Args:
+            sampleMap (pd.DataFrame): sample mapping.
+            colData (pd.DataFrame): column data.
+
+        Raises:
+            ValueError: if any of the checks fail.
+        """
         # check if unique samples is same as in sample data
-        smapsList = list(self._sampleMap["primary"])
+        smapsList = list(sampleMap["primary"])
         smapUniqLength = len(set(smapsList))
 
-        if self._colData.shape[0] != smapUniqLength:
+        if colData.shape[0] != smapUniqLength:
             raise ValueError(
-                f"SampleMap and SampleData do not match: provided {smapUniqLength}, needs to be {self._colData.shape[0]}"
+                f"SampleMap and SampleData do not match: provided {smapUniqLength}, needs to be {colData.shape[0]}"
             )
 
         # check if coldata has index
-        if self._colData.index is None:
+        if colData.index is None:
             raise ValueError(
                 "SampleData must contain an index with all sample names (primary column) from SampleMap"
             )
 
-        missing = set(smapsList).difference(set(self._colData.index.tolist()))
+        missing = set(smapsList).difference(set(colData.index.tolist()))
         if len(missing) > 0:
             raise ValueError(
                 f"SampleData contains missing samples from SampleMap: {missing}"
             )
 
+    def _validate_sampleMap_with_Expts(
+        self, sampleMap: pd.DataFrame, experiments: MutableMapping[str, BaseSE]
+    ):
+        """Internal method to validate sample map and experiments
+
+        Args:
+            sampleMap (pd.DataFrame): sample mapping.
+            experiments (MutableMapping[str, BaseSE]): experiments.
+
+        Raises:
+            ValueError: if any of the checks fail.
+        """
         # check if all assay names are in experiments
-        smapUniqueAssaynames = set(self._sampleMap["assay"].unique())
-        UniqueExperimentname = set(list(self._experiments.keys()))
+        smapUniqueAssaynames = set(sampleMap["assay"].unique())
+        UniqueExperimentname = set(list(experiments.keys()))
 
         if not UniqueExperimentname.issubset(smapUniqueAssaynames):
             raise ValueError(
-                f"Not all primary assays {smapUniqueAssaynames} in `sampleMap` map to experiments: {list(self._experiments.keys())}"
+                f"Not all primary assays {smapUniqueAssaynames} in `sampleMap` map to experiments: {list(experiments.keys())}"
             )
 
         # check if colnames exist
-        agroups = self._sampleMap.groupby(["assay"])
+        agroups = sampleMap.groupby(["assay"])
         for group, rows in agroups:
-            if group not in self._experiments:
+            if group not in experiments:
                 raise ValueError(f"Experiment {group} does not exist")
 
-            gcolData = self._experiments[group].colData
+            gcolData = experiments[group].colData
 
             if not set(rows["colname"].unique().tolist()).issubset(
                 set(gcolData.index.tolist())
@@ -122,17 +137,55 @@ class MultiAssayExperiment:
                     f"Assay {group} does not contain all columns in sampleMap"
                 )
 
+    def _validate_sampleMap(
+        self,
+        sampleMap: pd.DataFrame,
+        colData: pd.DataFrame,
+        experiments: MutableMapping[str, BaseSE],
+    ):
+        """Validate sample mapping.
+
+        Args:
+            sampleMap (pd.DataFrame): sample mapping.
+            colData (pd.DataFrame): column data.
+            experiments (MutableMapping[str, BaseSE]): experiments.
+
+        Raises:
+            TypeError, ValueError: any of the checks fail.
+        """
+        if not is_bioc_or_pandas_frame(sampleMap):
+            raise TypeError(
+                "sampleMap must be either a pandas dataframe or a biocframe object"
+            )
+
+        if not set(["assay", "primary", "colname"]).issubset(
+            set(list(sampleMap.columns))
+        ):
+            raise ValueError(
+                "Sample data does not contain required columns: `assay`, `primary` and `colname`"
+            )
+
+        self._validate_sampleMap_with_colData(sampleMap, colData)
+        self._validate_sampleMap_with_Expts(sampleMap, experiments)
+
+    def _validate(self):
+        """Internal method to validate the object
+
+        Raises:
+            ValueError: when attributes don't match expectations
+        """
+        self._validate_experiments(self._experiments)
+        self._validate_colData(self._colData)
+        self._validate_sampleMap(self._sampleMap, self._colData, self._experiments)
+
     @property
     def experiments(
         self,
-    ) -> MutableMapping[
-        str,
-        Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,],
-    ]:
+    ) -> MutableMapping[str, BaseSE]:
         """Get experiments.
 
         Returns:
-            MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]: all experiments
+            MutableMapping[str, BaseSE]: all experiments
         """
 
         return self._experiments
@@ -140,92 +193,100 @@ class MultiAssayExperiment:
     @experiments.setter
     def experiments(
         self,
-        expts: MutableMapping[
-            str,
-            Union[
-                SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment
-            ],
-        ],
+        experiments: MutableMapping[str, BaseSE],
     ):
         """Set new experiments.
 
         Args:
-            expts (MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]): new experiments dictionary to set.
+            experiments (MutableMapping[str, BaseSE]): new experiments to set.
         """
-        if not isinstance(expts, dict):
-            raise TypeError("expts must be a dictionary like object")
 
-        self._experiments = expts
-        self._validate()
+        self._validate_experiments(experiments)
+        self._validate_sampleMap_with_Expts(self._sampleMap, experiments)
+        self._experiments = experiments
 
-    def experiment(
-        self, name: str
-    ) -> Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]:
-        """Get experiment by name
+    def experiment(self, name: str, withSampleData: bool = False) -> BaseSE:
+        """Get experiment by name.
+
+        if withSampleData is True, a copy of the experiment object is returned.
 
         Args:
-            name (str): experiment name
+            name (str): experiment name.
+            with_sampleData (bool, optional): include sample data in returned object?
+                Defaults to False.
 
         Raises:
-            ValueError: if experiment name does not exist
+            ValueError: if experiment name does not exist.
 
         Returns:
-            Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]: experiment
+            BaseSE: experiment.
         """
         if name not in self._experiments:
             raise ValueError(f"Experiment {name} does not exist")
 
-        return self._experiments[name]
+        expt = self._experiments[name]
+
+        if withSampleData is True:
+            expt = deepcopy(self._experiments[name])
+
+            subset_map = self.sampleMap[self.sampleMap["assay"] == name]
+            subset_map = subset_map.set_index("colname")
+
+            expt_colData = expt.colData
+            new_colData = pd.concat([subset_map, expt_colData], axis=1)
+            expt.colData = new_colData
+
+        return expt
 
     @property
     def sampleMap(self) -> pd.DataFrame:
-        """Get sample map between experiments and sample metadata
+        """Get sample map between experiments and sample metadata.
 
         Returns:
-            pd.DataFrame: sample map dataframe
+            pd.DataFrame: sample map.
         """
         return self._sampleMap
 
     @sampleMap.setter
     def sampleMap(self, sampleMap: pd.DataFrame):
-        """Set new sample map
-        """
-        if not isinstance(sampleMap, pd.DataFrame):
-            raise TypeError("sample mapping must be a pandas dataframe")
+        """Set new sample mapping.
 
+        Args:
+            sampleMap (pd.DataFrame): new sample map.
+        """
+        self._validate_sampleMap(sampleMap, self._colData, self._experiments)
         self._sampleMap = sampleMap
-        self._validate()
 
     @property
     def colData(self) -> pd.DataFrame:
-        """Get sample metadata
+        """Get sample metadata.
 
         Returns:
-            pd.DataFrame: sample metadata
+            pd.DataFrame: sample metadata.
         """
         return self._colData
 
     @colData.setter
     def colData(self, colData: pd.DataFrame):
-        """Set new sample metadata
-        """
-        if not isinstance(colData, pd.DataFrame):
-            raise TypeError("sample metadata must be a pandas dataframe")
+        """Set sample metadata.
 
+        Args:
+            colData (pd.DataFrame): new metadata.
+        """
+        self._validate_colData(colData)
+        self._validate_sampleMap_with_colData(self._sampleMap, colData)
         self._colData = colData
-        self._validate()
 
     @property
     def assays(
         self,
-    ) -> MutableMapping[
-        str,
-        Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,],
-    ]:
-        """Get experiments
+    ) -> MutableMapping[str, BaseSE,]:
+        """Get experiments.
+
+        Alias to the experiment property.
 
         Returns:
-            MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]: all experiments
+            MutableMapping[str, BaseSE]: all experiments.
         """
         return self.experiments
 
@@ -247,76 +308,47 @@ class MultiAssayExperiment:
         """
         self._metadata = metadata
 
-    def _subsetExpt(
-        self, subset: Union[str, Sequence[str]]
-    ) -> MutableMapping[
-        str,
-        Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,],
-    ]:
+    def _subsetExpt(self, subset: StrOrListStr) -> MutableMapping[str, BaseSE]:
         """Internal method to subset experiments.
 
         Args:
             subset (Sequence[str]): list of experiments to keep.
 
         Returns:
-            MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]]: a dictionary with subset experiments
+            MutableMapping[str, BaseSE]: a dictionary with subset experiments.
         """
         if isinstance(subset, str):
             subset = [subset]
 
-        if not all([isinstance(x, str) for x in subset]):
-            raise ValueError("all experiment slices must be strings")
+        if not is_list_of_type(subset, str):
+            raise ValueError("all provided experiment names must be strings")
 
         newExpt = OrderedDict()
 
         for texpt in subset:
-            if texpt not in self._experiments:
+            if texpt not in self.experiments:
                 raise ValueError(
-                    f"experiment {texpt} does not exist. should be {list(self._experiments.keys())}"
+                    f"experiment {texpt} does not exist. should be {list(self.experiments.keys())}"
                 )
-            newExpt[texpt] = self._experiments[texpt]
+            newExpt[texpt] = self.experiments[texpt]
 
         return newExpt
 
     def _slice(
         self,
-        args: Tuple[
-            Optional[
-                Union[
-                    MutableMapping[str, Union[Sequence[int], slice]],
-                    Union[Sequence[int], slice],
-                ]
-            ],
-            Optional[
-                Union[
-                    MutableMapping[str, Union[Sequence[int], slice]],
-                    Union[Sequence[int], slice],
-                ]
-            ],
-            Optional[Sequence[str]],
-        ],
-    ) -> Tuple[
-        MutableMapping[
-            str,
-            Union[
-                SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,
-            ],
-        ],
-        pd.DataFrame,
-        pd.DataFrame,
-    ]:
+        args: SlicerArgTypes,
+    ) -> SlicerResult:
         """Internal method to slice `MAE` by index.
 
         Args:
-            args (Tuple[Union[Sequence[int], slice], Optional[Union[Sequence[int], slice]], Optional[Sequence[str]]]): indices to slice. tuple can
+            args (SlicerArgTypes): indices to slice. tuple can
                 contains slices along dimensions (rows, columns, experiments).
 
         Raises:
-            ValueError: Too many slices
+            ValueError: Too many or too few slices.
 
         Returns:
-             Tuple[MutableMapping[str, Union[SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment]], pd.DataFrame, pd.DataFrame]: 
-                sliced row, cols and assays.
+            SlicerResult: sliced row, cols and assays.
         """
 
         if len(args) == 0:
@@ -342,7 +374,7 @@ class MultiAssayExperiment:
         if len(args) > 3:
             raise ValueError("contains too many slices")
 
-        subsetExpts = self._experiments.copy()
+        subsetExpts = self.experiments.copy()
 
         if exptIndices is not None:
             subsetExpts = self._subsetExpt(exptIndices)
@@ -403,130 +435,103 @@ class MultiAssayExperiment:
             subsetSampleMap = pd.concat(
                 [
                     subsetSampleMap,
-                    self._sampleMap[
-                        (self._sampleMap["assay"] == expname)
-                        & (self._sampleMap["colname"].isin(expt.colnames))
+                    self.sampleMap[
+                        (self.sampleMap["assay"] == expname)
+                        & (self.sampleMap["colname"].isin(expt.colnames))
                     ],
                 ]
             )
 
         # filter coldata
-        subsetColdata = self._colData[
-            self._colData.index.isin(subsetSampleMap["primary"].unique().tolist())
+        subsetColdata = self.colData[
+            self.colData.index.isin(subsetSampleMap["primary"].unique().tolist())
         ]
 
-        return (subsetExpts, subsetSampleMap, subsetColdata)
+        return SlicerResult(subsetExpts, subsetSampleMap, subsetColdata)
 
-    def subsetByExperiments(
-        self, subset: Union[str, Sequence[str]]
-    ) -> "MultiAssayExperiment":
+    def subsetByExperiments(self, subset: StrOrListStr) -> "MultiAssayExperiment":
         """Subset by experiment(s).
 
         Args:
-            subset (Union[str, Sequence[str]]): experiment or experiments list to subset
+            subset (StrOrListStr): experiment or experiments list to subset.
 
         Returns:
             MultiAssayExperiment: a new `MultiAssayExperiment` with the subset.
         """
-        expt, smap, sdata = self._slice(args=(None, None, subset))
-        return MultiAssayExperiment(expt, sdata, smap, self._metadata)
+        sresult = self._slice(args=(None, None, subset))
+        return MultiAssayExperiment(
+            sresult.experiments, sresult.colData, sresult.sampleMap, self.metadata
+        )
 
-    def subsetByRow(
-        self,
-        subset: Tuple[
-            Union[
-                MutableMapping[str, Union[Sequence[int], slice]],
-                Union[Sequence[int], slice],
-            ]
-        ],
-    ) -> "MultiAssayExperiment":
+    def subsetByRow(self, subset: SlicerTypes) -> "MultiAssayExperiment":
         """Subset by rows.
 
         Args:
-            subset (Tuple[Union[MutableMapping[str, Union[Sequence[int], slice]], Union[Sequence[int], slice],]]): column indices or slice to subset.
+            subset (SlicerTypes): column indices or slice to subset.
 
         Returns:
             MultiAssayExperiment: a new `MultiAssayExperiment` with the subset.
         """
-        expt, smap, sdata = self._slice(args=(subset, None, None))
-        return MultiAssayExperiment(expt, sdata, smap, self._metadata)
+        sresult = self._slice(args=(subset, None, None))
+        return MultiAssayExperiment(
+            sresult.experiments, sresult.colData, sresult.sampleMap, self.metadata
+        )
 
-    def subsetByColumn(
-        self,
-        subset: Tuple[
-            Union[
-                MutableMapping[str, Union[Sequence[int], slice]],
-                Union[Sequence[int], slice],
-            ]
-        ],
-    ) -> "MultiAssayExperiment":
+    def subsetByColumn(self, subset: SlicerTypes) -> "MultiAssayExperiment":
         """Subset by column.
 
         Args:
-            subset (Tuple[Union[MutableMapping[str, Union[Sequence[int], slice]], Union[Sequence[int], slice],]]): column indices or slice to subset.
+            subset (SlicerTypes): column indices or slice to subset.
 
         Returns:
             MultiAssayExperiment: a new `MultiAssayExperiment` with the subset.
         """
-        expt, smap, sdata = self._slice(args=(None, subset, None))
-        return MultiAssayExperiment(expt, sdata, smap, self._metadata)
+        sresult = self._slice(args=(None, subset, None))
+        return MultiAssayExperiment(
+            sresult.experiments, sresult.colData, sresult.sampleMap, self.metadata
+        )
 
-    def __getitem__(
-        self,
-        args: Tuple[
-            Optional[
-                Union[
-                    MutableMapping[str, Union[Sequence[int], slice]],
-                    Union[Sequence[int], slice],
-                ]
-            ],
-            Optional[
-                Union[
-                    MutableMapping[str, Union[Sequence[int], slice]],
-                    Union[Sequence[int], slice],
-                ]
-            ],
-            Optional[Sequence[str]],
-        ],
-    ) -> "MultiAssayExperiment":
-        """Subset a `MultiAssayExperiment`. supports a tuple specifying slices along (rows, columns and experiments).
+    def __getitem__(self, args: SlicerArgTypes) -> "MultiAssayExperiment":
+        """Subset a `MultiAssayExperiment`.
+
+        supports a tuple specifying slices along (rows, columns and experiments).
 
         Args:
-            args (Tuple[Optional[Union[MutableMapping[str, Union[Sequence[int], slice]], Union[Sequence[int], slice]]], Optional[Union[MutableMapping[str, Union[Sequence[int], slice]], Union[Sequence[int], slice]]], Optional[str]]): indices to slice. tuple can
+            args (SlicerArgTypes): indices to slice. tuple can
                 contains slices along dimensions (row, column, experiments)
 
         Raises:
-            ValueError: Too many slices
+            ValueError: Too many or too few slices.
 
         Returns:
-            MultiAssayExperiment: new sliced `MultiAssayExperiment` object
+            MultiAssayExperiment: new sliced `MultiAssayExperiment` object.
         """
-        expt, smap, sdata = self._slice(args=args)
-        return MultiAssayExperiment(expt, sdata, smap, self._metadata)
+        sresult = self._slice(args=args)
+        return MultiAssayExperiment(
+            sresult.experiments, sresult.colData, sresult.sampleMap, self.metadata
+        )
 
     def __str__(self) -> str:
-        pattern = """
-        Class MultiAssayExperiment with {} experiments and {} samples
-            experiments: 
-                {}
-        """
-        return pattern.format(
-            len(self._experiments.keys()),
-            len(self._colData),
-            [f"{expname}: {str(expt)}" for expname, expt in self._experiments.items()],
+        pattern = (
+            f"Class MultiAssayExperiment with {len(self.experiments.keys())} experiments and {len(self.colData)} samples \n"
+            f"  experiments: "
         )
+
+        for expname, expt in self.experiments.items():
+            pattern = f"{pattern} \n" f"    {expname}: {str(expt)}"
+        return pattern
 
     def completeCases(self) -> Sequence[bool]:
         """Identify samples that have data across all experiments.
 
         Returns:
-            Sequence[bool]: a list of True if sample is present in all experiments.
+            Sequence[bool]: a list, True if sample is present in all experiments.
         """
         vec = []
-        for x in self._colData.index.tolist():
-            subset = self._sampleMap[self._sampleMap["primary"] == x]
+        for x in self.colData.index.tolist():
+            subset = self.sampleMap[self.sampleMap["primary"] == x]
 
-            vec.append(len(subset["assay"].unique()) == len(self._experiments.keys()))
+            vec.append(len(subset["assay"].unique()) == len(self.experiments.keys()))
 
         return vec
 
@@ -534,11 +539,11 @@ class MultiAssayExperiment:
         """Identify samples with replicates within each experiment.
 
         Returns:
-            MutableMapping[str, MutableMapping[str, Sequence[bool]]]: return true for replicates
+            MutableMapping[str, MutableMapping[str, Sequence[bool]]]: return true for replicates.
         """
         replicates = {}
-        allSamples = self._colData.index.tolist()
-        for expname, expt in self._experiments.items():
+        allSamples = self.colData.index.tolist()
+        for expname, expt in self.experiments.items():
             if expname not in replicates:
                 replicates[expname] = {}
 
@@ -546,7 +551,7 @@ class MultiAssayExperiment:
                     replicates[expname][s] = []
 
             colnames = expt.colnames
-            smap = self._sampleMap[self._sampleMap["assay"] == expname]
+            smap = self.sampleMap[self.sampleMap["assay"] == expname]
 
             for x in colnames:
                 colmap = smap[smap["colname"] == x]
@@ -558,13 +563,11 @@ class MultiAssayExperiment:
     def addExperiment(
         self,
         name: str,
-        experiment: Union[
-            SingleCellExperiment, SummarizedExperiment, RangeSummarizedExperiment,
-        ],
+        experiment: BaseSE,
         sampleMap: pd.DataFrame,
         colData: Optional[pd.DataFrame] = None,
     ):
-        """Add an new experiment to MAE. 
+        """Add an new experiment to MAE.
             Note: you have to provide information about new samples and a sample map.
 
         Args:
@@ -574,18 +577,30 @@ class MultiAssayExperiment:
             colData (pd.DataFrame, optional): Sample data to append to the MAE. Defaults to None.
         """
 
-        if name in self._experiments:
+        if name in self.experiments:
             raise ValueError(
                 f"an experiment with {name} already exists, provide a different name"
             )
 
-        self._experiments[name] = experiment
-        self._sampleMap = pd.concat([self._sampleMap, sampleMap], axis=0)
+        self._validate_colData(colData)
 
-        if colData is not None:
-            self._colData = pd.concat([self._colData, colData], axis=0)
+        new_experiments = self._experiments.copy()
+        new_experiments[name] = experiment
 
-        self._validate()
+        new_colData = colData
+        if new_colData is not None:
+            new_colData = pd.concat([self.colData, colData], axis=0)
+
+        new_sampleMap = pd.concat([self.sampleMap, sampleMap], axis=0)
+
+        self._validate_experiments(new_experiments)
+        self._validate_sampleMap(
+            sampleMap=new_sampleMap, colData=new_colData, experiments=new_experiments
+        )
+
+        self._experiments = new_experiments
+        self._sampleMap = new_sampleMap
+        self._colData = new_colData
 
     def toMuData(self) -> MuData:
         """Transform `SingleCellExperiment` object to `MuData`.
@@ -596,7 +611,7 @@ class MultiAssayExperiment:
 
         exptsList = OrderedDict()
 
-        for expname, expt in self._experiments.items():
+        for expname, expt in self.experiments.items():
             if isinstance(expt, SingleCellExperiment):
                 obj, adatas = expt.toAnnData(alts=True)
 

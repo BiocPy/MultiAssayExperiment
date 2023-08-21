@@ -1,14 +1,11 @@
-import pytest
-
-from multiassayexperiment import MultiAssayExperiment
-import multiassayexperiment
-from singlecellexperiment import SingleCellExperiment
-import numpy as np
 from random import random
-import pandas as pd
+
 import genomicranges
+import numpy as np
+import pandas as pd
+from multiassayexperiment import MultiAssayExperiment
+from singlecellexperiment import SingleCellExperiment
 from summarizedexperiment import SummarizedExperiment
-from anndata import AnnData
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -43,18 +40,36 @@ df_gr = pd.DataFrame(
 
 gr = genomicranges.fromPandas(df_gr)
 
-colData_sce = pd.DataFrame({"treatment": ["ChIP", "Input"] * 3,}, index=["sce"] * 6,)
+colData_sce = pd.DataFrame(
+    {
+        "treatment": ["ChIP", "Input"] * 3,
+    },
+    index=["sce"] * 6,
+)
 
 sample_map_sce = pd.DataFrame(
-    {"assay": ["sce"] * 6, "primary": ["sample1"] * 6, "colname": ["sce"] * 6,}
+    {
+        "assay": ["sce"] * 6,
+        "primary": ["sample1"] * 6,
+        "colname": ["sce"] * 6,
+    }
 )
 
 sample_coldata_sce = pd.DataFrame({"samples": ["sample1"]}, index=["sample1"])
 
-colData_se = pd.DataFrame({"treatment": ["ChIP", "Input"] * 3,}, index=["se"] * 6,)
+colData_se = pd.DataFrame(
+    {
+        "treatment": ["ChIP", "Input"] * 3,
+    },
+    index=["se"] * 6,
+)
 
 sample_map_se = pd.DataFrame(
-    {"assay": ["se"] * 6, "primary": ["sample2"] * 6, "colname": ["se"] * 6,}
+    {
+        "assay": ["se"] * 6,
+        "primary": ["sample2"] * 6,
+        "colname": ["se"] * 6,
+    }
 )
 
 sample_coldata_se = pd.DataFrame({"samples": ["sample2"]}, index=["sample2"])
@@ -86,4 +101,3 @@ def test_MAE_addExpt():
     )
 
     assert mae is not None
-
