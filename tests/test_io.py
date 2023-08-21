@@ -1,8 +1,9 @@
 import anndata
-import multiassayexperiment as mae
 import numpy as np
 from anndata import AnnData
 from mudata import MuData
+
+import multiassayexperiment as mae
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -16,8 +17,8 @@ def test_MAE_fromH5AD():
     assert isinstance(tse, mae.MultiAssayExperiment)
 
     assert tse.experiments is not None
-    assert tse.sampleMap is not None
-    assert tse.colData is not None
+    assert tse.sample_map is not None
+    assert tse.col_data is not None
 
 
 # credit: MuData docs
@@ -79,8 +80,8 @@ def test_MAE_makeMAE():
     assert isinstance(muMAE, mae.MultiAssayExperiment)
 
     assert muMAE.experiments is not None
-    assert muMAE.sampleMap is not None
-    assert muMAE.colData is not None
+    assert muMAE.sample_map is not None
+    assert muMAE.col_data is not None
 
-    assert len(muMAE.sampleMap["assay"].unique()) == 3
-    assert len(muMAE.sampleMap["primary"].unique()) == 3
+    assert len(muMAE.sample_map["assay"].unique()) == 3
+    assert len(muMAE.sample_map["primary"].unique()) == 3

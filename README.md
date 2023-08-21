@@ -47,14 +47,14 @@ df_gr = pd.DataFrame(
 
 gr = GenomicRanges.fromPandas(df_gr)
 
-colData_sce = pd.DataFrame(
+col_data_sce = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
     index=["sce"] * 6,
 )
 
-colData_se = pd.DataFrame(
+col_data_se = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
@@ -80,19 +80,19 @@ from singlecellexperiment import SingleCellExperiment
 from summarizedExperiment import SummarizedExperiment
 
 tsce = SingleCellExperiment(
-    assays={"counts": counts}, rowData=df_gr, colData=colData_sce
+    assays={"counts": counts}, rowData=df_gr, col_data=col_data_sce
 )
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
     rowData=df_gr.copy(),
-    colData=colData_se.copy(),
+    col_data=col_data_se.copy(),
 )
 
 mae = MultiAssayExperiment(
     experiments={"sce": tsce, "se": tse2},
-    colData=sample_data,
-    sampleMap=sample_map,
+    col_data=sample_data,
+    sample_map=sample_map,
     metadata={"could be": "anything"},
 )
 ```
