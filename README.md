@@ -1,6 +1,6 @@
 # MultiAssayExperiment
 
-Container class to represent multiple experiments and assays performed over a set of samples. follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
+Container class to represent and manage multi-omics genomic experiments. Follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
 
 ## Install
 
@@ -12,7 +12,7 @@ pip install multiassayexperiment
 
 ## Usage
 
-First create mock sample data 
+First create mock sample data
 
 ```python
 import pandas as pd
@@ -22,7 +22,7 @@ from genomicranges import GenomicRanges
 nrows = 200
 ncols = 6
 counts = np.random.rand(nrows, ncols)
-df_gr = pd.DataFrame(
+gr = GenomicRanges(
     {
         "seqnames": [
             "chr1",
@@ -45,16 +45,14 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = GenomicRanges.fromPandas(df_gr)
-
-colData_sce = pd.DataFrame(
+col_data_sce = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
     index=["sce"] * 6,
 )
 
-colData_se = pd.DataFrame(
+col_data_se = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
@@ -72,7 +70,7 @@ sample_map = pd.DataFrame(
 sample_data = pd.DataFrame({"samples": ["sample1", "sample2"]})
 ```
 
-Now we can create an instance of an MAE - 
+Now we can create an instance of an MAE -
 
 ```python
 from multiassayexperiment import MultiAssayExperiment
@@ -80,19 +78,19 @@ from singlecellexperiment import SingleCellExperiment
 from summarizedExperiment import SummarizedExperiment
 
 tsce = SingleCellExperiment(
-    assays={"counts": counts}, rowData=df_gr, colData=colData_sce
+    assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
 )
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
-    rowData=df_gr.copy(),
-    colData=colData_se.copy(),
+    row_data=df_gr.copy(),
+    col_data=col_data_se.copy(),
 )
 
 mae = MultiAssayExperiment(
     experiments={"sce": tsce, "se": tse2},
-    colData=sample_data,
-    sampleMap=sample_map,
+    col_data=sample_data,
+    sample_map=sample_map,
     metadata={"could be": "anything"},
 )
 ```
@@ -103,5 +101,5 @@ For more use cases, checkout the [documentation](https://biocpy.github.io/MultiA
 
 ## Note
 
-This project has been set up using PyScaffold 4.1.1. For details and usage
+This project has been set up using PyScaffold 4.5. For details and usage
 information on PyScaffold see https://pyscaffold.org/.

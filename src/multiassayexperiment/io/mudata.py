@@ -1,8 +1,8 @@
 from collections import OrderedDict
 
-import mudata
-import pandas as pd
-from singlecellexperiment import fromAnnData
+from mudata import MuData
+from pandas import DataFrame, concat
+from singlecellexperiment import from_anndata
 
 from ..MultiAssayExperiment import MultiAssayExperiment
 
@@ -11,26 +11,37 @@ __copyright__ = "jkanche"
 __license__ = "MIT"
 
 
-def fromMuData(mudata: mudata.MuData) -> MultiAssayExperiment:
-    """Transform MuData object to MAE representation.
+def from_mudata(mudata: MuData) -> MultiAssayExperiment:
+    """Read :py:class:`~mudata.MuData` as
+    :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
+
+    The import naively creates sample mapping, each ``experiment`` is considered to be a `sample`.
+    We add a sample with the following pattern - ``"unknown_sample_{experiment_name}"`` to
+    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`
+    All cells from the same experiment are considered to be extracted from the same sample and is
+    reflected in
+    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map`.
 
     Args:
-        mudata (mudata.MuData): MuData object.
+        mudata (MuData): MuData object.
+
+    Raises:
+        Exception: If ``mudata`` object is read in backed mode :py:attr:`~mudata.MuData.isbacked`.
 
     Returns:
         MultiAssayExperiment: MAE representation.
     """
 
-    if mudata.isbacked:
-        raise Exception("backed mode is currently not supported")
+    if mudata.isbacked is True:
+        raise Exception("backed mode is currently not supported.")
 
     experiments = OrderedDict()
 
-    sampleMap = pd.DataFrame()
+    sample_map = DataFrame()
     samples = []
 
     for asy, adata in mudata.mod.items():
-        experiments[asy] = fromAnnData(adata)
+        experiments[asy] = from_anndata(adata)
 
         colnames = None
         if adata.obs.index.tolist() is not None:
@@ -40,7 +51,7 @@ def fromMuData(mudata: mudata.MuData) -> MultiAssayExperiment:
 
         asy_sample = f"unknown_sample_{asy}"
 
-        asy_df = pd.DataFrame(
+        asy_df = DataFrame(
             {
                 "assay": [asy] * len(colnames),
                 "primary": [asy_sample] * len(colnames),
@@ -48,14 +59,14 @@ def fromMuData(mudata: mudata.MuData) -> MultiAssayExperiment:
             }
         )
 
-        sampleMap = pd.concat([sampleMap, asy_df])
+        sample_map = concat([sample_map, asy_df])
         samples.append(asy_sample)
 
-    coldata = pd.DataFrame({"samples": samples}, index=samples)
+    col_data = DataFrame({"samples": samples}, index=samples)
 
     return MultiAssayExperiment(
         experiments=experiments,
-        colData=coldata,
-        sampleMap=sampleMap,
+        col_data=col_data,
+        sample_map=sample_map,
         metadata=mudata.uns,
     )

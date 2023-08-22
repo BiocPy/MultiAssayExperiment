@@ -2,15 +2,9 @@ import sys
 
 if sys.version_info[:2] >= (3, 8):
     # TODO: Import directly (no need for conditional) when `python_requires = >= 3.8`
-    from importlib.metadata import (
-        PackageNotFoundError,
-        version,
-    )
+    from importlib.metadata import PackageNotFoundError, version  # pragma: no cover
 else:
-    from importlib_metadata import (
-        PackageNotFoundError,
-        version,
-    )
+    from importlib_metadata import PackageNotFoundError, version  # pragma: no cover
 
 try:
     # Change here if project is renamed and does not equal the package name
@@ -21,7 +15,7 @@ except PackageNotFoundError:  # pragma: no cover
 finally:
     del version, PackageNotFoundError
 
-from .io.anndata import fromAnnData, readH5AD
-from .io.interface import makeMAE
-from .io.mudata import fromMuData
+from .io.anndata import from_anndata, read_h5ad
+from .io.interface import make_mae
+from .io.mudata import from_mudata
 from .MultiAssayExperiment import MultiAssayExperiment

@@ -3,9 +3,10 @@ from random import random
 import genomicranges
 import numpy as np
 import pandas as pd
-from multiassayexperiment import MultiAssayExperiment
 from singlecellexperiment import SingleCellExperiment
 from summarizedexperiment import SummarizedExperiment
+
+from multiassayexperiment import MultiAssayExperiment
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -38,9 +39,9 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.fromPandas(df_gr)
+gr = genomicranges.from_pandas(df_gr)
 
-colData_sce = pd.DataFrame(
+col_data_sce = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
@@ -55,9 +56,9 @@ sample_map_sce = pd.DataFrame(
     }
 )
 
-sample_coldata_sce = pd.DataFrame({"samples": ["sample1"]}, index=["sample1"])
+sample_col_data_sce = pd.DataFrame({"samples": ["sample1"]}, index=["sample1"])
 
-colData_se = pd.DataFrame(
+col_data_se = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
@@ -72,18 +73,18 @@ sample_map_se = pd.DataFrame(
     }
 )
 
-sample_coldata_se = pd.DataFrame({"samples": ["sample2"]}, index=["sample2"])
+sample_col_data_se = pd.DataFrame({"samples": ["sample2"]}, index=["sample2"])
 
 
 def test_MAE_addExpt():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, rowData=df_gr, colData=colData_sce
+        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
     )
 
     mae = MultiAssayExperiment(
         experiments={"sce": tsce},
-        colData=sample_coldata_sce,
-        sampleMap=sample_map_sce,
+        col_data=sample_col_data_sce,
+        sample_map=sample_map_sce,
         metadata={"could be": "anything"},
     )
 
@@ -92,12 +93,15 @@ def test_MAE_addExpt():
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
-        rowData=df_gr.copy(),
-        colData=colData_se,
+        row_data=df_gr.copy(),
+        col_data=col_data_se,
     )
 
-    mae.addExperiment(
-        name="se", experiment=tse2, sampleMap=sample_map_se, colData=sample_coldata_se
+    mae.add_experiment(
+        name="se",
+        experiment=tse2,
+        sample_map=sample_map_se,
+        col_data=sample_col_data_se,
     )
 
     assert mae is not None

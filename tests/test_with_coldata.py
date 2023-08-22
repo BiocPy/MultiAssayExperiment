@@ -3,9 +3,10 @@ from random import random
 import genomicranges
 import numpy as np
 import pandas as pd
-from multiassayexperiment import MultiAssayExperiment
 from singlecellexperiment import SingleCellExperiment
 from summarizedexperiment import SummarizedExperiment
+
+from multiassayexperiment import MultiAssayExperiment
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -37,15 +38,15 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.fromPandas(df_gr)
+gr = genomicranges.from_pandas(df_gr)
 
-colData_sce = pd.DataFrame(
+col_data_sce = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
     index=[f"sce_{i}" for i in range(6)],
 )
-colData_se = pd.DataFrame(
+col_data_se = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
@@ -78,30 +79,30 @@ sample_data = pd.DataFrame(
 )
 
 tsce = SingleCellExperiment(
-    assays={"counts": counts}, rowData=df_gr, colData=colData_sce
+    assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
 )
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
-    rowData=df_gr.copy(),
-    colData=colData_se.copy(),
+    row_data=df_gr.copy(),
+    col_data=col_data_se.copy(),
 )
 
 mae = MultiAssayExperiment(
     experiments={"sce": tsce, "se": tse2},
-    colData=sample_data,
-    sampleMap=sample_map,
+    col_data=sample_data,
+    sample_map=sample_map,
     metadata={"could be": "anything"},
 )
 
 
-def test_access_expt_with_coldata():
+def test_access_expt_with_col_data():
     assert mae is not None
 
     se = mae.experiment("se")
     assert se.shape == tse2.shape
 
-    sce = mae.experiment("sce", withSampleData=True)
+    sce = mae.experiment("sce", with_sample_data=True)
     assert sce.shape == tsce.shape
 
-    assert len(sce.colData.columns) >= len(tsce.colData.columns)
+    assert len(sce.col_data.columns) >= len(tsce.col_data.columns)

@@ -1,8 +1,9 @@
 import anndata
-import multiassayexperiment as mae
 import numpy as np
 from anndata import AnnData
 from mudata import MuData
+
+import multiassayexperiment as mae
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -10,18 +11,18 @@ __license__ = "MIT"
 
 
 def test_MAE_fromH5AD():
-    tse = mae.readH5AD("tests/data/adata.h5ad")
+    tse = mae.read_h5ad("tests/data/adata.h5ad")
 
     assert tse is not None
     assert isinstance(tse, mae.MultiAssayExperiment)
 
     assert tse.experiments is not None
-    assert tse.sampleMap is not None
-    assert tse.colData is not None
+    assert tse.sample_map is not None
+    assert tse.col_data is not None
 
 
 # credit: MuData docs
-def test_MAE_fromMuData():
+def test_MAE_from_mudata():
     np.random.seed(1)
 
     n, d, k = 1000, 100, 10
@@ -44,13 +45,13 @@ def test_MAE_fromMuData():
 
     mdata = MuData({"A": adata, "B": adata2})
 
-    muMAE = mae.fromMuData(mudata=mdata)
+    muMAE = mae.from_mudata(mudata=mdata)
 
     assert muMAE is not None
     assert isinstance(muMAE, mae.MultiAssayExperiment)
 
 
-def test_MAE_makeMAE():
+def test_MAE_make_mae():
     np.random.seed(1)
 
     n, d, k = 1000, 100, 10
@@ -73,14 +74,14 @@ def test_MAE_makeMAE():
 
     adata3 = anndata.read_h5ad("tests/data/adata.h5ad")
 
-    muMAE = mae.makeMAE(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
+    muMAE = mae.make_mae(experiments={"rna": adata, "spatial": adata2, "multi": adata3})
 
     assert muMAE is not None
     assert isinstance(muMAE, mae.MultiAssayExperiment)
 
     assert muMAE.experiments is not None
-    assert muMAE.sampleMap is not None
-    assert muMAE.colData is not None
+    assert muMAE.sample_map is not None
+    assert muMAE.col_data is not None
 
-    assert len(muMAE.sampleMap["assay"].unique()) == 3
-    assert len(muMAE.sampleMap["primary"].unique()) == 3
+    assert len(muMAE.sample_map["assay"].unique()) == 3
+    assert len(muMAE.sample_map["primary"].unique()) == 3

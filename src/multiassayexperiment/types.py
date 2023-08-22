@@ -17,4 +17,4 @@ SlicerArgTypes = Tuple[
     Optional[Sequence[str]],
 ]
 
-SlicerResult = namedtuple("SlicerResult", ["experiments", "sampleMap", "colData"])
+SlicerResult = namedtuple("SlicerResult", ["experiments", "sample_map", "col_data"])
