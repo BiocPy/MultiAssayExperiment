@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="License" href="license.html" /><link rel="prev" title="MultiAssayExperiment" href="readme.html" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="multiassayexperiment" href="api/modules.html" /><link rel="prev" title="MultiAssayExperiment" href="readme.html" />
 
-    <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
-        <title>Tutorial - MultiAssayExperiment 0.2.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <!-- Generated with Sphinx 7.2.2 and Furo 2023.08.19 -->
+        <title>Tutorial - MultiAssayExperiment 0.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
     
     
 
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">MultiAssayExperiment 0.2.4 documentation</div></a>
+      <a href="index.html"><div class="brand">MultiAssayExperiment 0.3.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.2.4 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.3.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -161,9 +161,6 @@
 <li class="toctree-l1"><a class="reference internal" href="#accessors">Accessors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#slice-a-multiassayexperiment">Slice a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="#helper-methods">Helper methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api/modules.html">Module Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Module Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/multiassayexperiment.html">multiassayexperiment package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of multiassayexperiment package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/multiassayexperiment.io.html">multiassayexperiment.io package</a></li>
@@ -171,6 +168,10 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributions &amp; Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
 </div>
@@ -205,17 +206,27 @@
           </label>
         </div>
         <article role="main">
-          <section id="tutorial">
-<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading">#</a></h1>
-<p>Container class to represent multiple experiments and assays performed over a set of samples. For more detailed description checkout the <a class="reference external" href="https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html">MultiAssayExperiment Bioc/R package</a>)</p>
+          <section class="tex2jax_ignore mathjax_ignore" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading">#</a></h1>
+<p>Container class to represent and manage multi-omics genomic experiments.</p>
+<p>For more detailed description checkout the <a class="reference external" href="https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html">MultiAssayExperiment Bioc/R package</a>)</p>
 </section>
-<section id="construct-an-multiassayexperiment">
-<h1>Construct an <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code><a class="headerlink" href="#construct-an-multiassayexperiment" title="Permalink to this heading">#</a></h1>
-<p>An MAE contains three main entities</p>
+<section class="tex2jax_ignore mathjax_ignore" id="construct-an-multiassayexperiment">
+<h1>Construct an <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code><a class="headerlink" href="#construct-an-multiassayexperiment" title="Link to this heading">#</a></h1>
+<p>An MAE contains three main entities,</p>
 <ul class="simple">
-<li><p>Primary information (<code class="docutils literal notranslate"><span class="pre">coldata</span></code>): Bio-specimen information on which experiments were run. represented as a Pandas <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p></li>
-<li><p>Experiments (<code class="docutils literal notranslate"><span class="pre">experiments</span></code>): genomic data from each experiment. represented as <code class="docutils literal notranslate"><span class="pre">SingleCellExperiment</span></code>, <code class="docutils literal notranslate"><span class="pre">SummarizedExperiment</span></code>, <code class="docutils literal notranslate"><span class="pre">RangeSummarizedExperiment</span></code>.</p></li>
-<li><p>Sample Mapping (<code class="docutils literal notranslate"><span class="pre">sampleMap</span></code>): Mapping from biospecimens to samples/columns in each experiment. in the context of single cell, these are cells.</p></li>
+<li><p>Primary information (<code class="docutils literal notranslate"><span class="pre">col_data</span></code>): Bio-specimen/sample information. The <code class="docutils literal notranslate"><span class="pre">col_data</span></code> may provide information about patients, cell lines, or
+other biological units.</p></li>
+<li><p>Experiments (<code class="docutils literal notranslate"><span class="pre">experiments</span></code>): Genomic data from each experiment. either a <code class="docutils literal notranslate"><span class="pre">SingleCellExperiment</span></code>, <code class="docutils literal notranslate"><span class="pre">SummarizedExperiment</span></code>, <code class="docutils literal notranslate"><span class="pre">RangeSummarizedExperiment</span></code> or
+any class that extends a <code class="docutils literal notranslate"><span class="pre">SummarizedExperiment</span></code>.</p></li>
+<li><p>Sample Map (<code class="docutils literal notranslate"><span class="pre">sample_map</span></code>): Map biological units from <code class="docutils literal notranslate"><span class="pre">col_data</span></code> to the list of <code class="docutils literal notranslate"><span class="pre">experiments</span></code>. Must contain columns,</p>
+<ul>
+<li><p><strong>assay</strong> provides the names of the different experiments performed on the
+biological units. All experiment names from <code class="docutils literal notranslate"><span class="pre">experiments</span></code> must be present in this column.</p></li>
+<li><p><strong>primary</strong> contains the sample name. All names in this column must match with row labels from <code class="docutils literal notranslate"><span class="pre">col_data</span></code>.</p></li>
+<li><p><strong>colname</strong> is the mapping of samples/cells within each experiment back to its biosample information in <code class="docutils literal notranslate"><span class="pre">col_data</span></code>.</p></li>
+</ul>
+</li>
 </ul>
 <p>Lets create these objects</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -248,16 +259,16 @@
     <span class="p">}</span>
 <span class="p">)</span>
 
-<span class="n">gr</span> <span class="o">=</span> <span class="n">GenomicRanges</span><span class="o">.</span><span class="n">fromPandas</span><span class="p">(</span><span class="n">df_gr</span><span class="p">)</span>
+<span class="n">gr</span> <span class="o">=</span> <span class="n">GenomicRanges</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">df_gr</span><span class="p">)</span>
 
-<span class="n">colData_sce</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<span class="n">col_data_sce</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">{</span>
         <span class="s2">&quot;treatment&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ChIP&quot;</span><span class="p">,</span> <span class="s2">&quot;Input&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
     <span class="p">},</span>
     <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sce&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">colData_se</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<span class="n">col_data_se</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">{</span>
         <span class="s2">&quot;treatment&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ChIP&quot;</span><span class="p">,</span> <span class="s2">&quot;Input&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span>
     <span class="p">},</span>
@@ -280,13 +291,13 @@
 <span class="kn">from</span> <span class="nn">summarizedExperiment</span> <span class="kn">import</span> <span class="n">SummarizedExperiment</span>
 
 <span class="n">tsce</span> <span class="o">=</span> <span class="n">SingleCellExperiment</span><span class="p">(</span>
-    <span class="n">assays</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="p">},</span> <span class="n">rowData</span><span class="o">=</span><span class="n">df_gr</span><span class="p">,</span> <span class="n">colData</span><span class="o">=</span><span class="n">colData_sce</span>
+    <span class="n">assays</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="p">},</span> <span class="n">row_data</span><span class="o">=</span><span class="n">df_gr</span><span class="p">,</span> <span class="n">col_data</span><span class="o">=</span><span class="n">col_data_sce</span>
 <span class="p">)</span>
 
 <span class="n">tse2</span> <span class="o">=</span> <span class="n">SummarizedExperiment</span><span class="p">(</span>
     <span class="n">assays</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="o">.</span><span class="n">copy</span><span class="p">()},</span>
-    <span class="n">rowData</span><span class="o">=</span><span class="n">df_gr</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
-    <span class="n">colData</span><span class="o">=</span><span class="n">colData_se</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+    <span class="n">row_data</span><span class="o">=</span><span class="n">df_gr</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+    <span class="n">col_data</span><span class="o">=</span><span class="n">col_data_se</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -295,21 +306,21 @@
 
 <span class="n">maeObj</span> <span class="o">=</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span>
     <span class="n">experiments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;sce&quot;</span><span class="p">:</span> <span class="n">tsce</span><span class="p">,</span> <span class="s2">&quot;se&quot;</span><span class="p">:</span> <span class="n">tse2</span><span class="p">},</span>
-    <span class="n">colData</span><span class="o">=</span><span class="n">sample_data</span><span class="p">,</span>
-    <span class="n">sampleMap</span><span class="o">=</span><span class="n">sample_map</span><span class="p">,</span>
+    <span class="n">col_data</span><span class="o">=</span><span class="n">sample_data</span><span class="p">,</span>
+    <span class="n">sample_map</span><span class="o">=</span><span class="n">sample_map</span><span class="p">,</span>
     <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;could be&quot;</span><span class="p">:</span> <span class="s2">&quot;anything&quot;</span><span class="p">},</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <p>To make your life easier, we also provide methods to naively create sample mapping from experiments.</p>
 <p><strong><em>This is not a recommended approach, but if you don’t have sample mapping, then it doesn’t matter.</em></strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span> <span class="o">=</span> <span class="n">mae</span><span class="o">.</span><span class="n">makeMAE</span><span class="p">(</span><span class="n">experiments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;sce&quot;</span><span class="p">:</span> <span class="n">tsce</span><span class="p">,</span> <span class="s2">&quot;se&quot;</span><span class="p">:</span> <span class="n">tse2</span><span class="p">})</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span> <span class="o">=</span> <span class="n">mae</span><span class="o">.</span><span class="n">make_mae</span><span class="p">(</span><span class="n">experiments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;sce&quot;</span><span class="p">:</span> <span class="n">tsce</span><span class="p">,</span> <span class="s2">&quot;se&quot;</span><span class="p">:</span> <span class="n">tse2</span><span class="p">})</span>
 </pre></div>
 </div>
 <section id="import-mudata-and-anndata-as-multiassayexperiment">
-<h2>Import <code class="docutils literal notranslate"><span class="pre">MuData</span></code> and <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> as <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code><a class="headerlink" href="#import-mudata-and-anndata-as-multiassayexperiment" title="Permalink to this heading">#</a></h2>
-<p>If you have a dataset stored as <code class="docutils literal notranslate"><span class="pre">MuData</span></code>, these can be easily converted to an MAE using the <code class="docutils literal notranslate"><span class="pre">fromMuData</span></code> method.</p>
-<p>Lets first construct AnnData objects and then an MAE</p>
+<h2>Import <code class="docutils literal notranslate"><span class="pre">MuData</span></code> and <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> as <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code><a class="headerlink" href="#import-mudata-and-anndata-as-multiassayexperiment" title="Link to this heading">#</a></h2>
+<p>If you have datasets stored as <code class="docutils literal notranslate"><span class="pre">MuData</span></code>, these can be easily converted to an MAE using the <code class="docutils literal notranslate"><span class="pre">from_mudata</span></code> method.</p>
+<p>Lets first construct `AnnData`` objects and then an MAE</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">multiassayexperiment</span> <span class="k">as</span> <span class="nn">mae</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">anndata</span> <span class="kn">import</span> <span class="n">AnnData</span>
@@ -338,27 +349,27 @@
 <p>we can now construct a <code class="docutils literal notranslate"><span class="pre">MuData</span></code> object and convert that to an MAE</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mdata</span> <span class="o">=</span> <span class="n">MuData</span><span class="p">({</span><span class="s2">&quot;rna&quot;</span><span class="p">:</span> <span class="n">adata</span><span class="p">,</span> <span class="s2">&quot;spatial&quot;</span><span class="p">:</span> <span class="n">adata2</span><span class="p">})</span>
 
-<span class="n">maeObj</span> <span class="o">=</span> <span class="n">mae</span><span class="o">.</span><span class="n">fromMuData</span><span class="p">(</span><span class="n">mudata</span><span class="o">=</span><span class="n">mdata</span><span class="p">)</span>
+<span class="n">maeObj</span> <span class="o">=</span> <span class="n">mae</span><span class="o">.</span><span class="n">from_mudata</span><span class="p">(</span><span class="n">mudata</span><span class="o">=</span><span class="n">mdata</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Methods are also available to convert an <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> object to <code class="docutils literal notranslate"><span class="pre">MAE</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span> <span class="o">=</span> <span class="n">mae</span><span class="o">.</span><span class="n">readH5AD</span><span class="p">(</span><span class="s2">&quot;tests/data/adata.h5ad&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span> <span class="o">=</span> <span class="n">mae</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;tests/data/adata.h5ad&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="accessors">
-<h1>Accessors<a class="headerlink" href="#accessors" title="Permalink to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="accessors">
+<h1>Accessors<a class="headerlink" href="#accessors" title="Link to this heading">#</a></h1>
 <p>Multiple methods are available to access various slots of a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span><span class="o">.</span><span class="n">assays</span>
-<span class="n">maeObj</span><span class="o">.</span><span class="n">colData</span>
-<span class="n">maeObj</span><span class="o">.</span><span class="n">sampleMap</span>
+<span class="n">maeObj</span><span class="o">.</span><span class="n">col_data</span>
+<span class="n">maeObj</span><span class="o">.</span><span class="n">sample_map</span>
 <span class="n">maeObj</span><span class="o">.</span><span class="n">experiments</span>
 <span class="n">maeObj</span><span class="o">.</span><span class="n">metadata</span>
 </pre></div>
 </div>
 <section id="access-experiments">
-<h2>Access experiments<a class="headerlink" href="#access-experiments" title="Permalink to this heading">#</a></h2>
+<h2>Access experiments<a class="headerlink" href="#access-experiments" title="Link to this heading">#</a></h2>
 <p>if you want to access a specific experiment</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># access a specific experiment</span>
 <span class="n">maeObj</span><span class="o">.</span><span class="n">experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="p">)</span>
@@ -366,13 +377,13 @@
 </div>
 <p>This does not include the sample data stored in the MAE. If you want to include this information</p>
 <p><em><strong>Note: This creates a copy of the experiment object.</strong></em></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expt_with_sampleData</span> <span class="o">=</span> <span class="n">maeObj</span><span class="o">.</span><span class="n">experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="p">,</span> <span class="n">withSampleData</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expt_with_sampleData</span> <span class="o">=</span> <span class="n">maeObj</span><span class="o">.</span><span class="n">experiment</span><span class="p">(</span><span class="n">experiment_name</span><span class="p">,</span> <span class="n">with_sample_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="slice-a-multiassayexperiment">
-<h1>Slice a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code><a class="headerlink" href="#slice-a-multiassayexperiment" title="Permalink to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="slice-a-multiassayexperiment">
+<h1>Slice a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code><a class="headerlink" href="#slice-a-multiassayexperiment" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> allows subsetting by <code class="docutils literal notranslate"><span class="pre">rows</span></code>, <code class="docutils literal notranslate"><span class="pre">columns</span></code>, and <code class="docutils literal notranslate"><span class="pre">experiments</span></code>. Samples are automatically sliced during this operation.</p>
 <p>The structure for slicing,</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">experiments</span><span class="p">]</span>
@@ -383,37 +394,37 @@
 <li><p>experiments: accepts a list of experiment names to subset to.</p></li>
 </ul>
 <section id="slice-by-row-and-column-slices">
-<h2>Slice by row and column slices<a class="headerlink" href="#slice-by-row-and-column-slices" title="Permalink to this heading">#</a></h2>
+<h2>Slice by row and column slices<a class="headerlink" href="#slice-by-row-and-column-slices" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
 <section id="slice-by-rows-columns-experiments">
-<h2>Slice by rows, columns, experiments<a class="headerlink" href="#slice-by-rows-columns-experiments" title="Permalink to this heading">#</a></h2>
+<h2>Slice by rows, columns, experiments<a class="headerlink" href="#slice-by-rows-columns-experiments" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;spatial&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </section>
 <section id="specify-slices-per-experiment">
-<h2>Specify slices per experiment<a class="headerlink" href="#specify-slices-per-experiment" title="Permalink to this heading">#</a></h2>
+<h2>Specify slices per experiment<a class="headerlink" href="#specify-slices-per-experiment" title="Link to this heading">#</a></h2>
 <p>You can specify slices by experiment, rest of the experiments are not sliced.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span><span class="p">[{</span><span class="s2">&quot;rna&quot;</span><span class="p">:</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)},</span> <span class="p">{</span><span class="s2">&quot;spatial&quot;</span><span class="p">:</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)},</span> <span class="p">[</span><span class="s2">&quot;spatial&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
-<p>Checkout other methods that perform similar operations - <code class="docutils literal notranslate"><span class="pre">subsetByRows</span></code>, <code class="docutils literal notranslate"><span class="pre">subsetByColumns</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">subsetByExperiments</span></code>.</p>
+<p>Checkout other methods that perform similar operations - <code class="docutils literal notranslate"><span class="pre">subset_by_rows</span></code>, <code class="docutils literal notranslate"><span class="pre">subset_by_columns</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">subset_by_experiments</span></code>.</p>
 </section>
 </section>
-<section id="helper-methods">
-<h1>Helper methods<a class="headerlink" href="#helper-methods" title="Permalink to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="helper-methods">
+<h1>Helper methods<a class="headerlink" href="#helper-methods" title="Link to this heading">#</a></h1>
 <section id="completedcases">
-<h2>completedCases<a class="headerlink" href="#completedcases" title="Permalink to this heading">#</a></h2>
+<h2>completedCases<a class="headerlink" href="#completedcases" title="Link to this heading">#</a></h2>
 <p>This method returns a boolean vector that specifies which biospecimens have data across all experiments.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span><span class="o">.</span><span class="n">completedCases</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span><span class="o">.</span><span class="n">completed_cases</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="replicated">
-<h2>replicated<a class="headerlink" href="#replicated" title="Permalink to this heading">#</a></h2>
+<h2>replicated<a class="headerlink" href="#replicated" title="Link to this heading">#</a></h2>
 <p>replicated identifies biospecimens that have multiple observations per experiment.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maeObj</span><span class="o">.</span><span class="n">replicated</span><span class="p">()</span>
 </pre></div>
@@ -426,12 +437,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="license.html">
+          <a class="next-page" href="api/modules.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">License</div>
+                <div class="title">multiassayexperiment</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -450,7 +461,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2022, jkanche
+                Copyright &#169; 2023, jkanche
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -470,9 +481,9 @@
       
     </aside>
   </div>
-</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/scripts/furo.js"></script>
+</div><script src="_static/documentation_options.js?v=e259d695"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     </body>
 </html>
