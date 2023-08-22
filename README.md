@@ -1,6 +1,6 @@
 # MultiAssayExperiment
 
-Container class for representing and managing multi-omics genomic experiments. follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
+Container class to represent and manage multi-omics genomic experiments. Follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
 
 ## Install
 
@@ -22,7 +22,7 @@ from genomicranges import GenomicRanges
 nrows = 200
 ncols = 6
 counts = np.random.rand(nrows, ncols)
-df_gr = pd.DataFrame(
+gr = GenomicRanges(
     {
         "seqnames": [
             "chr1",
@@ -44,8 +44,6 @@ df_gr = pd.DataFrame(
         "GC": [random() for _ in range(10)] * 20,
     }
 )
-
-gr = GenomicRanges.from_pandas(df_gr)
 
 col_data_sce = pd.DataFrame(
     {

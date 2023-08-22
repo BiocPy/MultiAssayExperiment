@@ -1,14 +1,23 @@
 # Tutorial
 
-Container class for representing and managing multi-omics genomic experiments For more detailed description checkout the [MultiAssayExperiment Bioc/R package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html))
+Container class to represent and manage multi-omics genomic experiments. 
+
+For more detailed description checkout the [MultiAssayExperiment Bioc/R package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html))
 
 # Construct an `MultiAssayExperiment`
 
-An MAE contains three main entities
+An MAE contains three main entities, 
 
-- Primary information (`col_data`): Bio-specimen information on which experiments were run. represented as a Pandas `DataFrame`.
-- Experiments (`experiments`): genomic data from each experiment. represented as `SingleCellExperiment`, `SummarizedExperiment`, `RangeSummarizedExperiment`.
-- Sample Mapping (`sample_map`): Mapping from biospecimens to samples/columns in each experiment. in the context of single cell, these are cells.
+- Primary information (`col_data`): Bio-specimen/sample information. The ``col_data`` may provide information about patients, cell lines, or 
+  other biological units. 
+- Experiments (`experiments`): Genomic data from each experiment. either a `SingleCellExperiment`, `SummarizedExperiment`, `RangeSummarizedExperiment` or
+  any class that extends a `SummarizedExperiment`.
+- Sample Map (`sample_map`): Map biological units from ``col_data`` to the list of ``experiments``. Must contain columns,
+
+  - **assay** provides the names of the different experiments performed on the
+    biological units. All experiment names from ``experiments`` must be present in this column.
+  - **primary** contains the sample name. All names in this column must match with row labels from ``col_data``.
+  - **colname** is the mapping of samples/cells within each experiment back to its biosample information in ``col_data``.
 
 Lets create these objects
 
@@ -110,9 +119,9 @@ maeObj = mae.make_mae(experiments={"sce": tsce, "se": tse2})
 
 ## Import `MuData` and `AnnData` as `MultiAssayExperiment`
 
-If you have a dataset stored as `MuData`, these can be easily converted to an MAE using the `from_mudata` method.
+If you have datasets stored as `MuData`, these can be easily converted to an MAE using the `from_mudata` method.
 
-Lets first construct AnnData objects and then an MAE
+Lets first construct `AnnData`` objects and then an MAE
 
 ```python
 import multiassayexperiment as mae

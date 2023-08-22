@@ -36,7 +36,7 @@ class MultiAssayExperiment:
                 Each row in this table is an independent biological unit. Must contain an `index`
                 that maps to primary in ``sample_map``.
 
-            sample_map (DataFrame): Links biological units from ``col_data`` to a
+            sample_map (DataFrame): Map biological units from ``col_data`` to the
                 list of ``experiments``.
 
                 Must contain columns "assay", "primary" and "colname".
@@ -46,8 +46,7 @@ class MultiAssayExperiment:
                     in this column.
                 - **primary** contains the sample name. All names in this column must match with
                     row labels from ``col_data``.
-
-                - `colname` is the mapping of samples/cells within each experiment back to its
+                - **colname** is the mapping of samples/cells within each experiment back to its
                     biosample information in ``col_data``.
 
                 Each sample in ``col_data`` may map to one or more columns per assay.
