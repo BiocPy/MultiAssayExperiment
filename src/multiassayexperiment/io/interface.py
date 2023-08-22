@@ -19,24 +19,25 @@ def make_mae(
         Union[AnnData, SummarizedExperiment],
     ]
 ) -> MultiAssayExperiment:
-    """Read a dictionary of experiments into an
+    """Read a dictionary of experiments as an
     :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
 
-    The import naively creates sample mapping, each ``experiment`` is considered to be a `sample`.
-    We add a sample with the following pattern - ``unknown_sample_{experiment_name}`` to
+    The import naively creates sample mapping, with each ``experiment`` considered to be a
+    independent `sample`. We add a sample to
     :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`
-    All cells from the same experiment are extracted from the same sample and should reflect in
-    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_mapping`.
+    in this pattern - ``unknown_sample_{experiment_name}``. All cells from the same experiment are
+    considered to be from the same sample and is reflected in
+    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map`.
 
-    Additionally, converts :py:class`~anndata.AnnData` objects to
+    Additionally, converts :py:class:`~anndata.AnnData` objects to
     :py:class:`~singlecellexperiment.SingleCellExperiment.SingleCellExperiment` objects.
 
     Args:
         experiments (MutableMapping[str, Union[AnnData, SummarizedExperiment]]): A dictionary of
             experiments with experiment names as keys and the experiments as values.
 
-            each ``experiment`` can be represented as :py:class`~anndata.AnnData` objects or any
-            subclass of :py:class`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`.
+            Each ``experiment`` can be represented as :py:class:`~anndata.AnnData` objects or any
+            subclass of :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`.
 
     Raises:
         TypeError: If any of the provided objects are not an expected types.

@@ -11,17 +11,17 @@ __license__ = "MIT"
 
 
 def from_anndata(adata: AnnData, name: str = "unknown") -> MultiAssayExperiment:
-    """Read :py:class:`~anndata.AnnData` objects into a
+    """Read :py:class:`~anndata.AnnData` objects as a
     :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
 
     Since :py:class:`~anndata.AnnData` does not contain sample information,
-    sample named "unknown_sample" will be added to
+    sample named ``"unknown_sample"`` will be added to
     :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`.
-    All cells are considered to be extracted from this sample as reflected in
-    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_mapping`.
+    All cells are considered to be extracted from this sample and is reflected in
+    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map`.
 
     Args:
-        data (AnnData): An `AnnData` aobject.
+        data (AnnData): An `AnnData` object.
         name (str, optional): Name for the experiment. Defaults to "unknown".
 
     Returns:
@@ -56,8 +56,8 @@ def from_anndata(adata: AnnData, name: str = "unknown") -> MultiAssayExperiment:
 
 
 def read_h5ad(path: str) -> MultiAssayExperiment:
-    """Read a H5ad file into a
-    ~:py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
+    """Read a H5ad file as a
+    :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
 
     This function reads the h5ad at the ``path`` using :py:func:`~anndata.read_h5ad` and converts
     it into an MAE using :py:func:`~multiassayexperiment.io.anndata.from_anndata`.

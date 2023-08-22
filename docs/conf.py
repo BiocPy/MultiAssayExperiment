@@ -308,6 +308,11 @@ intersphinx_mapping = {
     "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
     "setuptools": ("https://setuptools.pypa.io/en/stable/", None),
     "pyscaffold": ("https://pyscaffold.org/en/stable", None),
+    "anndata": ("https://anndata.readthedocs.io/en/latest/", None),
+    "biocframe": ("https://biocpy.github.io/BiocFrame", None),
+    "genomicranges": ("https://biocpy.github.io/GenomicRanges", None),
+    "singelcellexperiment": ("https://biocpy.github.io/SingleCellExperiment", None),
+    "summarizedexperiment": ("https://biocpy.github.io/SummarizedExperiment", None),
 }
 
 print(f"loading configurations for {project} {version} ...", file=sys.stderr)

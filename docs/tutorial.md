@@ -234,7 +234,7 @@ Checkout other methods that perform similar operations - `subset_by_rows`, `subs
 This method returns a boolean vector that specifies which biospecimens have data across all experiments.
 
 ```python
-maeObj.completedCases()
+maeObj.completed_cases()
 ```
 
 ## replicated

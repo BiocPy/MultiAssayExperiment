@@ -25,8 +25,8 @@ class MultiAssayExperiment:
             experiments (MutableMapping[str, SummarizedExperiment]): A dictionary of
                 experiments with experiment names as keys and the experiments as values.
 
-                Each ``experiment`` may be either either a
-                :py:class`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`
+                Each ``experiment`` may be either a
+                :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`
                 and any class that extends `SummarizedExperiment`.
 
             col_data (DataFrame]): Bio-specimen/sample information.
@@ -36,25 +36,31 @@ class MultiAssayExperiment:
                 Each row in this table is an independent biological unit. Must contain an `index`
                 that maps to primary in ``sample_map``.
 
-            sample_map (DataFrame): Map biological units from ``col_data`` to the
-                list of ``experiments``.
+            sample_map (DataFrame): Map biological units from
+                :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`
+                to the list of
+                :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments`.
 
                 Must contain columns "assay", "primary" and "colname".
 
                 - **assay** provides the names of the different experiments performed on the
-                    biological units. All experiment names from ``experiments`` must be present
-                    in this column.
+                    biological units. All experiment names from
+                    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments`
+                    must be present in this column.
                 - **primary** contains the sample name. All names in this column must match with
-                    row labels from ``col_data``.
+                    row labels from
+                    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`.
                 - **colname** is the mapping of samples/cells within each experiment back to its
-                    biosample information in ``col_data``.
+                    biosample information in
+                    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`.
 
                 Each sample in ``col_data`` may map to one or more columns per assay.
 
                 This table can be created automatically in simple usecases, Checkout the
-                :py:class:`~multiassayexperiment.io.make_mae`, or import functions to read data as
-                `MultiAssayExperiment` like :py:class:`~multiassayexperiment.io.from_mudata` and
-                :py:class:`~multiassayexperiment.io.from_anndata`.
+                :py:class:`~multiassayexperiment.io.interface.make_mae`, or import functions to
+                read data as ``MultiAssayExperiment`` like
+                :py:class:`~multiassayexperiment.io.mudata.from_mudata` and
+                :py:class:`~multiassayexperiment.io.anndata.from_anndata`.
 
             metadata (MutableMapping, optional): Additional study level metadata. Defaults to None.
     """
@@ -240,8 +246,8 @@ class MultiAssayExperiment:
                 A dictionary of experiments with experiment names as keys and the experiments
                 as values.
 
-                Each ``experiment`` may be either either a
-                :py:class`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`
+                Each ``experiment`` may be either a
+                :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`
                 and any class that extends `SummarizedExperiment`.
         """
 
@@ -266,7 +272,7 @@ class MultiAssayExperiment:
 
         Returns:
             SummarizedExperiment: A class that extends
-            :py:class`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`.
+            :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`.
         """
         if name not in self._experiments:
             raise ValueError(f"Experiment '{name}' does not exist.")
@@ -338,8 +344,8 @@ class MultiAssayExperiment:
             A dictionary of experiments with experiment names as keys and the experiments
             as values.
 
-            Each ``experiment`` may be either either a
-            :py:class`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`
+            Each ``experiment`` may be either a
+            :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`
             and any class that extends `SummarizedExperiment`.
         """
         return self.experiments
@@ -369,7 +375,7 @@ class MultiAssayExperiment:
 
         Args:
             subset (StrOrListStr): May be an single experiment name to keep.
-                Alternatively, ``subset`` may be a list of experiment names to keep.
+                Alternatively, ``subset`` may be a list of experiment names.
 
         Returns:
             Dict[str, SummarizedExperiment]: A dictionary with experiment names as keys
@@ -517,7 +523,7 @@ class MultiAssayExperiment:
 
         Args:
             subset (StrOrListStr): May be an single experiment name to keep.
-                Alternatively, ``subset`` may be a list of experiment names to keep.
+                Alternatively, ``subset`` may be a list of experiment names.
 
         Returns:
             MultiAssayExperiment: A new `MultiAssayExperiment` with the subset experiments.
@@ -654,7 +660,7 @@ class MultiAssayExperiment:
             name (str): Name of the new experiment.
             experiment (SummarizedExperiment): The experiment to add.
                 Must extend
-                :py:class`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment` class.
+                :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment` class.
 
             sample_map (DataFrame): Sample map to append to the MAE.
 

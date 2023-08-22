@@ -12,14 +12,15 @@ __license__ = "MIT"
 
 
 def from_mudata(mudata: MuData) -> MultiAssayExperiment:
-    """Read :py:class:`~mudata.MuData` into
+    """Read :py:class:`~mudata.MuData` as
     :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
 
     The import naively creates sample mapping, each ``experiment`` is considered to be a `sample`.
-    We add a sample with the following pattern - ``unknown_sample_{experiment_name}`` to
+    We add a sample with the following pattern - ``"unknown_sample_{experiment_name}"`` to
     :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`
-    All cells from the same experiment are extracted from the same sample and should reflect in
-    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_mapping`.
+    All cells from the same experiment are considered to be extracted from the same sample and is
+    reflected in
+    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map`.
 
     Args:
         mudata (MuData): MuData object.
