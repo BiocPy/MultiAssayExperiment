@@ -2,7 +2,7 @@
 
 ## Version 0.3.0 (development)
 
-This release migrates the package to a more palatable Googl's version of pthon style guide. A major modification to the MAE class is with casing, all `camelCase` methods, functions and parameters are now `snake_case` .
+This release migrates the package to a more palatable Google's Python style guide. A major modification to the package is with casing, all `camelCase` methods, functions and parameters are now `snake_case`.
 
 In addition, docstrings and documentation has been updated to use sphinx's features of linking objects to their types. Sphinx now also documents private and special dunder methods (e.g. `__getitem__`, `__copy__` etc). Intersphinx has been updated to link to references from dependent packages.
 
