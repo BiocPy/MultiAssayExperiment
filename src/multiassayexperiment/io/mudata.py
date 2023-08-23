@@ -12,8 +12,7 @@ __license__ = "MIT"
 
 
 def from_mudata(mudata: MuData) -> MultiAssayExperiment:
-    """Read :py:class:`~mudata.MuData` as
-    :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
+    """Read :py:class:`~mudata.MuData` as :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
 
     The import naively creates sample mapping, each ``experiment`` is considered to be a `sample`.
     We add a sample with the following pattern - ``"unknown_sample_{experiment_name}"`` to
