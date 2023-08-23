@@ -1,15 +1,15 @@
 # Tutorial
 
-Container class to represent and manage multi-omics genomic experiments. 
+Container class to represent and manage multi-omics genomic experiments.
 
 For more detailed description checkout the [MultiAssayExperiment Bioc/R package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html))
 
 # Construct an `MultiAssayExperiment`
 
-An MAE contains three main entities, 
+An MAE contains three main entities,
 
-- Primary information (`col_data`): Bio-specimen/sample information. The ``col_data`` may provide information about patients, cell lines, or 
-  other biological units. 
+- Primary information (`col_data`): Bio-specimen/sample information. The ``col_data`` may provide information about patients, cell lines, or
+  other biological units.
 - Experiments (`experiments`): Genomic data from each experiment. either a `SingleCellExperiment`, `SummarizedExperiment`, `RangeSummarizedExperiment` or
   any class that extends a `SummarizedExperiment`.
 - Sample Map (`sample_map`): Map biological units from ``col_data`` to the list of ``experiments``. Must contain columns,

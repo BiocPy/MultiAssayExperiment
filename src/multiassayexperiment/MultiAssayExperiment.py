@@ -212,7 +212,7 @@ class MultiAssayExperiment:
         self._validate_sample_map_with_Expts(sample_map, experiments)
 
     def _validate(self):
-        """Internal method to validate the object
+        """Internal method to validate the object.
 
         Raises:
             ValueError: If attributes don't match expectations.
@@ -590,7 +590,7 @@ class MultiAssayExperiment:
 
     def __str__(self) -> str:
         pattern = (
-            f"Class MultiAssayExperiment with {len(self.experiments.keys())} experiments and {len(self.col_data)} samples \n"
+            f"Class MultiAssayExperiment with {len(self.experiments.keys())} experiments and {len(self.col_data)} samples \n"  # noqa: E501
             f"  experiments: "
         )
 
