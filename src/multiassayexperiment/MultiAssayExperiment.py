@@ -212,7 +212,7 @@ class MultiAssayExperiment:
         self._validate_sample_map_with_Expts(sample_map, experiments)
 
     def _validate(self):
-        """Internal method to validate the object
+        """Internal method to validate the object.
 
         Raises:
             ValueError: If attributes don't match expectations.
