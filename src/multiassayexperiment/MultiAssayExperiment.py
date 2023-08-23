@@ -590,7 +590,7 @@ class MultiAssayExperiment:
 
     def __str__(self) -> str:
         pattern = (
-            f"Class MultiAssayExperiment with {len(self.experiments.keys())} experiments and {len(self.col_data)} samples \n"
+            f"Class MultiAssayExperiment with {len(self.experiments.keys())} experiments and {len(self.col_data)} samples \n"  # noqa: E501
             f"  experiments: "
         )
 
