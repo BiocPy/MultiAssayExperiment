@@ -1,3 +1,7 @@
+[![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
+[![PyPI-Server](https://img.shields.io/pypi/v/MultiAssayExperiment.svg)](https://pypi.org/project/MultiAssayExperiment/)
+![Unit tests](https://github.com/BiocPy/MultiAssayExperiment/actions/workflows/pypi-test.yml/badge.svg)
+
 # MultiAssayExperiment
 
 Container class to represent and manage multi-omics genomic experiments. Follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
