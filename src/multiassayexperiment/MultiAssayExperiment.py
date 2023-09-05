@@ -56,9 +56,8 @@ class MultiAssayExperiment:
 
                 Each sample in ``col_data`` may map to one or more columns per assay.
 
-                This table can be created automatically in simple usecases, Checkout the
                 :py:class:`~multiassayexperiment.io.interface.make_mae`, or import functions to
-                read data as ``MultiAssayExperiment`` like
+                read data as ``MultiAssayExperiment`` from
                 :py:class:`~multiassayexperiment.io.mudata.from_mudata` and
                 :py:class:`~multiassayexperiment.io.anndata.from_anndata`.
 
@@ -168,7 +167,7 @@ class MultiAssayExperiment:
             )
 
         # check if colnames exist
-        agroups = sample_map.groupby(["assay"])
+        agroups = sample_map.groupby("assay")
         for group, rows in agroups:
             if group not in experiments:
                 raise ValueError(
