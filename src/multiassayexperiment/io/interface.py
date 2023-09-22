@@ -8,7 +8,6 @@ from ..MultiAssayExperiment import MultiAssayExperiment
 
 try:
     from anndata import AnnData
-    import pandas as pd
 except ImportError:
     pass
 
