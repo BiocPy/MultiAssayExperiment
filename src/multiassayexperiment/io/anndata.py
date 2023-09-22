@@ -1,9 +1,11 @@
-import anndata
 import singlecellexperiment
-from anndata import AnnData
-from pandas import DataFrame
 
 from ..MultiAssayExperiment import MultiAssayExperiment
+
+try:
+    from anndata import AnnData
+except ImportError:
+    pass
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -27,6 +29,8 @@ def from_anndata(adata: AnnData, name: str = "unknown") -> MultiAssayExperiment:
     Returns:
         MultiAssayExperiment: An MAE of ``data``.
     """
+    from anndata import AnnData
+    from pandas import DataFrame
 
     if not isinstance(adata, AnnData):
         raise TypeError("data is not an `AnnData` object.")
@@ -67,6 +71,7 @@ def read_h5ad(path: str) -> MultiAssayExperiment:
     Returns:
         MultiAssayExperiment: An MAE from the H5ad file.
     """
+    from anndata import read_h5ad
 
-    adata = anndata.read_h5ad(path)
+    adata = read_h5ad(path)
     return from_anndata(adata)

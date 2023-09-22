@@ -1,12 +1,16 @@
 from collections import OrderedDict
-from typing import MutableMapping, Union
+from typing import Dict, Union
 
-import pandas as pd
 import singlecellexperiment as sce
-from anndata import AnnData
 from summarizedexperiment import SummarizedExperiment
 
 from ..MultiAssayExperiment import MultiAssayExperiment
+
+try:
+    from anndata import AnnData
+    import pandas as pd
+except ImportError:
+    pass
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -14,10 +18,7 @@ __license__ = "MIT"
 
 
 def make_mae(
-    experiments: MutableMapping[
-        str,
-        Union[AnnData, SummarizedExperiment],
-    ]
+    experiments: Dict[str, Union[AnnData, SummarizedExperiment]]
 ) -> MultiAssayExperiment:
     """Read a dictionary of experiments as an
     :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.
@@ -33,7 +34,7 @@ def make_mae(
     :py:class:`~singlecellexperiment.SingleCellExperiment.SingleCellExperiment` objects.
 
     Args:
-        experiments (MutableMapping[str, Union[AnnData, SummarizedExperiment]]): A dictionary of
+        experiments (Dict[str, Union[AnnData, SummarizedExperiment]]): A dictionary of
             experiments with experiment names as keys and the experiments as values.
 
             Each ``experiment`` can be represented as :py:class:`~anndata.AnnData` objects or any
@@ -46,21 +47,20 @@ def make_mae(
     Returns:
         MultiAssayExperiment: An MAE from the experiments.
     """
+    import pandas as pd
 
     if not isinstance(experiments, dict):
         raise TypeError("`experiments` is not a dictionary.")
 
     failedExpts = []
     for expname, expt in experiments.items():
-        if not (
-            isinstance(expt, AnnData) or issubclass(type(expt), SummarizedExperiment)
-        ):
+        if not issubclass(type(expt), SummarizedExperiment):
             failedExpts.append(expname)
 
     if len(failedExpts) > 0:
         raise TypeError(
-            f"Experiments '{', '.join(failedExpts)}' are not compatible, Must be either an "
-            "AnnData, or a subclass derived from SummarizedExperiment."
+            f"Experiments '{', '.join(failedExpts)}' are not compatible, Must be "
+            "a subclass derived from SummarizedExperiment."
         )
 
     newExpts = OrderedDict()

@@ -1,10 +1,13 @@
 from collections import OrderedDict
-
-from mudata import MuData
 from pandas import DataFrame, concat
 from singlecellexperiment import from_anndata
 
 from ..MultiAssayExperiment import MultiAssayExperiment
+
+try:
+    from mudata import MuData
+except ImportError:
+    pass
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"

@@ -1,20 +1,21 @@
 from collections import namedtuple
-from typing import MutableMapping, Optional, Sequence, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
 __license__ = "MIT"
 
-StrOrListStr = Union[str, Sequence[str]]
+StrOrListStr = Union[str, List[str]]
 SlicerTypes = Union[
-    MutableMapping[str, Union[Sequence[int], slice]],
-    Union[Sequence[int], slice],
+    Dict[str, Union[List[int], slice]],
+    List[int],
+    slice,
 ]
 
 SlicerArgTypes = Tuple[
     Optional[SlicerTypes],
     Optional[SlicerTypes],
-    Optional[Sequence[str]],
+    Optional[List[str]],
 ]
 
 SlicerResult = namedtuple("SlicerResult", ["experiments", "sample_map", "col_data"])

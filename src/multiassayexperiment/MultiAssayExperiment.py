@@ -1,9 +1,8 @@
 from collections import OrderedDict
 from copy import deepcopy
-from typing import Dict, MutableMapping, Optional, Sequence
+from typing import Dict, List, Optional
 from warnings import warn
 
-from mudata import MuData
 from pandas import DataFrame, concat
 from singlecellexperiment import SingleCellExperiment
 from summarizedexperiment import SummarizedExperiment
@@ -11,65 +10,65 @@ from summarizedexperiment.type_checks import is_bioc_or_pandas_frame, is_list_of
 
 from .types import SlicerArgTypes, SlicerResult, SlicerTypes, StrOrListStr
 
+try:
+    from mudata import MuData
+except ImportError:
+    pass
+
 __author__ = "jkanche"
 __copyright__ = "jkanche"
 __license__ = "MIT"
 
 
 class MultiAssayExperiment:
-    """Container class for representing and managing multi-omics genomic experiments. Checkout the
-    `R/MultiAssayExperiment <https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html>`_
-    for more information.
+    """Container class for representing and managing multi-omics genomic experiments.
+
+    For more detailed information, please refer to the
+    `R/MultiAssayExperiment <https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html>`_.
 
     Attributes:
-            experiments (MutableMapping[str, SummarizedExperiment]): A dictionary of
-                experiments with experiment names as keys and the experiments as values.
+        experiments (Dict[str, SummarizedExperiment]): A dictionary of experiments with experiment names as keys and
+            the experiments as values.
 
-                Each ``experiment`` may be either a
-                :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`
-                and any class that extends `SummarizedExperiment`.
+            Each ``experiment`` may be either a
+            :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`
+            and any class that extends `SummarizedExperiment`.
+        col_data (DataFrame]): Bio-specimen/sample information.
+            The `col_data` may provide information about patients, cell lines, or other biological units.
 
-            col_data (DataFrame]): Bio-specimen/sample information.
-                The ``col_data`` may provide information about patients, cell lines, or
-                other biological units.
+            Each row in this table represents an independent biological unit. It must contain an `index` that maps to
+            the 'primary' in :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map`.
 
-                Each row in this table is an independent biological unit. Must contain an `index`
-                that maps to primary in ``sample_map``.
+        sample_map (DataFrame): Map biological units from
+            :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`
+            to the list of experiments.
 
-            sample_map (DataFrame): Map biological units from
-                :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`
-                to the list of
-                :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments`.
+            Must contain columns "assay", "primary", and "colname".
 
-                Must contain columns "assay", "primary" and "colname".
+            - `assay` provides the names of the different experiments performed on the biological units. All experiment
+                names from :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments` must
+                be present in this column.
+            - `primary` contains the sample name. All names in this column must match with row labels from
+                :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`.
+            - `colname` is the mapping of samples/cells within each experiment back to its biosample information in
+                :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`.
 
-                - **assay** provides the names of the different experiments performed on the
-                    biological units. All experiment names from
-                    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments`
-                    must be present in this column.
-                - **primary** contains the sample name. All names in this column must match with
-                    row labels from
-                    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`.
-                - **colname** is the mapping of samples/cells within each experiment back to its
-                    biosample information in
-                    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`.
+            Each sample in `col_data` may map to one or more columns per assay.
 
-                Each sample in ``col_data`` may map to one or more columns per assay.
+            You can create a `MultiAssayExperiment` using functions like
+            :py:class:`~multiassayexperiment.io.interface.make_mae`
+            for importing data or by using :py:class:`~multiassayexperiment.io.mudata.from_mudata` and
+            :py:class:`~multiassayexperiment.io.anndata.from_anndata` for reading data as a `MultiAssayExperiment`.
 
-                :py:class:`~multiassayexperiment.io.interface.make_mae`, or import functions to
-                read data as ``MultiAssayExperiment`` from
-                :py:class:`~multiassayexperiment.io.mudata.from_mudata` and
-                :py:class:`~multiassayexperiment.io.anndata.from_anndata`.
-
-            metadata (MutableMapping, optional): Additional study level metadata. Defaults to None.
+        metadata (Dict, optional): Additional study-level metadata. Defaults to None.
     """
 
     def __init__(
         self,
-        experiments: MutableMapping[str, SummarizedExperiment],
+        experiments: Dict[str, SummarizedExperiment],
         col_data: DataFrame,
         sample_map: DataFrame,
-        metadata: Optional[MutableMapping] = None,
+        metadata: Optional[Dict] = None,
     ) -> None:
         """Construct an MAE."""
         self._validate_experiments(experiments)
@@ -82,9 +81,7 @@ class MultiAssayExperiment:
 
         self._metadata = metadata
 
-    def _validate_experiments(
-        self, experiments: MutableMapping[str, SummarizedExperiment]
-    ):
+    def _validate_experiments(self, experiments: Dict[str, SummarizedExperiment]):
         """Internal method to validate experiments.
 
         Raises:
@@ -144,13 +141,13 @@ class MultiAssayExperiment:
     def _validate_sample_map_with_Expts(
         self,
         sample_map: DataFrame,
-        experiments: MutableMapping[str, SummarizedExperiment],
+        experiments: Dict[str, SummarizedExperiment],
     ):
         """Internal method to validate ``sample_map`` and ``experiments``.
 
         Args:
             sample_map (DataFrame): Sample mapping.
-            experiments (MutableMapping[str, SummarizedExperiment]): Experiments.
+            experiments (Dict[str, SummarizedExperiment]): Experiments.
 
         Raises:
             ValueError: If any of the checks fail.
@@ -163,7 +160,7 @@ class MultiAssayExperiment:
             UniqueExperimentname != smapUniqueAssaynames
         ):
             raise ValueError(
-                "'assays' from sample_map does not match with `experiments`."
+                "'assays' from `sample_map` does not match with `experiments`."
             )
 
         # check if colnames exist
@@ -185,14 +182,14 @@ class MultiAssayExperiment:
         self,
         sample_map: DataFrame,
         col_data: DataFrame,
-        experiments: MutableMapping[str, SummarizedExperiment],
+        experiments: Dict[str, SummarizedExperiment],
     ):
         """Validate sample map.
 
         Args:
             sample_map (DataFrame): Sample map.
             col_data (DataFrame): Column data.
-            experiments (MutableMapping[str, SummarizedExperiment]): Experiments.
+            experiments (Dict[str, SummarizedExperiment]): Experiments.
 
         Raises:
             TypeError, ValueError: If any of the checks fail.
@@ -236,12 +233,12 @@ class MultiAssayExperiment:
     @experiments.setter
     def experiments(
         self,
-        experiments: MutableMapping[str, SummarizedExperiment],
+        experiments: Dict[str, SummarizedExperiment],
     ):
         """Set new experiments.
 
         Args:
-            experiments (MutableMapping[str, SummarizedExperiment]): New experiments to set.
+            experiments (Dict[str, SummarizedExperiment]): New experiments to set.
                 A dictionary of experiments with experiment names as keys and the experiments
                 as values.
 
@@ -263,7 +260,7 @@ class MultiAssayExperiment:
 
         Args:
             name (str): Experiment name.
-            with_sampleData (bool, optional): Whether to merge column data of the experiment with
+            with_sample_data (bool, optional): Whether to merge column data of the experiment with
                 sample data from the MAE. Defaults to False.
 
         Raises:
@@ -359,11 +356,11 @@ class MultiAssayExperiment:
         return self._metadata
 
     @metadata.setter
-    def metadata(self, metadata: MutableMapping):
+    def metadata(self, metadata: Dict):
         """Set metadata.
 
         Args:
-            metadata (MutableMapping): New metadata object.
+            metadata (Dict): New metadata object.
         """
         self._metadata = metadata
 
@@ -521,8 +518,7 @@ class MultiAssayExperiment:
         """Subset by experiment(s).
 
         Args:
-            subset (StrOrListStr): May be an single experiment name to keep.
-                Alternatively, ``subset`` may be a list of experiment names.
+            subset (StrOrListStr): Experiment name(s) to keep.
 
         Returns:
             MultiAssayExperiment: A new `MultiAssayExperiment` with the subset experiments.
@@ -597,11 +593,11 @@ class MultiAssayExperiment:
             pattern = f"{pattern} \n    {expname}: {str(expt)}"
         return pattern
 
-    def complete_cases(self) -> Sequence[bool]:
+    def complete_cases(self) -> List[bool]:
         """Identify samples that have data across all experiments.
 
         Returns:
-            Sequence[bool]: A boolean vector, where each element is
+            List[bool]: A boolean vector, where each element is
             True if sample is present in all experiments or False.
         """
         vec = []
@@ -612,11 +608,11 @@ class MultiAssayExperiment:
 
         return vec
 
-    def replicated(self) -> Dict[str, Dict[str, Sequence[bool]]]:
+    def replicated(self) -> Dict[str, Dict[str, List[bool]]]:
         """Identify samples with replicates within each experiment.
 
         Returns:
-            Dict[str, Dict[str, Sequence[bool]]]: A dictionary where experiment names
+            Dict[str, Dict[str, List[bool]]]: A dictionary where experiment names
             are keys and values specify if the sample is replicated within each experiment.
         """
         replicates = {}
@@ -695,11 +691,12 @@ class MultiAssayExperiment:
         self._col_data = new_col_data
 
     def to_mudata(self) -> MuData:
-        """Transform `SingleCellExperiment` object to :py:class:`~mudata.MuData`.
+        """Transform `SingleCellExperiment` object into :py:class:`~mudata.MuData`.
 
         Returns:
             MuData: A `MuData` representation.
         """
+        from mudata import MuData
 
         exptsList = OrderedDict()
 
