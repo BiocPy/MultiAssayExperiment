@@ -7,7 +7,10 @@ from mudata import MuData
 from pandas import DataFrame, concat
 from singlecellexperiment import SingleCellExperiment
 from summarizedexperiment import SummarizedExperiment
-from summarizedexperiment.type_checks import is_bioc_or_pandas_frame, is_list_of_type
+from summarizedexperiment.type_checks import (
+    is_bioc_or_pandas_frame,
+    is_list_of_type,
+)
 
 from .types import SlicerArgTypes, SlicerResult, SlicerTypes, StrOrListStr
 
@@ -176,7 +179,11 @@ class MultiAssayExperiment:
 
             gcol_data = experiments[group].col_data
 
-            if set(rows["colname"].tolist()) != set(gcol_data.index.tolist()):
+            if gcol_data.index is not None and set(rows["colname"].tolist()) != set(
+                gcol_data.index.tolist()
+                if isinstance(gcol_data, DataFrame)
+                else gcol_data.index
+            ):
                 raise ValueError(
                     f"Experiment '{group}' does not contain all columns in `sample_map`."
                 )
@@ -529,7 +536,10 @@ class MultiAssayExperiment:
         """
         sresult = self._slice(args=(None, None, subset))
         return MultiAssayExperiment(
-            sresult.experiments, sresult.col_data, sresult.sample_map, self.metadata
+            sresult.experiments,
+            sresult.col_data,
+            sresult.sample_map,
+            self.metadata,
         )
 
     def subset_by_row(self, subset: SlicerTypes) -> "MultiAssayExperiment":
@@ -546,7 +556,10 @@ class MultiAssayExperiment:
         """
         sresult = self._slice(args=(subset, None, None))
         return MultiAssayExperiment(
-            sresult.experiments, sresult.col_data, sresult.sample_map, self.metadata
+            sresult.experiments,
+            sresult.col_data,
+            sresult.sample_map,
+            self.metadata,
         )
 
     def subset_by_column(self, subset: SlicerTypes) -> "MultiAssayExperiment":
@@ -563,7 +576,10 @@ class MultiAssayExperiment:
         """
         sresult = self._slice(args=(None, subset, None))
         return MultiAssayExperiment(
-            sresult.experiments, sresult.col_data, sresult.sample_map, self.metadata
+            sresult.experiments,
+            sresult.col_data,
+            sresult.sample_map,
+            self.metadata,
         )
 
     def __getitem__(self, args: SlicerArgTypes) -> "MultiAssayExperiment":
@@ -584,7 +600,10 @@ class MultiAssayExperiment:
         """
         sresult = self._slice(args=args)
         return MultiAssayExperiment(
-            sresult.experiments, sresult.col_data, sresult.sample_map, self.metadata
+            sresult.experiments,
+            sresult.col_data,
+            sresult.sample_map,
+            self.metadata,
         )
 
     def __str__(self) -> str:
