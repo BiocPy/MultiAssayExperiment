@@ -99,7 +99,9 @@ def _validate_sample_map(sample_map, column_data, experiments):
 
 
 class MultiAssayExperiment:
-    """Container class for representing and managing multi-omics genomic experiments. Checkout the
+    """Container class for representing and managing multi-omics genomic experiments.
+
+    Checkout the
     `R/MultiAssayExperiment <https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html>`_
     for more information.
     """
