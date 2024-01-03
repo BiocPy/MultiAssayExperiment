@@ -296,10 +296,13 @@ class MultiAssayExperiment:
             expt = self._experiments[expt_name]
             output += f"[{idx}] {expt_name}: {type(expt).__name} with {expt.shape[0]} rows and {expt.shape[1]} columns"
 
-        output += f"column_data columns({len(self._column_data.column_names)}): {ut.print_truncated_list(self._column_data.column_names)}\n"
-        output += f"sample_map columns({len(self._sample_map.column_names)}): {ut.print_truncated_list(self._sample_map.column_names)}\n"
+        output += f"column_data columns({len(self._column_data.column_names)}): "
+        output += "{ut.print_truncated_list(self._column_data.column_names)}\n"
 
-        output += f"metadata({str(len(self.metadata))}): {ut.print_truncated_list(list(self.metadata.keys()), sep=' ', include_brackets=False, transform=lambda y: y)}\n"
+        output += f"sample_map columns({len(self._sample_map.column_names)}): "
+        output += "{ut.print_truncated_list(self._sample_map.column_names)}\n"
+
+        output += f"metadata({str(len(self.metadata))}): {ut.print_truncated_list(list(self.metadata.keys()), sep=' ', include_brackets=False, transform=lambda y: y)}\n"  # noqa
 
         return output
 
