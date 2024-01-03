@@ -29,7 +29,10 @@ def _validate_experiments(experiments):
             raise ValueError(f"experiment: {k} is not supported.")
 
         if v.column_data is None:
-            warn(f"Experiment '{k}' does not contain column (cell/sample) names.", UserWarning)
+            warn(
+                f"Experiment '{k}' does not contain column (cell/sample) names.",
+                UserWarning,
+            )
 
 
 def _validate_column_data(column_data):
