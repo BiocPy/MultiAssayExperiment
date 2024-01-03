@@ -1,6 +1,18 @@
 # Changelog
 
-## Version 0.3.0 (development)
+## Version 0.4.0 
+
+This is a complete rewrite of the package, following the functional paradigm from our [developer notes](https://github.com/BiocPy/developer_guide#use-functional-discipline).
+
+- `column_data` and `sample_map` are expected to be `BiocFrame` objects and will be converted if a pandas `DataFrame` is provided. This will allows us to reduce complexity and provide consistent downstream operations.
+- A `sample_map` will be created by default if both `column_data` and `sample_map` are None.
+- A warning is raised if `column_names` are empty for an experiment.
+- A warning is raised if `column_data` contains duplicate row names. 
+- Streamlines subset operation.
+- Reduce dependency on a number of external packages.
+- Update docstrings, tests and docs.
+
+## Version 0.3.0
 
 This release migrates the package to a more palatable Google's Python style guide. A major modification to the package is with casing, all `camelCase` methods, functions and parameters are now `snake_case`.
 
