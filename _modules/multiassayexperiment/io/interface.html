@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
-    <!-- Generated with Sphinx 7.2.5 and Furo 2023.08.19 -->
-        <title>multiassayexperiment.io.interface - MultiAssayExperiment 0.3.1 documentation</title>
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>multiassayexperiment.io.interface - MultiAssayExperiment 0.4.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">MultiAssayExperiment 0.3.1 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">MultiAssayExperiment 0.4.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.3.1 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -206,14 +206,9 @@
         <article role="main">
           <h1>Source code for multiassayexperiment.io.interface</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">singlecellexperiment</span> <span class="k">as</span> <span class="nn">sce</span>
-<span class="kn">from</span> <span class="nn">anndata</span> <span class="kn">import</span> <span class="n">AnnData</span>
-<span class="kn">from</span> <span class="nn">summarizedexperiment</span> <span class="kn">import</span> <span class="n">SummarizedExperiment</span>
-
-<span class="kn">from</span> <span class="nn">..MultiAssayExperiment</span> <span class="kn">import</span> <span class="n">MultiAssayExperiment</span>
+<span class="kn">from</span> <span class="nn">..MultiAssayExperiment</span> <span class="kn">import</span> <span class="n">MultiAssayExperiment</span><span class="p">,</span> <span class="n">_create_smap_from_experiments</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;jkanche&quot;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;jkanche&quot;</span>
@@ -222,14 +217,11 @@
 
 <div class="viewcode-block" id="make_mae">
 <a class="viewcode-back" href="../../../api/multiassayexperiment.io.html#multiassayexperiment.io.interface.make_mae">[docs]</a>
-<span class="k">def</span> <span class="nf">make_mae</span><span class="p">(</span>
-    <span class="n">experiments</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span>
-        <span class="nb">str</span><span class="p">,</span>
-        <span class="n">Union</span><span class="p">[</span><span class="n">AnnData</span><span class="p">,</span> <span class="n">SummarizedExperiment</span><span class="p">],</span>
-    <span class="p">]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MultiAssayExperiment</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read a dictionary of experiments as an</span>
-<span class="sd">    :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment`.</span>
+<span class="k">def</span> <span class="nf">make_mae</span><span class="p">(</span><span class="n">experiments</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">MultiAssayExperiment</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment` from a dictionary of</span>
+<span class="sd">    experiment objects. Each experiment is either an :py:class:`~anndata.AnnData` object or a subclass of</span>
+<span class="sd">    :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`. :py:class:`~anndata.AnnData` objects</span>
+<span class="sd">    will be converted to a :py:class:`~singlecellexperiment.SingleCellExperiment.SingleCellExperiment`.</span>
 
 <span class="sd">    The import naively creates sample mapping, with each ``experiment`` considered to be a</span>
 <span class="sd">    independent `sample`. We add a sample to</span>
@@ -238,26 +230,28 @@
 <span class="sd">    considered to be from the same sample and is reflected in</span>
 <span class="sd">    :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map`.</span>
 
-<span class="sd">    Additionally, converts :py:class:`~anndata.AnnData` objects to</span>
-<span class="sd">    :py:class:`~singlecellexperiment.SingleCellExperiment.SingleCellExperiment` objects.</span>
-
 <span class="sd">    Args:</span>
-<span class="sd">        experiments (MutableMapping[str, Union[AnnData, SummarizedExperiment]]): A dictionary of</span>
-<span class="sd">            experiments with experiment names as keys and the experiments as values.</span>
+<span class="sd">        experiments:</span>
+<span class="sd">            A dictionary of experiments with experiment names as keys and the</span>
+<span class="sd">            experiments as values.</span>
 
-<span class="sd">            Each ``experiment`` can be represented as :py:class:`~anndata.AnnData` objects or any</span>
+<span class="sd">            Each ``experiment`` can be either a :py:class:`~anndata.AnnData` object or a</span>
 <span class="sd">            subclass of :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        TypeError: If any of the provided objects are not an expected types.</span>
-<span class="sd">        TypeError: If ``experiments`` is not a dictionary.</span>
+<span class="sd">        TypeError:</span>
+<span class="sd">            - If any of the provided objects are not an expected types.</span>
+<span class="sd">            - If ``experiments`` is not a dictionary.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        MultiAssayExperiment: An MAE from the experiments.</span>
+<span class="sd">        An MAE from the experiments.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">singlecellexperiment</span> <span class="kn">import</span> <span class="n">SingleCellExperiment</span>
+    <span class="kn">from</span> <span class="nn">anndata</span> <span class="kn">import</span> <span class="n">AnnData</span>
+    <span class="kn">from</span> <span class="nn">summarizedexperiment</span> <span class="kn">import</span> <span class="n">SummarizedExperiment</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">experiments</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;`experiments` is not a dictionary.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;experiments&#39; is not a dictionary.&quot;</span><span class="p">)</span>
 
     <span class="n">failedExpts</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">expname</span><span class="p">,</span> <span class="n">expt</span> <span class="ow">in</span> <span class="n">experiments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -269,38 +263,21 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">failedExpts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Experiments &#39;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">failedExpts</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39; are not compatible, Must be either an &quot;</span>
-            <span class="s2">&quot;AnnData, or a subclass derived from SummarizedExperiment.&quot;</span>
+            <span class="s2">&quot;AnnData, or a subclass derived from `SummarizedExperiment`.&quot;</span>
         <span class="p">)</span>
 
     <span class="n">newExpts</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
-
-    <span class="n">sample_map</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-    <span class="n">samples</span> <span class="o">=</span> <span class="p">[]</span>
-
     <span class="k">for</span> <span class="n">expname</span><span class="p">,</span> <span class="n">expt</span> <span class="ow">in</span> <span class="n">experiments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expt</span><span class="p">,</span> <span class="n">AnnData</span><span class="p">):</span>
-            <span class="n">newExpts</span><span class="p">[</span><span class="n">expname</span><span class="p">]</span> <span class="o">=</span> <span class="n">sce</span><span class="o">.</span><span class="n">from_anndata</span><span class="p">(</span><span class="n">expt</span><span class="p">)</span>
+            <span class="n">newExpts</span><span class="p">[</span><span class="n">expname</span><span class="p">]</span> <span class="o">=</span> <span class="n">SingleCellExperiment</span><span class="o">.</span><span class="n">from_anndata</span><span class="p">(</span><span class="n">expt</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">newExpts</span><span class="p">[</span><span class="n">expname</span><span class="p">]</span> <span class="o">=</span> <span class="n">expt</span>
 
-        <span class="n">colnames</span> <span class="o">=</span> <span class="n">newExpts</span><span class="p">[</span><span class="n">expname</span><span class="p">]</span><span class="o">.</span><span class="n">colnames</span>
-        <span class="n">asy_sample</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;unknown_sample_</span><span class="si">{</span><span class="n">expname</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">asy_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;assay&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">expname</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">colnames</span><span class="p">),</span>
-                <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">asy_sample</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">colnames</span><span class="p">),</span>
-                <span class="s2">&quot;colname&quot;</span><span class="p">:</span> <span class="n">colnames</span><span class="p">,</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-
-        <span class="n">sample_map</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">sample_map</span><span class="p">,</span> <span class="n">asy_df</span><span class="p">])</span>
-        <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asy_sample</span><span class="p">)</span>
-
-    <span class="n">col_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="n">samples</span><span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">samples</span><span class="p">)</span>
+    <span class="n">col_data</span><span class="p">,</span> <span class="n">sample_map</span> <span class="o">=</span> <span class="n">_create_smap_from_experiments</span><span class="p">(</span><span class="n">newExpts</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span>
         <span class="n">experiments</span><span class="o">=</span><span class="n">newExpts</span><span class="p">,</span>
-        <span class="n">col_data</span><span class="o">=</span><span class="n">col_data</span><span class="p">,</span>
+        <span class="n">column_data</span><span class="o">=</span><span class="n">col_data</span><span class="p">,</span>
         <span class="n">sample_map</span><span class="o">=</span><span class="n">sample_map</span><span class="p">,</span>
     <span class="p">)</span></div>
 
@@ -336,7 +313,7 @@
       
     </aside>
   </div>
-</div><script src="../../../_static/documentation_options.js?v=4621528c"></script>
+</div><script src="../../../_static/documentation_options.js?v=6c02275b"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/furo.js?v=32e29ea5"></script>

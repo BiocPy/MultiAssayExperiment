@@ -4,10 +4,10 @@ multiassayexperiment.io package
 Submodules
 ----------
 
-multiassayexperiment.io.anndata module
---------------------------------------
+multiassayexperiment.io.h5ad module
+-----------------------------------
 
-.. automodule:: multiassayexperiment.io.anndata
+.. automodule:: multiassayexperiment.io.h5ad
    :members:
    :undoc-members:
    :show-inheritance:
@@ -16,14 +16,6 @@ multiassayexperiment.io.interface module
 ----------------------------------------
 
 .. automodule:: multiassayexperiment.io.interface
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-multiassayexperiment.io.mudata module
--------------------------------------
-
-.. automodule:: multiassayexperiment.io.mudata
    :members:
    :undoc-members:
    :show-inheritance:
