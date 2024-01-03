@@ -98,6 +98,29 @@ def _validate_sample_map(sample_map, column_data, experiments):
     _validate_sample_map_with_expts(sample_map, experiments)
 
 
+def _create_smap_from_experiments(experiments):
+    _all_assays = []
+    _all_primary = []
+    _all_colnames = []
+    samples = []
+
+    for expname, expt in experiments.items():
+        colnames = expt.colnames
+        asy_sample = f"unknown_sample_{expname}"
+        _all_assays.extend([expname] * len(colnames))
+        _all_primary.extend([asy_sample] * len(colnames))
+        _all_colnames.extend(colnames)
+
+        samples.append(asy_sample)
+
+    sample_map = biocframe.BiocFrame(
+        {"assays": _all_assays, "primary": _all_primary, "colname": _all_colnames}
+    )
+    col_data = biocframe.BiocFrame({"samples": samples}, row_names=samples)
+
+    return col_data, sample_map
+
+
 class MultiAssayExperiment:
     """Container class for representing and managing multi-omics genomic experiments. Checkout the
     `R/MultiAssayExperiment <https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html>`_
@@ -107,8 +130,8 @@ class MultiAssayExperiment:
     def __init__(
         self,
         experiments: Dict[str, Any],
-        column_data: biocframe.BiocFrame,
-        sample_map: biocframe.BiocFrame,
+        column_data: biocframe.BiocFrame = None,
+        sample_map: biocframe.BiocFrame = None,
         metadata: Optional[dict] = None,
         validate: bool = True,
     ) -> None:
@@ -118,6 +141,13 @@ class MultiAssayExperiment:
         :py:class:`~multiassayexperiment.io.interface.make_mae` or by
         transform from :py:class:`~multiassayexperiment.io.mudata.from_mudata` and
         :py:class:`~multiassayexperiment.io.anndata.from_anndata` objects.
+
+        If both ``column_data`` and ``sample_map`` are None, the constructor naively creates
+        sample mapping, with each ``experiment`` considered to be a independent `sample`.
+        We add a sample to :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`
+        in this pattern - ``unknown_sample_{experiment_name}``. All cells from the same experiment are
+        considered to be from the same sample and is reflected in
+        :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map`.
 
         Args:
             experiments:
@@ -137,6 +167,8 @@ class MultiAssayExperiment:
                 that maps to the 'primary' in
                 :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map`.
 
+                Defaults to None.
+
             sample_map:
                 Map biological units from
                 :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data`
@@ -155,18 +187,29 @@ class MultiAssayExperiment:
 
                 Each sample in ``column_data`` may map to one or more columns per assay.
 
-            metadata:
-                Additional study-level metadata.
                 Defaults to None.
+
+            metadata:
+                Additional study-level metadata. Defaults to None.
 
             validate:
                 Internal use only.
         """
-
-        self._sample_map = _sanitize_frame(sample_map)
-        self._column_data = _sanitize_frame(column_data)
         self._experiments = experiments if experiments is not None else {}
         self._metadata = metadata if metadata is not None else {}
+
+        if self._sample_map is not None and self._column_data is not None:
+            self._sample_map = _sanitize_frame(sample_map)
+            self._column_data = _sanitize_frame(column_data)
+        elif self._sample_map is None and self._column_data is None:
+            # make a sample map
+            self._column_data, self._sample_map = _create_smap_from_experiments(
+                self._experiments
+            )
+        else:
+            raise ValueError(
+                "Either 'sample_map' or 'column_data' is `None`. Either both should be provided or set both to `None`."
+            )
 
         if validate:
             _validate_experiments(self._experiments)
@@ -993,3 +1036,123 @@ class MultiAssayExperiment:
                 print(f"Experiment: '{expname}' is not supported!")
 
         return MuData(exptsList)
+
+    @classmethod
+    def from_mudata(cls, input: "mudata.MuData") -> "MultiAssayExperiment":
+        """Create a ``MultiAssayExperiment`` object from :py:class:`~mudata.MuData`.
+
+        The import naively creates sample mapping, each ``experiment`` is considered to be a `sample`.
+        We add a sample with the following pattern - ``"unknown_sample_{experiment_name}"`` to
+        :py:attr:`~col_data`. All cells from the same experiment are considered to be extracted from
+        the same sample and is reflected in :py:attr:`~sample_map`.
+
+        Args:
+            input:
+                MuData object.
+
+        Raises:
+            Exception:
+                If ``mudata`` object is read in backed mode :py:attr:`~mudata.MuData.isbacked`.
+
+        Returns:
+            ``MultiAssayExperiment`` object.
+        """
+
+        import singlecellexperiment
+
+        if input.isbacked is True:
+            raise Exception("backed mode is currently not supported.")
+
+        experiments = OrderedDict()
+
+        _all_assays = []
+        _all_primary = []
+        _all_colnames = []
+        samples = []
+
+        for asy, adata in input.mod.items():
+            experiments[asy] = singlecellexperiment.SingleCellExperiment.from_anndata(
+                adata
+            )
+
+            colnames = None
+            if adata.obs.index.tolist() is not None:
+                colnames = adata.obs.index.tolist()
+            else:
+                colnames = range(len(adata.shape[0]))
+
+            asy_sample = f"unknown_sample_{asy}"
+
+            _all_assays.extend([asy] * len(colnames))
+            _all_primary.extend([asy_sample] * len(colnames))
+            _all_colnames.extend(colnames)
+
+            samples.append(asy_sample)
+
+        sample_map = biocframe.BiocFrame(
+            {"assays": _all_assays, "primary": _all_primary, "colname": _all_colnames}
+        )
+        col_data = biocframe.BiocFrame({"samples": samples}, row_names=samples)
+
+        return cls(
+            experiments=experiments,
+            column_data=col_data,
+            sample_map=sample_map,
+            metadata=input.uns,
+        )
+
+    @classmethod
+    def from_anndata(
+        cls, input: "anndata.AnnData", name: str = "unknown"
+    ) -> "MultiAssayExperiment":
+        """Create a ``MultiAssayExperiment`` from :py:class:`~anndata.AnnData`.
+
+        Since :py:class:`~anndata.AnnData` does not contain sample information,
+        sample named ``"unknown_sample"`` will be added to
+        :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.col_data`.
+        All cells are considered to be extracted from this sample and is reflected in
+        :py:attr:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map`.
+
+        Args:
+            input:
+                An ``AnnData`` object.
+
+            name:
+                Name for the experiment.
+
+                Defaults to "unknown".
+
+        Returns:
+            An ``MultiAssayExperiment``.
+        """
+        import singlecellexperiment
+
+        scexpt = singlecellexperiment.SingleCellExperiment.from_anndata(input=input)
+
+        experiments = {name: scexpt}
+
+        col_data = biocframe.BiocFrame(
+            {"samples": ["unknown_sample"]}, row_names=["unknown_sample"]
+        )
+
+        colnames = None
+
+        if input.obs.index.tolist() is not None:
+            colnames = input.obs.index.tolist()
+        else:
+            colnames = range(len(input.shape[0]))
+
+        sample_map = biocframe.BiocFrame(
+            {
+                "colname": colnames,
+                "assay": ["unknown"] * len(colnames),
+                "primary": ["unknown_sample"] * len(colnames),
+            }
+        )
+
+        return cls(
+            experiments=experiments,
+            column_data=col_data,
+            sample_map=sample_map,
+            metadata=input.uns,
+        )
