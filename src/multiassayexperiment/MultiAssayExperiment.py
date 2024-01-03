@@ -28,7 +28,7 @@ def _validate_experiments(experiments):
         if not hasattr(v, "shape"):
             raise ValueError(f"experiment: {k} is not supported.")
 
-        if v.column_data is None:
+        if v.column_names is None:
             warn(
                 f"Experiment '{k}' does not contain column (cell/sample) names.",
                 UserWarning,
