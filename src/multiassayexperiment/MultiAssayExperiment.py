@@ -888,7 +888,7 @@ class MultiAssayExperiment:
                 )
             else:
                 raise ValueError(
-                    f"`{type(self).__name__}` only supports 3-dimensional slicing along rows, columns and/or experiments."
+                    f"`{type(self).__name__}` only supports 3-dimensional slicing along rows, columns and/or experiments." # noqa
                 )
 
         raise TypeError("'args' must be a tuple")
