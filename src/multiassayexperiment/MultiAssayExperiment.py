@@ -756,8 +756,6 @@ class MultiAssayExperiment:
             experiment_names=experiments, rows=rows, columns=columns
         )
 
-        print("new expt keys", _new_experiments.keys())
-
         # filter sample_map
         smap_indices_to_keep = []
         for expname, expt in _new_experiments.items():
@@ -883,7 +881,6 @@ class MultiAssayExperiment:
                     self.metadata,
                 )
             elif len(args) == 3:
-                print("SHOULD BER HERE???????")
                 sresult = self._generic_slice(
                     rows=args[0], columns=args[1], experiments=args[2]
                 )
