@@ -299,7 +299,7 @@ class MultiAssayExperiment:
         for idx in range(len(self.experiment_names)):
             expt_name = self.experiment_names[idx]
             expt = self._experiments[expt_name]
-            output += f"[{idx}] {expt_name}: {type(expt).__name__} with {expt.shape[0]} rows and {expt.shape[1]} columns \n" # noqa
+            output += f"[{idx}] {expt_name}: {type(expt).__name__} with {expt.shape[0]} rows and {expt.shape[1]} columns \n"  # noqa
 
         output += f"column_data columns({len(self._column_data.column_names)}): "
         output += f"{ut.print_truncated_list(self._column_data.column_names)}\n"
