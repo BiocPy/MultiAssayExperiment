@@ -45,6 +45,9 @@ def _validate_column_data(column_data):
     if column_data.row_names is None:
         raise ValueError("`column_data` must have row names or labels.")
 
+    if len(set(column_data.row_names)) != len(column_data.row_names):
+        warn("'column_data' has duplicate row_names.", UserWarning)
+
 
 def _validate_sample_map_with_column_data(sample_map, column_data):
     # check if all samples are from primary exist in col data
@@ -109,7 +112,7 @@ def _create_smap_from_experiments(experiments):
     samples = []
 
     for expname, expt in experiments.items():
-        colnames = expt.colnames
+        colnames = expt.column_names
         asy_sample = f"unknown_sample_{expname}"
         _all_assays.extend([expname] * len(colnames))
         _all_primary.extend([asy_sample] * len(colnames))
