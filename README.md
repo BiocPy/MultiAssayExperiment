@@ -94,8 +94,8 @@ mae = MultiAssayExperiment(
 
     ## output
     class: MultiAssayExperiment containing 2 experiments
-    [0] sce: SingleCellExperiment with 200 rows and 6 columns 
-    [1] se: SummarizedExperiment with 200 rows and 6 columns 
+    [0] sce: SingleCellExperiment with 200 rows and 6 columns
+    [1] se: SummarizedExperiment with 200 rows and 6 columns
     column_data columns(1): ['samples']
     sample_map columns(3): ['assay', 'primary', 'colname']
     metadata(1): could be
