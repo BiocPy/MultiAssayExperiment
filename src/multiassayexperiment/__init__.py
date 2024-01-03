@@ -15,7 +15,5 @@ except PackageNotFoundError:  # pragma: no cover
 finally:
     del version, PackageNotFoundError
 
-from .io.anndata import from_anndata, read_h5ad
-from .io.interface import make_mae
-from .io.mudata import from_mudata
+from .io import read_h5ad, make_mae
 from .MultiAssayExperiment import MultiAssayExperiment
