@@ -122,7 +122,9 @@ def _create_smap_from_experiments(experiments):
 
 
 class MultiAssayExperiment:
-    """Container class for representing and managing multi-omics genomic experiments. Checkout the
+    """Container class for representing and managing multi-omics genomic experiments.
+
+    Checkout the
     `R/MultiAssayExperiment <https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html>`_
     for more information.
     """
