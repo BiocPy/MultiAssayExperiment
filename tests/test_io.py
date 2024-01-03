@@ -18,7 +18,7 @@ def test_MAE_fromH5AD():
 
     assert tse.experiments is not None
     assert tse.sample_map is not None
-    assert tse.col_data is not None
+    assert tse.column_data is not None
 
 
 # credit: MuData docs
@@ -45,7 +45,7 @@ def test_MAE_from_mudata():
 
     mdata = MuData({"A": adata, "B": adata2})
 
-    muMAE = mae.from_mudata(mudata=mdata)
+    muMAE = mae.MultiAssayExperiment.from_mudata(input=mdata)
 
     assert muMAE is not None
     assert isinstance(muMAE, mae.MultiAssayExperiment)
@@ -81,7 +81,7 @@ def test_MAE_make_mae():
 
     assert muMAE.experiments is not None
     assert muMAE.sample_map is not None
-    assert muMAE.col_data is not None
+    assert muMAE.column_data is not None
 
-    assert len(muMAE.sample_map["assay"].unique()) == 3
-    assert len(muMAE.sample_map["primary"].unique()) == 3
+    assert len(set(muMAE.sample_map["assay"])) == 3
+    assert len(set(muMAE.sample_map["primary"])) == 3

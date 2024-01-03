@@ -22,16 +22,17 @@ An MAE contains three main entities,
 Lets create these objects
 
 ```python
-import pandas as pd
+from biocframe import BiocFrame
+from iranges import IRanges
 import numpy as np
 from genomicranges import GenomicRanges
+from random import random
 
 nrows = 200
 ncols = 6
 counts = np.random.rand(nrows, ncols)
-df_gr = pd.DataFrame(
-    {
-        "seqnames": [
+gr = GenomicRanges(
+    seqnames=[
             "chr1",
             "chr2",
             "chr2",
@@ -42,57 +43,46 @@ df_gr = pd.DataFrame(
             "chr3",
             "chr3",
             "chr3",
-        ]
-        * 20,
-        "starts": range(100, 300),
-        "ends": range(110, 310),
-        "strand": ["-", "+", "+", "*", "*", "+", "+", "+", "-", "-"] * 20,
+        ] * 20,
+    ranges=IRanges(range(100, 300), range(110, 310)),
+    strand = ["-", "+", "+", "*", "*", "+", "+", "+", "-", "-"] * 20,
+    mcols=BiocFrame({
         "score": range(0, 200),
         "GC": [random() for _ in range(10)] * 20,
-    }
+    })
 )
 
-gr = GenomicRanges.from_pandas(df_gr)
-
-col_data_sce = pd.DataFrame(
-    {
-        "treatment": ["ChIP", "Input"] * 3,
-    },
-    index=["sce"] * 6,
+col_data_sce = BiocFrame({"treatment": ["ChIP", "Input"] * 3},
+    row_names=["sce"] * 6,
 )
 
-col_data_se = pd.DataFrame(
-    {
-        "treatment": ["ChIP", "Input"] * 3,
-    },
-    index=["se"] * 6,
+col_data_se = BiocFrame({"treatment": ["ChIP", "Input"] * 3},
+    row_names=["se"] * 6,
 )
 
-sample_map = pd.DataFrame(
-    {
-        "assay": ["sce", "se"] * 6,
-        "primary": ["sample1", "sample2"] * 6,
-        "colname": ["sce", "se"] * 6,
-    }
-)
+sample_map = BiocFrame({
+    "assay": ["sce", "se"] * 6,
+    "primary": ["sample1", "sample2"] * 6,
+    "colname": ["sce", "se"] * 6
+})
 
-sample_data = pd.DataFrame({"samples": ["sample1", "sample2"]})
+sample_data = BiocFrame({"samples": ["sample1", "sample2"]}, row_names=["sample1", "sample2"])
 ```
 
 Then, create various experiment classes,
 
 ```python
 from singlecellexperiment import SingleCellExperiment
-from summarizedExperiment import SummarizedExperiment
+from summarizedexperiment import SummarizedExperiment
 
 tsce = SingleCellExperiment(
-    assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
+    assays={"counts": counts}, row_data=gr.to_pandas(), column_data=col_data_sce
 )
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
-    row_data=df_gr.copy(),
-    col_data=col_data_se.copy(),
+    row_data=gr.to_pandas().copy(),
+    column_data=col_data_se.copy(),
 )
 ```
 
@@ -101,9 +91,9 @@ Now that we have all the pieces together, we can now create an MAE,
 ```python
 from multiassayexperiment import MultiAssayExperiment
 
-maeObj = MultiAssayExperiment(
+mae = MultiAssayExperiment(
     experiments={"sce": tsce, "se": tse2},
-    col_data=sample_data,
+    column_data=sample_data,
     sample_map=sample_map,
     metadata={"could be": "anything"},
 )
@@ -114,7 +104,8 @@ To make your life easier, we also provide methods to naively create sample mappi
 **_This is not a recommended approach, but if you don't have sample mapping, then it doesn't matter._**
 
 ```python
-maeObj = mae.make_mae(experiments={"sce": tsce, "se": tse2})
+import multiassayexperiment
+maeObj = multiassayexperiment.make_mae(experiments={"sce": tsce, "se": tse2})
 ```
 
 ## Import `MuData` and `AnnData` as `MultiAssayExperiment`
@@ -152,15 +143,18 @@ adata2.var_names = [f"var2_{j+1}" for j in range(d2)]
 we can now construct a `MuData` object and convert that to an MAE
 
 ```python
+from mudata import MuData
+from multiassayexperiment import MultiAssayExperiment
 mdata = MuData({"rna": adata, "spatial": adata2})
 
-maeObj = mae.from_mudata(mudata=mdata)
+maeObj = MultiAssayExperiment.from_mudata(input=mdata)
 ```
 
 Methods are also available to convert an `AnnData` object to `MAE`.
 
 ```python
-maeObj = mae.read_h5ad("tests/data/adata.h5ad")
+import multiassayexperiment
+maeObj = multiassayexperiment.read_h5ad("tests/data/adata.h5ad")
 ```
 
 # Accessors
@@ -168,11 +162,11 @@ maeObj = mae.read_h5ad("tests/data/adata.h5ad")
 Multiple methods are available to access various slots of a `MultiAssayExperiment` object
 
 ```python
-maeObj.assays
-maeObj.col_data
-maeObj.sample_map
-maeObj.experiments
-maeObj.metadata
+mae.assays
+mae.column_data
+mae.sample_map
+mae.experiments
+mae.metadata
 ```
 
 ## Access experiments
@@ -181,7 +175,7 @@ if you want to access a specific experiment
 
 ```python
 # access a specific experiment
-maeObj.experiment(experiment_name)
+mae.experiment("se")
 ```
 
 This does not include the sample data stored in the MAE. If you want to include this information
@@ -199,7 +193,7 @@ expt_with_sampleData = maeObj.experiment(experiment_name, with_sample_data=True)
 The structure for slicing,
 
 ```
-maeObj[rows, columns, experiments]
+mae[rows, columns, experiments]
 ```
 
 - rows, columns: accepts either a slice, list of indices or a dictionary to specify slices per experiment.
@@ -217,21 +211,13 @@ maeObj[1:5, 0:4]
 maeObj[1:5, 0:4, ["spatial"]]
 ```
 
-## Specify slices per experiment
-
-You can specify slices by experiment, rest of the experiments are not sliced.
-
-```python
-maeObj[{"rna": slice(0,10)}, {"spatial": slice(0,5)}, ["spatial"]]
-```
-
 Checkout other methods that perform similar operations - `subset_by_rows`, `subset_by_columns` & `subset_by_experiments`.
 
 # Helper methods
 
 ## completedCases
 
-This method returns a boolean vector that specifies which biospecimens have data across all experiments.
+This method returns a boolean vector that specifies which bio specimens have data across all experiments.
 
 ```python
 maeObj.completed_cases()
@@ -239,7 +225,7 @@ maeObj.completed_cases()
 
 ## replicated
 
-replicated identifies biospecimens that have multiple observations per experiment.
+replicated identifies bio specimens that have multiple observations per experiment.
 
 ```python
 maeObj.replicated()

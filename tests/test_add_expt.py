@@ -39,9 +39,9 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.from_pandas(df_gr)
+gr = genomicranges.GenomicRanges.from_pandas(df_gr)
 
-col_data_sce = pd.DataFrame(
+column_data_sce = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
@@ -56,9 +56,9 @@ sample_map_sce = pd.DataFrame(
     }
 )
 
-sample_col_data_sce = pd.DataFrame({"samples": ["sample1"]}, index=["sample1"])
+sample_column_data_sce = pd.DataFrame({"samples": ["sample1"]}, index=["sample1"])
 
-col_data_se = pd.DataFrame(
+column_data_se = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
@@ -73,17 +73,17 @@ sample_map_se = pd.DataFrame(
     }
 )
 
-sample_col_data_se = pd.DataFrame({"samples": ["sample2"]}, index=["sample2"])
+sample_column_data_se = pd.DataFrame({"samples": ["sample2"]}, index=["sample2"])
 
 
 def test_MAE_addExpt():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
     )
 
     mae = MultiAssayExperiment(
         experiments={"sce": tsce},
-        col_data=sample_col_data_sce,
+        column_data=sample_column_data_sce,
         sample_map=sample_map_sce,
         metadata={"could be": "anything"},
     )
@@ -94,14 +94,14 @@ def test_MAE_addExpt():
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
         row_data=df_gr.copy(),
-        col_data=col_data_se,
+        column_data=column_data_se,
     )
 
     mae.add_experiment(
         name="se",
         experiment=tse2,
         sample_map=sample_map_se,
-        col_data=sample_col_data_se,
+        column_data=sample_column_data_se,
     )
 
     assert mae is not None

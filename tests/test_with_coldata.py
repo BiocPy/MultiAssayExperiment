@@ -38,15 +38,15 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.from_pandas(df_gr)
+gr = genomicranges.GenomicRanges.from_pandas(df_gr)
 
-col_data_sce = pd.DataFrame(
+column_data_sce = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
     index=[f"sce_{i}" for i in range(6)],
 )
-col_data_se = pd.DataFrame(
+column_data_se = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
@@ -79,24 +79,24 @@ sample_data = pd.DataFrame(
 )
 
 tsce = SingleCellExperiment(
-    assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
+    assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
 )
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
     row_data=df_gr.copy(),
-    col_data=col_data_se.copy(),
+    column_data=column_data_se.copy(),
 )
 
 mae = MultiAssayExperiment(
     experiments={"sce": tsce, "se": tse2},
-    col_data=sample_data,
+    column_data=sample_data,
     sample_map=sample_map,
     metadata={"could be": "anything"},
 )
 
 
-def test_access_expt_with_col_data():
+def test_access_expt_with_column_data():
     assert mae is not None
 
     se = mae.experiment("se")
@@ -105,4 +105,4 @@ def test_access_expt_with_col_data():
     sce = mae.experiment("sce", with_sample_data=True)
     assert sce.shape == tsce.shape
 
-    assert len(sce.col_data.columns) >= len(tsce.col_data.columns)
+    assert len(sce.column_data.columns) >= len(tsce.column_data.columns)

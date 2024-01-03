@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import pytest
 from anndata import AnnData
+from biocframe import BiocFrame
 from singlecellexperiment import SingleCellExperiment
 from summarizedexperiment import SummarizedExperiment
 
@@ -42,48 +43,58 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.from_pandas(df_gr)
+gr = genomicranges.GenomicRanges.from_pandas(df_gr)
 
-col_data_sce = pd.DataFrame(
-    {
-        "treatment": ["ChIP", "Input"] * 3,
-    },
-    index=["sce"] * 6,
-)
-col_data_se = pd.DataFrame(
-    {
-        "treatment": ["ChIP", "Input"] * 3,
-    },
-    index=["se"] * 6,
+column_data_sce = BiocFrame(
+    {"treatment": ["ChIP", "Input"] * 3},
+    row_names=[f"sce_{i}" for i in range(6)],
 )
 
-sample_map = pd.DataFrame(
+column_data_se = BiocFrame(
+    {"treatment": ["ChIP", "Input"] * 3},
+    row_names=[f"se_{i}" for i in range(6)],
+)
+
+sample_map = BiocFrame(
     {
         "assay": ["sce", "se"] * 6,
         "primary": ["sample1", "sample2"] * 6,
-        "colname": ["sce", "se"] * 6,
+        "colname": [
+            "sce_0",
+            "se_0",
+            "sce_1",
+            "se_1",
+            "sce_2",
+            "se_2",
+            "sce_3",
+            "se_3",
+            "sce_4",
+            "se_4",
+            "sce_5",
+            "se_5",
+        ],
     }
 )
 
-sample_data = pd.DataFrame(
-    {"samples": ["sample1", "sample2"]}, index=["sample1", "sample2"]
+sample_data = BiocFrame(
+    {"samples": ["sample1", "sample2"]}, row_names=["sample1", "sample2"]
 )
 
 
 def test_MAE_creation():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
         row_data=df_gr.copy(),
-        col_data=col_data_se.copy(),
+        column_data=column_data_se.copy(),
     )
 
     mae = MultiAssayExperiment(
         experiments={"sce": tsce, "se": tse2},
-        col_data=sample_data,
+        column_data=sample_data,
         sample_map=sample_map,
         metadata={"could be": "anything"},
     )
@@ -94,25 +105,25 @@ def test_MAE_creation():
 
 def test_MAE_creation_with_alts():
     tse = SummarizedExperiment(
-        assays={"counts": counts}, row_data=df_gr, col_data=col_data_se
+        assays={"counts": counts}, row_data=df_gr, column_data=column_data_se
     )
 
     tsce = SingleCellExperiment(
         assays={"counts": counts},
         row_data=df_gr,
-        col_data=col_data_sce,
+        column_data=column_data_sce,
         alternative_experiments={"alt": tse},
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
         row_data=df_gr.copy(),
-        col_data=col_data_se.copy(),
+        column_data=column_data_se.copy(),
     )
 
     mae = MultiAssayExperiment(
         experiments={"sce": tsce, "se": tse2},
-        col_data=sample_data,
+        column_data=sample_data,
         sample_map=sample_map,
         metadata={"could be": "anything"},
     )
@@ -123,34 +134,34 @@ def test_MAE_creation_with_alts():
     assert mae.experiments is not None
     assert mae.experiment("sce") is not None
     assert mae.assays is not None
-    assert mae.col_data is not None
+    assert mae.column_data is not None
     assert mae.sample_map is not None
 
     with pytest.raises(Exception):
-        mae.col_data = None
+        mae.column_data = None
 
     with pytest.raises(Exception):
         mae.sample_map = None
 
     assert mae.metadata is not None
-    mae.metadata = None
-    assert mae.metadata is None
+    mae.metadata = {}
+    assert mae.metadata is not None
 
 
 def test_MAE_completedcases():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
         row_data=df_gr.copy(),
-        col_data=col_data_se.copy(),
+        column_data=column_data_se.copy(),
     )
 
     mae = MultiAssayExperiment(
         experiments={"sce": tsce, "se": tse2},
-        col_data=sample_data,
+        column_data=sample_data,
         sample_map=sample_map,
         metadata={"could be": "anything"},
     )
@@ -194,3 +205,29 @@ def test_MAE_replicated():
 
     assert repls is not None
     assert len(repls) == len(mae.experiments.keys())
+
+
+def test_with_sample_data():
+    tsce = SingleCellExperiment(
+        assays={"counts": counts}, row_data=gr.to_pandas(), column_data=column_data_sce
+    )
+
+    tse2 = SummarizedExperiment(
+        assays={"counts": counts.copy()},
+        row_data=gr.to_pandas().copy(),
+        column_data=column_data_se.copy(),
+    )
+
+    mae = MultiAssayExperiment(
+        experiments={"sce": tsce, "se": tse2},
+        column_data=sample_data,
+        sample_map=sample_map,
+        metadata={"could be": "anything"},
+    )
+
+    expt_with_sample_data = mae.experiment("se", with_sample_data=True)
+
+    assert expt_with_sample_data is not None
+    assert expt_with_sample_data.column_data is not None
+    print(expt_with_sample_data.column_data)
+    assert expt_with_sample_data.column_data.get_column("samples") is not None
