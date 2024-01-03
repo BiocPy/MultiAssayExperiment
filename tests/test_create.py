@@ -164,3 +164,9 @@ def test_MAE_save():
 
     assert mdata is not None
     assert len(mdata.mod.keys()) == 2
+
+def test_empty_mae():
+    mae = MultiAssayExperiment(experiments={})
+
+    assert mae is not None
+    assert isinstance(mae, MultiAssayExperiment)
