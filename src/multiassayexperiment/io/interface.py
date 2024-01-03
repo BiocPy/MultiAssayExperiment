@@ -9,13 +9,10 @@ __license__ = "MIT"
 
 
 def make_mae(experiments: Dict[str, Any]) -> MultiAssayExperiment:
-    """Create an
-    :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment` from
-    a dictionary of experiment objects. Each experiment is either an
-    :py:class:`~anndata.AnnData` object or a subclass of
-    :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`.
-    :py:class:`~anndata.AnnData` objects will be converted to a
-    :py:class:`~singlecellexperiment.SingleCellExperiment.SingleCellExperiment`.
+    """Create an :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment` from a dictionary of
+    experiment objects. Each experiment is either an :py:class:`~anndata.AnnData` object or a subclass of
+    :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`. :py:class:`~anndata.AnnData` objects
+    will be converted to a :py:class:`~singlecellexperiment.SingleCellExperiment.SingleCellExperiment`.
 
     The import naively creates sample mapping, with each ``experiment`` considered to be a
     independent `sample`. We add a sample to
