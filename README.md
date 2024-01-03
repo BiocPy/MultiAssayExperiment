@@ -64,7 +64,7 @@ sample_map = BiocFrame({
     "colname": ["sce_0", "se_0", "sce_1", "se_1", "sce_2", "se_2", "sce_3", "se_3", "sce_4", "se_4", "sce_5", "se_5"]
 })
 
-sample_data = BiocFrame({"samples": ["sample1", "sample2"]})
+sample_data = BiocFrame({"samples": ["sample1", "sample2"]}, row_names= ["sample1", "sample2"])
 ```
 
 Now we can create an instance of an MAE -
