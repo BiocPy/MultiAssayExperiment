@@ -19,16 +19,18 @@ pip install multiassayexperiment
 First create mock sample data
 
 ```python
-import pandas as pd
+from random import random
+
 import numpy as np
+from biocframe import BiocFrame
 from genomicranges import GenomicRanges
+from iranges import IRanges
 
 nrows = 200
 ncols = 6
 counts = np.random.rand(nrows, ncols)
 gr = GenomicRanges(
-    {
-        "seqnames": [
+    seqnames=[
             "chr1",
             "chr2",
             "chr2",
@@ -39,39 +41,30 @@ gr = GenomicRanges(
             "chr3",
             "chr3",
             "chr3",
-        ]
-        * 20,
-        "starts": range(100, 300),
-        "ends": range(110, 310),
-        "strand": ["-", "+", "+", "*", "*", "+", "+", "+", "-", "-"] * 20,
+        ] * 20,
+    ranges=IRanges(range(100, 300), range(110, 310)),
+    strand = ["-", "+", "+", "*", "*", "+", "+", "+", "-", "-"] * 20,
+    mcols=BiocFrame({
         "score": range(0, 200),
         "GC": [random() for _ in range(10)] * 20,
-    }
+    })
 )
 
-col_data_sce = pd.DataFrame(
-    {
-        "treatment": ["ChIP", "Input"] * 3,
-    },
-    index=["sce"] * 6,
+col_data_sce = BiocFrame({"treatment": ["ChIP", "Input"] * 3},
+    row_names=["sce"] * 6,
 )
 
-col_data_se = pd.DataFrame(
-    {
-        "treatment": ["ChIP", "Input"] * 3,
-    },
-    index=["se"] * 6,
+col_data_se = BiocFrame({"treatment": ["ChIP", "Input"] * 3},
+    row_names=["se"] * 6,
 )
 
-sample_map = pd.DataFrame(
-    {
-        "assay": ["sce", "se"] * 6,
-        "primary": ["sample1", "sample2"] * 6,
-        "colname": ["sce", "se"] * 6,
-    }
-)
+sample_map = BiocFrame({
+    "assay": ["sce", "se"] * 6,
+    "primary": ["sample1", "sample2"] * 6,
+    "colname": ["sce", "se"] * 6
+})
 
-sample_data = pd.DataFrame({"samples": ["sample1", "sample2"]})
+sample_data = BiocFrame({"samples": ["sample1", "sample2"]})
 ```
 
 Now we can create an instance of an MAE -
@@ -79,25 +72,33 @@ Now we can create an instance of an MAE -
 ```python
 from multiassayexperiment import MultiAssayExperiment
 from singlecellexperiment import SingleCellExperiment
-from summarizedExperiment import SummarizedExperiment
+from summarizedexperiment import SummarizedExperiment
 
 tsce = SingleCellExperiment(
-    assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
+    assays={"counts": counts}, row_data=gr.to_pandas(), column_data=col_data_sce
 )
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
-    row_data=df_gr.copy(),
-    col_data=col_data_se.copy(),
+    row_data=gr.to_pandas().copy(),
+    column_data=col_data_se.copy(),
 )
 
 mae = MultiAssayExperiment(
     experiments={"sce": tsce, "se": tse2},
-    col_data=sample_data,
+    column_data=sample_data,
     sample_map=sample_map,
     metadata={"could be": "anything"},
 )
 ```
+
+    ## output
+    class: MultiAssayExperiment containing 2 experiments
+    [0] sce: SingleCellExperiment with 200 rows and 6 columns 
+    [1] se: SummarizedExperiment with 200 rows and 6 columns 
+    column_data columns(1): ['samples']
+    sample_map columns(3): ['assay', 'primary', 'colname']
+    metadata(1): could be
 
 For more use cases, checkout the [documentation](https://biocpy.github.io/MultiAssayExperiment/).
 
