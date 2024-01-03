@@ -463,8 +463,6 @@ class MultiAssayExperiment:
         expt = self.experiments[name]
 
         if with_sample_data is True:
-            expt = deepcopy(expt)
-
             assay_splits = self.sample_map.split("assay", only_indices=True)
             subset_map = self.sample_map[assay_splits[name],]
             subset_map = subset_map.set_row_names(subset_map.get_column("colname"))
@@ -474,7 +472,11 @@ class MultiAssayExperiment:
                 [subset_map, expt_column_data], join="outer"
             )
 
-            expt.column_data = new_column_data
+            new_column_data = biocframe.merge(
+                [new_column_data, self._column_data], join="left"
+            )
+
+            return expt.set_column_data(new_column_data, in_place=False)
 
         return expt
 

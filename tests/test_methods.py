@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import pytest
 from anndata import AnnData
+from biocframe import BiocFrame
 from singlecellexperiment import SingleCellExperiment
 from summarizedexperiment import SummarizedExperiment
 
@@ -44,29 +45,39 @@ df_gr = pd.DataFrame(
 
 gr = genomicranges.GenomicRanges.from_pandas(df_gr)
 
-column_data_sce = pd.DataFrame(
-    {
-        "treatment": ["ChIP", "Input"] * 3,
-    },
-    index=["sce"] * 6,
-)
-column_data_se = pd.DataFrame(
-    {
-        "treatment": ["ChIP", "Input"] * 3,
-    },
-    index=["se"] * 6,
+column_data_sce = BiocFrame(
+    {"treatment": ["ChIP", "Input"] * 3},
+    row_names=[f"sce_{i}" for i in range(6)],
 )
 
-sample_map = pd.DataFrame(
+column_data_se = BiocFrame(
+    {"treatment": ["ChIP", "Input"] * 3},
+    row_names=[f"se_{i}" for i in range(6)],
+)
+
+sample_map = BiocFrame(
     {
         "assay": ["sce", "se"] * 6,
         "primary": ["sample1", "sample2"] * 6,
-        "colname": ["sce", "se"] * 6,
+        "colname": [
+            "sce_0",
+            "se_0",
+            "sce_1",
+            "se_1",
+            "sce_2",
+            "se_2",
+            "sce_3",
+            "se_3",
+            "sce_4",
+            "se_4",
+            "sce_5",
+            "se_5",
+        ],
     }
 )
 
-sample_data = pd.DataFrame(
-    {"samples": ["sample1", "sample2"]}, index=["sample1", "sample2"]
+sample_data = BiocFrame(
+    {"samples": ["sample1", "sample2"]}, row_names=["sample1", "sample2"]
 )
 
 
@@ -194,3 +205,28 @@ def test_MAE_replicated():
 
     assert repls is not None
     assert len(repls) == len(mae.experiments.keys())
+
+def test_with_sample_data():
+    tsce = SingleCellExperiment(
+        assays={"counts": counts}, row_data=gr.to_pandas(), column_data=column_data_sce
+    )
+
+    tse2 = SummarizedExperiment(
+        assays={"counts": counts.copy()},
+        row_data=gr.to_pandas().copy(),
+        column_data=column_data_se.copy(),
+    )
+
+    mae = MultiAssayExperiment(
+        experiments={"sce": tsce, "se": tse2},
+        column_data=sample_data,
+        sample_map=sample_map,
+        metadata={"could be": "anything"},
+    )
+
+    expt_with_sample_data = mae.experiment("se", with_sample_data=True)
+
+    assert expt_with_sample_data is not None
+    assert expt_with_sample_data.column_data is not None
+    print(expt_with_sample_data.column_data)
+    assert expt_with_sample_data.column_data.get_column("samples") is not None

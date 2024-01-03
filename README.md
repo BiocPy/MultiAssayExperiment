@@ -51,17 +51,17 @@ gr = GenomicRanges(
 )
 
 col_data_sce = BiocFrame({"treatment": ["ChIP", "Input"] * 3},
-    row_names=["sce"] * 6,
+    row_names=[f"sce_{i}" for i in range(6)],
 )
 
 col_data_se = BiocFrame({"treatment": ["ChIP", "Input"] * 3},
-    row_names=["se"] * 6,
+    row_names=[f"se_{i}" for i in range(6)],
 )
 
 sample_map = BiocFrame({
     "assay": ["sce", "se"] * 6,
     "primary": ["sample1", "sample2"] * 6,
-    "colname": ["sce", "se"] * 6
+    "colname": ["sce_0", "se_0", "sce_1", "se_1", "sce_2", "se_2", "sce_3", "se_3", "sce_4", "se_4", "sce_5", "se_5"]
 })
 
 sample_data = BiocFrame({"samples": ["sample1", "sample2"]})
