@@ -1,5 +1,4 @@
 from collections import OrderedDict, namedtuple
-from copy import deepcopy
 from typing import Any, Dict, List, Optional, Sequence, Union
 from warnings import warn
 

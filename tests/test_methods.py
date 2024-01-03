@@ -206,6 +206,7 @@ def test_MAE_replicated():
     assert repls is not None
     assert len(repls) == len(mae.experiments.keys())
 
+
 def test_with_sample_data():
     tsce = SingleCellExperiment(
         assays={"counts": counts}, row_data=gr.to_pandas(), column_data=column_data_sce
