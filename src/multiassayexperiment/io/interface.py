@@ -40,7 +40,7 @@ def make_mae(experiments: Dict[str, Any]) -> MultiAssayExperiment:
     Returns:
         An MAE from the experiments.
     """
-    import singlecellexperiment as sce
+    from singlecellexperiment import SingleCellExperiment
     from anndata import AnnData
     from summarizedexperiment import SummarizedExperiment
 
@@ -63,7 +63,7 @@ def make_mae(experiments: Dict[str, Any]) -> MultiAssayExperiment:
     newExpts = OrderedDict()
     for expname, expt in experiments.items():
         if isinstance(expt, AnnData):
-            newExpts[expname] = sce.from_anndata(expt)
+            newExpts[expname] = SingleCellExperiment.from_anndata(expt)
         else:
             newExpts[expname] = expt
 

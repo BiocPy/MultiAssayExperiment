@@ -40,15 +40,15 @@ df_gr = pd.DataFrame(
     }
 )
 
-gr = genomicranges.from_pandas(df_gr)
+gr = genomicranges.GenomicRanges.from_pandas(df_gr)
 
-col_data_sce = pd.DataFrame(
+column_data_sce = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
     index=["sce"] * 6,
 )
-col_data_se = pd.DataFrame(
+column_data_se = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
@@ -70,18 +70,18 @@ sample_data = pd.DataFrame(
 
 def test_MAE_creation():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
         row_data=df_gr.copy(),
-        col_data=col_data_se.copy(),
+        column_data=column_data_se.copy(),
     )
 
     mae = MultiAssayExperiment(
         experiments={"sce": tsce, "se": tse2},
-        col_data=sample_data,
+        column_data=sample_data,
         sample_map=sample_map,
         metadata={"could be": "anything"},
     )
@@ -92,25 +92,25 @@ def test_MAE_creation():
 
 def test_MAE_creation_with_alts():
     tse = SummarizedExperiment(
-        assays={"counts": counts}, row_data=df_gr, col_data=col_data_se
+        assays={"counts": counts}, row_data=df_gr, column_data=column_data_se
     )
 
     tsce = SingleCellExperiment(
         assays={"counts": counts},
         row_data=df_gr,
-        col_data=col_data_sce,
+        column_data=column_data_sce,
         alternative_experiments={"alt": tse},
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
         row_data=df_gr.copy(),
-        col_data=col_data_se.copy(),
+        column_data=column_data_se.copy(),
     )
 
     mae = MultiAssayExperiment(
         experiments={"sce": tsce, "se": tse2},
-        col_data=sample_data,
+        column_data=sample_data,
         sample_map=sample_map,
         metadata={"could be": "anything"},
     )
@@ -121,19 +121,19 @@ def test_MAE_creation_with_alts():
 
 def test_MAE_creation_fails():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
         row_data=df_gr.copy(),
-        col_data=col_data_sce.copy(),
+        column_data=column_data_sce.copy(),
     )
 
     with pytest.raises(Exception):
         MultiAssayExperiment(
             experiments={"sce": tsce, "se": tse2},
-            col_data=sample_data,
+            column_data=sample_data,
             sample_map=sample_map,
             metadata={"could be": "anything"},
         )
@@ -141,18 +141,18 @@ def test_MAE_creation_fails():
 
 def test_MAE_save():
     tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, col_data=col_data_sce
+        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
     )
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
         row_data=df_gr.copy(),
-        col_data=col_data_se.copy(),
+        column_data=column_data_se.copy(),
     )
 
     mae = MultiAssayExperiment(
         experiments={"sce": tsce, "se": tse2},
-        col_data=sample_data,
+        column_data=sample_data,
         sample_map=sample_map,
         metadata={"could be": "anything"},
     )

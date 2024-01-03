@@ -6,7 +6,6 @@ from warnings import warn
 import biocframe
 import biocutils as ut
 import summarizedexperiment as se
-from singlecellexperiment import SingleCellExperiment
 
 __author__ = "jkanche"
 __copyright__ = "jkanche"
@@ -68,7 +67,7 @@ def _validate_sample_map_with_expts(sample_map, experiments):
 
     # check if colnames exist
     agroups = sample_map.split("assay")
-    for grp, rows in agroups:
+    for grp, rows in agroups.items():
         if grp not in experiments:
             warn(
                 f"Experiment '{grp}' exists in `sample_map` but not in `experiments`.",
@@ -114,7 +113,7 @@ def _create_smap_from_experiments(experiments):
         samples.append(asy_sample)
 
     sample_map = biocframe.BiocFrame(
-        {"assays": _all_assays, "primary": _all_primary, "colname": _all_colnames}
+        {"assay": _all_assays, "primary": _all_primary, "colname": _all_colnames}
     )
     col_data = biocframe.BiocFrame({"samples": samples}, row_names=samples)
 
@@ -200,10 +199,10 @@ class MultiAssayExperiment:
         self._experiments = experiments if experiments is not None else {}
         self._metadata = metadata if metadata is not None else {}
 
-        if self._sample_map is not None and self._column_data is not None:
+        if sample_map is not None and column_data is not None:
             self._sample_map = _sanitize_frame(sample_map)
             self._column_data = _sanitize_frame(column_data)
-        elif self._sample_map is None and self._column_data is None:
+        elif sample_map is None and column_data is None:
             # make a sample map
             self._column_data, self._sample_map = _create_smap_from_experiments(
                 self._experiments
@@ -242,7 +241,7 @@ class MultiAssayExperiment:
 
         current_class_const = type(self)
         return current_class_const(
-            experiment=_expts_copy,
+            experiments=_expts_copy,
             column_data=_column_data_copy,
             sample_map=_sample_map_copy,
             metadata=_metadata_copy,
@@ -255,7 +254,7 @@ class MultiAssayExperiment:
         """
         current_class_const = type(self)
         return current_class_const(
-            experiment=self._experiments,
+            experiments=self._experiments,
             column_data=self._column_data,
             sample_map=self._sample_map,
             metadata=self._metadata,
@@ -463,8 +462,8 @@ class MultiAssayExperiment:
         if with_sample_data is True:
             expt = deepcopy(expt)
 
-            assay_splits = self.sample_map.split("assay", indices_only=True)
-            subset_map = self.sample_map[assay_splits[name]]
+            assay_splits = self.sample_map.split("assay", only_indices=True)
+            subset_map = self.sample_map[assay_splits[name],]
             subset_map = subset_map.set_row_names(subset_map.get_column("colname"))
 
             expt_column_data = expt.column_data
@@ -678,12 +677,12 @@ class MultiAssayExperiment:
         if experiment_names is None:
             experiment_names = slice(None)
 
-        if isinstance(experiment_names, slice) and experiment_names != slice(None):
+        if experiment_names != slice(None):
             expts, _ = ut.normalize_subscript(
                 experiment_names, len(self.experiment_names), self.experiment_names
             )
 
-            to_keep = self.experiment_names[expts]
+            to_keep = [self.experiment_names[idx] for idx in expts]
 
             new_expt = OrderedDict()
             for texpt in to_keep:
@@ -691,16 +690,17 @@ class MultiAssayExperiment:
 
             _expts_copy = new_expt
 
-        for k, v in _expts_copy.items():
-            _expts_copy[k] = v[rows, columns]
+        if rows != slice(None) and columns != slice(None):
+            for k, v in _expts_copy.items():
+                _expts_copy[k] = v[rows, columns]
 
-        return new_expt
+        return _expts_copy
 
     def _generic_slice(
         self,
-        rows: Optional[Union[str, int, bool, Sequence]],
-        columns: Optional[Union[str, int, bool, Sequence]],
-        experiments: Optional[Union[str, int, bool, Sequence]],
+        rows: Optional[Union[str, int, bool, Sequence]] = None,
+        columns: Optional[Union[str, int, bool, Sequence]] = None,
+        experiments: Optional[Union[str, int, bool, Sequence]] = None,
     ) -> SlicerResult:
         """Slice ``MultiAssayExperiment`` along the rows and/or columns, based on their indices or names.
 
@@ -746,6 +746,8 @@ class MultiAssayExperiment:
             experiment_names=experiments, rows=rows, columns=columns
         )
 
+        print("new expt keys", _new_experiments.keys())
+
         # filter sample_map
         smap_indices_to_keep = []
         for expname, expt in _new_experiments.items():
@@ -754,16 +756,14 @@ class MultiAssayExperiment:
                 if row["assay"] == expname and row["colname"] in expt.column_names:
                     smap_indices_to_keep.append(counter)
                 counter += 1
-
         _new_sample_map = self._sample_map[list(set(smap_indices_to_keep)),]
 
         # filter column_data
         subset_primary = list(set(_new_sample_map.get_column("primary")))
         coldata_indices_to_keep = []
-        counter = 0
-        for row in self._column_data._row_names:
+        for idx, row in enumerate(self._column_data._row_names):
             if row in subset_primary:
-                coldata_indices_to_keep.append(counter)
+                coldata_indices_to_keep.append(idx)
 
         _new_column_data = self._column_data[list(set(coldata_indices_to_keep)),]
 
@@ -857,12 +857,31 @@ class MultiAssayExperiment:
                 raise ValueError("At least one slice argument must be provided.")
 
             if len(args) == 1:
-                return self._generic_slice(rows=args[0])
+                sresult = self._generic_slice(rows=args[0])
+                return MultiAssayExperiment(
+                    sresult.experiments,
+                    sresult.column_data,
+                    sresult.sample_map,
+                    self.metadata,
+                )
             elif len(args) == 2:
-                return self._generic_slice(rows=args[0], columns=args[1])
+                sresult = self._generic_slice(rows=args[0], columns=args[1])
+                return MultiAssayExperiment(
+                    sresult.experiments,
+                    sresult.column_data,
+                    sresult.sample_map,
+                    self.metadata,
+                )
             elif len(args) == 3:
-                return self._generic_slice(
+                print("SHOULD BER HERE???????")
+                sresult = self._generic_slice(
                     rows=args[0], columns=args[1], experiments=args[2]
+                )
+                return MultiAssayExperiment(
+                    sresult.experiments,
+                    sresult.column_data,
+                    sresult.sample_map,
+                    self.metadata,
                 )
             else:
                 raise ValueError(
@@ -987,8 +1006,10 @@ class MultiAssayExperiment:
 
         _new_column_data = self._column_data
         if column_data is not None:
+            column_data = _sanitize_frame(column_data)
             _new_column_data = ut.combine_rows(self._column_data, column_data)
 
+        sample_map = _sanitize_frame(sample_map)
         _new_sample_map = ut.combine_rows(self._sample_map, sample_map)
 
         _new_experiments = self._experiments.copy()
@@ -1020,6 +1041,7 @@ class MultiAssayExperiment:
             A `MuData` representation.
         """
         from mudata import MuData
+        from singlecellexperiment import SingleCellExperiment
 
         exptsList = OrderedDict()
 
@@ -1060,7 +1082,7 @@ class MultiAssayExperiment:
             ``MultiAssayExperiment`` object.
         """
 
-        import singlecellexperiment
+        from singlecellexperiment import SingleCellExperiment
 
         if input.isbacked is True:
             raise Exception("backed mode is currently not supported.")
@@ -1073,9 +1095,7 @@ class MultiAssayExperiment:
         samples = []
 
         for asy, adata in input.mod.items():
-            experiments[asy] = singlecellexperiment.SingleCellExperiment.from_anndata(
-                adata
-            )
+            experiments[asy] = SingleCellExperiment.from_anndata(adata)
 
             colnames = None
             if adata.obs.index.tolist() is not None:
@@ -1092,7 +1112,7 @@ class MultiAssayExperiment:
             samples.append(asy_sample)
 
         sample_map = biocframe.BiocFrame(
-            {"assays": _all_assays, "primary": _all_primary, "colname": _all_colnames}
+            {"assay": _all_assays, "primary": _all_primary, "colname": _all_colnames}
         )
         col_data = biocframe.BiocFrame({"samples": samples}, row_names=samples)
 
@@ -1127,9 +1147,9 @@ class MultiAssayExperiment:
         Returns:
             An ``MultiAssayExperiment``.
         """
-        import singlecellexperiment
+        from singlecellexperiment import SingleCellExperiment
 
-        scexpt = singlecellexperiment.SingleCellExperiment.from_anndata(input=input)
+        scexpt = SingleCellExperiment.from_anndata(input=input)
 
         experiments = {name: scexpt}
 
