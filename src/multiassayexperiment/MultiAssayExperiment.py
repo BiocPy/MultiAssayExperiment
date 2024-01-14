@@ -570,8 +570,8 @@ class MultiAssayExperiment:
         """
         column_data = _sanitize_frame(column_data)
 
-        self._validate_column_data(column_data)
-        self._validate_sample_map_with_column_data(self._sample_map, column_data)
+        _validate_column_data(column_data)
+        _validate_sample_map_with_column_data(self._sample_map, column_data)
 
         output = self._define_output(in_place)
         output._column_data = column_data
@@ -671,7 +671,7 @@ class MultiAssayExperiment:
 
                 Integer indices, a boolean filter, or (if the current object is
                 named) names specifying the ranges to be extracted, see
-                :py:meth:`~biocutils.normalize_subscript.normalize_subsc
+                :py:meth:`~biocutils.normalize_subscript.normalize_subscript`.
 
             experiment_names:
                 Experiment name to keep.
