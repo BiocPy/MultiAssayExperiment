@@ -492,7 +492,10 @@ class MultiAssayExperiment:
         return expt
 
     def get_with_column_data(self, name: str) -> Any:
-        """Alias to :py:meth:`~experiment`. Consistency with Bioconductor's naming of the same function."""
+        """Alias to :py:meth:`~experiment`.
+
+        Consistency with Bioconductor's naming of the same function.
+        """
         return self.experiment(name, with_sample_data=True)
 
     ############################
