@@ -71,7 +71,10 @@ def _validate_sample_map_with_expts(sample_map, experiments):
     if (len(unique_expt_names) != len(smap_unique_assays)) or (
         unique_expt_names != smap_unique_assays
     ):
-        raise ValueError("'assays' mismatch between `sample_map` and `experiments`.")
+        warn(
+            "'experiments' contains names not represented in 'sample_map' or vice-versa.",
+            UserWarning,
+        )
 
     # check if colnames exist
     agroups = sample_map.split("assay")
@@ -660,16 +663,15 @@ class MultiAssayExperiment:
         return columns, _scalar
 
     def _filter_sample_map(self, columns: Union[str, int, bool, Sequence, slice]):
-        _samples_to_filter = [self._column_data.row_names[i] for i in columns]
-        _primary = self._sample_map.get_column("primary")
+        _samples_to_filter = self._column_data[columns,].row_names
 
         column_names_to_keep = {}
-        for i in _samples_to_filter:
+        for i in self.experiment_names:
             column_names_to_keep[i] = []
 
-        for rdx in range(len(_primary)):
-            if _primary[rdx] in _samples_to_filter:
-                column_names_to_keep[_primary[rdx]].append(rdx)
+        for _, row in self._sample_map:
+            if row["primary"] in _samples_to_filter:
+                column_names_to_keep[row["assay"]].append(row["colname"])
 
         return column_names_to_keep
 
@@ -697,7 +699,7 @@ class MultiAssayExperiment:
                 :py:meth:`~biocutils.normalize_subscript.normalize_subscript`.
 
             experiment_names:
-                Experiment name to keep.
+                Experiment names to keep.
 
                 Integer indices, a boolean filter, or (if the current object is
                 named) names specifying the ranges to be extracted, see
@@ -728,7 +730,7 @@ class MultiAssayExperiment:
 
         if rows != slice(None):
             for k, v in _expts_copy.items():
-                _expts_copy[k] = v[rows, :]
+                _expts_copy[k] = v[rows,]
 
         columns, _ = self._normalize_column_slice(columns)
         if columns != slice(None):
@@ -736,7 +738,10 @@ class MultiAssayExperiment:
 
             for k, v in _expts_copy.items():
                 if k in _col_dict:
-                    _matched_indices = ut.match(v.column_names, _col_dict[k])
+                    if len(_col_dict[k]) != 0:
+                        _matched_indices = ut.match(_col_dict[k], v.column_names)
+                    else:
+                        _matched_indices = []
                     _expts_copy[k] = v[:, list(_matched_indices)]
 
         return _expts_copy
@@ -785,7 +790,8 @@ class MultiAssayExperiment:
             columns = slice(None)
         columns, _ = self._normalize_column_slice(columns)
 
-        print("columns::", columns)
+        # filter column_data
+        _new_column_data = self._column_data[columns,]
 
         if experiments is None:
             experiments = slice(None)
@@ -799,19 +805,14 @@ class MultiAssayExperiment:
         for expname, expt in _new_experiments.items():
             counter = 0
             for _, row in self._sample_map:
-                if row["assay"] == expname and row["colname"] in expt.column_names:
+                if (
+                    row["assay"] == expname
+                    and row["primary"] in _new_column_data.row_names
+                    and row["colname"] in expt.column_names
+                ):
                     smap_indices_to_keep.append(counter)
                 counter += 1
         _new_sample_map = self._sample_map[list(set(smap_indices_to_keep)),]
-
-        # filter column_data
-        subset_primary = list(set(_new_sample_map.get_column("primary")))
-        coldata_indices_to_keep = []
-        for idx, row in enumerate(self._column_data._row_names):
-            if row in subset_primary:
-                coldata_indices_to_keep.append(idx)
-
-        _new_column_data = self._column_data[list(set(coldata_indices_to_keep)),]
 
         return SlicerResult(_new_experiments, _new_sample_map, _new_column_data)
 
