@@ -491,6 +491,10 @@ class MultiAssayExperiment:
 
         return expt
 
+    def get_with_column_data(self, name: str) -> Any:
+        """Alias to :py:meth:`~experiment`. Consistency with Bioconductor's naming of the same function."""
+        return self.experiment(name, with_sample_data=True)
+
     ############################
     ######>> sample map <<######
     ############################
@@ -944,7 +948,7 @@ class MultiAssayExperiment:
         """Identify samples that have data across all experiments.
 
         Returns:
-            A boolean vector same as the number of samples in column_data,
+            A boolean vector same as the number of samples in 'column_data',
             where each element is True if sample is present in all experiments or False.
         """
         vec = []
@@ -957,7 +961,6 @@ class MultiAssayExperiment:
                     smap_indices_to_keep.append(rdx)
 
             subset = self.sample_map[list(set(smap_indices_to_keep)),]
-
             vec.append(set(subset.get_column("assay")) == set(self.experiment_names))
 
         return vec
@@ -970,7 +973,7 @@ class MultiAssayExperiment:
             are keys and values specify if the sample is replicated within each experiment.
         """
         replicates = {}
-        all_samples = self.column_data.row_names
+        all_samples = self._column_data.row_names
         for expname, expt in self._experiments.items():
             if expname not in replicates:
                 replicates[expname] = {}
