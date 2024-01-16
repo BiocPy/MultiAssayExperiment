@@ -43,7 +43,7 @@ def test_MAE_slice():
     assert len(set(muMAE.sample_map["assay"])) == 3
     assert len(set(muMAE.sample_map["primary"])) == 3
 
-    sliced_MAE = muMAE[1:3, 1:3]
+    sliced_MAE = muMAE[1:3, 1:2]
     assert sliced_MAE is not None
     assert isinstance(sliced_MAE, mae.MultiAssayExperiment)
 
@@ -51,9 +51,10 @@ def test_MAE_slice():
     assert sliced_MAE.sample_map is not None
     assert sliced_MAE.column_data is not None
 
-    assert len(set(sliced_MAE.sample_map["assay"])) == 3
-    assert len(set(sliced_MAE.sample_map["primary"])) == 3
-    assert sliced_MAE.sample_map.shape[0] == 6
+    assert len(set(sliced_MAE.sample_map["assay"])) == 1
+    assert len(set(sliced_MAE.sample_map["primary"])) == 1
+    assert sliced_MAE.sample_map.shape[0] != muMAE.sample_map.shape[0]
+    assert sliced_MAE.sample_map.shape[0] == 1000
 
     sliced_MAE_assay = muMAE[None, None, ["rna", "spatial"]]
     assert sliced_MAE_assay is not None
@@ -77,7 +78,7 @@ def test_MAE_slice():
 
     assert len(set(sliced_MAE_assay.sample_map["assay"])) == 1
     assert len(set(sliced_MAE_assay.sample_map["primary"])) == 1
-    assert sliced_MAE_assay.sample_map.shape[0] == 5
+    assert sliced_MAE_assay.sample_map.shape[0] == 1000
 
 
 # def test_MAE_slice_dict():
@@ -137,7 +138,7 @@ def test_MAE_subset_by_column():
     assert len(set(muMAE.sample_map["assay"])) == 3
     assert len(set(muMAE.sample_map["primary"])) == 3
 
-    sliced_MAE = muMAE.subset_by_column(columns=[10, 2, 5])
+    sliced_MAE = muMAE.subset_by_column(columns=[1, 2])
     assert sliced_MAE is not None
     assert isinstance(sliced_MAE, mae.MultiAssayExperiment)
 
@@ -145,9 +146,10 @@ def test_MAE_subset_by_column():
     assert sliced_MAE.sample_map is not None
     assert sliced_MAE.column_data is not None
 
-    assert len(set(sliced_MAE.sample_map["assay"])) == 3
-    assert len(set(sliced_MAE.sample_map["primary"])) == 3
-    assert sliced_MAE.sample_map.shape == (2030, 3)
+    assert len(set(sliced_MAE.sample_map["assay"])) == 2
+    assert len(set(sliced_MAE.sample_map["primary"])) == 2
+    assert sliced_MAE.sample_map.shape == (1030, 3)
+    assert len(sliced_MAE.experiment_names) == len(muMAE.experiment_names)
 
 
 def test_MAE_subsetByExpt():

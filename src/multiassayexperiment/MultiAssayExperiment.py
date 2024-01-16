@@ -71,7 +71,10 @@ def _validate_sample_map_with_expts(sample_map, experiments):
     if (len(unique_expt_names) != len(smap_unique_assays)) or (
         unique_expt_names != smap_unique_assays
     ):
-        raise ValueError("'assays' mismatch between `sample_map` and `experiments`.")
+        warn(
+            "'experiments' contains names not represented in 'sample_map' or vice-versa.",
+            UserWarning,
+        )
 
     # check if colnames exist
     agroups = sample_map.split("assay")
@@ -488,6 +491,13 @@ class MultiAssayExperiment:
 
         return expt
 
+    def get_with_column_data(self, name: str) -> Any:
+        """Alias to :py:meth:`~experiment`.
+
+        Consistency with Bioconductor's naming of the same function.
+        """
+        return self.experiment(name, with_sample_data=True)
+
     ############################
     ######>> sample map <<######
     ############################
@@ -570,8 +580,8 @@ class MultiAssayExperiment:
         """
         column_data = _sanitize_frame(column_data)
 
-        self._validate_column_data(column_data)
-        self._validate_sample_map_with_column_data(self._sample_map, column_data)
+        _validate_column_data(column_data)
+        _validate_sample_map_with_column_data(self._sample_map, column_data)
 
         output = self._define_output(in_place)
         output._column_data = column_data
@@ -650,6 +660,28 @@ class MultiAssayExperiment:
     ######>> subset <<#######
     #########################
 
+    def _normalize_column_slice(self, columns: Union[str, int, bool, Sequence, slice]):
+        _scalar = None
+        if columns != slice(None):
+            columns, _scalar = ut.normalize_subscript(
+                columns, len(self._column_data), self._column_data.row_names
+            )
+
+        return columns, _scalar
+
+    def _filter_sample_map(self, columns: Union[str, int, bool, Sequence, slice]):
+        _samples_to_filter = self._column_data[columns,].row_names
+
+        column_names_to_keep = {}
+        for i in self.experiment_names:
+            column_names_to_keep[i] = []
+
+        for _, row in self._sample_map:
+            if row["primary"] in _samples_to_filter:
+                column_names_to_keep[row["assay"]].append(row["colname"])
+
+        return column_names_to_keep
+
     def subset_experiments(
         self,
         rows: Optional[Union[str, int, bool, Sequence]],
@@ -667,14 +699,14 @@ class MultiAssayExperiment:
                 :py:meth:`~biocutils.normalize_subscript.normalize_subscript`.
 
             columns:
-                Column indices to subset.
+                Column indices (from :py:attr:`~column_data`) to subset.
 
                 Integer indices, a boolean filter, or (if the current object is
                 named) names specifying the ranges to be extracted, see
-                :py:meth:`~biocutils.normalize_subscript.normalize_subsc
+                :py:meth:`~biocutils.normalize_subscript.normalize_subscript`.
 
             experiment_names:
-                Experiment name to keep.
+                Experiment names to keep.
 
                 Integer indices, a boolean filter, or (if the current object is
                 named) names specifying the ranges to be extracted, see
@@ -703,9 +735,21 @@ class MultiAssayExperiment:
 
             _expts_copy = new_expt
 
-        if rows != slice(None) and columns != slice(None):
+        if rows != slice(None):
             for k, v in _expts_copy.items():
-                _expts_copy[k] = v[rows, columns]
+                _expts_copy[k] = v[rows,]
+
+        columns, _ = self._normalize_column_slice(columns)
+        if columns != slice(None):
+            _col_dict = self._filter_sample_map(columns)
+
+            for k, v in _expts_copy.items():
+                if k in _col_dict:
+                    if len(_col_dict[k]) != 0:
+                        _matched_indices = ut.match(_col_dict[k], v.column_names)
+                    else:
+                        _matched_indices = []
+                    _expts_copy[k] = v[:, list(_matched_indices)]
 
         return _expts_copy
 
@@ -751,6 +795,10 @@ class MultiAssayExperiment:
 
         if columns is None:
             columns = slice(None)
+        columns, _ = self._normalize_column_slice(columns)
+
+        # filter column_data
+        _new_column_data = self._column_data[columns,]
 
         if experiments is None:
             experiments = slice(None)
@@ -764,19 +812,14 @@ class MultiAssayExperiment:
         for expname, expt in _new_experiments.items():
             counter = 0
             for _, row in self._sample_map:
-                if row["assay"] == expname and row["colname"] in expt.column_names:
+                if (
+                    row["assay"] == expname
+                    and row["primary"] in _new_column_data.row_names
+                    and row["colname"] in expt.column_names
+                ):
                     smap_indices_to_keep.append(counter)
                 counter += 1
         _new_sample_map = self._sample_map[list(set(smap_indices_to_keep)),]
-
-        # filter column_data
-        subset_primary = list(set(_new_sample_map.get_column("primary")))
-        coldata_indices_to_keep = []
-        for idx, row in enumerate(self._column_data._row_names):
-            if row in subset_primary:
-                coldata_indices_to_keep.append(idx)
-
-        _new_column_data = self._column_data[list(set(coldata_indices_to_keep)),]
 
         return SlicerResult(_new_experiments, _new_sample_map, _new_column_data)
 
@@ -908,7 +951,7 @@ class MultiAssayExperiment:
         """Identify samples that have data across all experiments.
 
         Returns:
-            A boolean vector same as the number of samples in column_data,
+            A boolean vector same as the number of samples in 'column_data',
             where each element is True if sample is present in all experiments or False.
         """
         vec = []
@@ -921,7 +964,6 @@ class MultiAssayExperiment:
                     smap_indices_to_keep.append(rdx)
 
             subset = self.sample_map[list(set(smap_indices_to_keep)),]
-
             vec.append(set(subset.get_column("assay")) == set(self.experiment_names))
 
         return vec
@@ -934,15 +976,14 @@ class MultiAssayExperiment:
             are keys and values specify if the sample is replicated within each experiment.
         """
         replicates = {}
-        all_samples = self.column_data.row_names
+        all_samples = self._column_data.row_names
         for expname, expt in self._experiments.items():
             if expname not in replicates:
                 replicates[expname] = {}
 
                 for s in all_samples:
-                    replicates[expname][s] = []
+                    replicates[expname][s] = [False] * expt.shape[1]
 
-            colnames = expt.column_names
             smap_indices_to_keep = []
 
             _assay = self._sample_map.get_column("assay")
@@ -952,17 +993,11 @@ class MultiAssayExperiment:
 
             subset_smap = self.sample_map[list(set(smap_indices_to_keep)),]
 
-            for x in colnames:
-                _subset_smap_colnames = subset_smap.get_column("colname")
-                _indices = []
-                for cdx in range(len(_subset_smap_colnames)):
-                    if _subset_smap_colnames[cdx] == x:
-                        _indices.append(cdx)
-
-                __subset_smap = subset_smap[_indices,]
-
-                for s in all_samples:
-                    replicates[expname][s].append(__subset_smap.get_column("primary"))
+            counter = 0
+            for _, row in subset_smap:
+                if row["assay"] == expname:
+                    replicates[expname][row["primary"]][counter] = True
+                counter += 1
 
         return replicates
 
