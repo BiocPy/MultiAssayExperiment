@@ -733,7 +733,7 @@ class MultiAssayExperiment:
         columns, _ = self._normalize_column_slice(columns)
         if columns != slice(None):
             _col_dict = self._filter_sample_map(columns)
-            
+
             for k, v in _expts_copy.items():
                 if k in _col_dict:
                     _matched_indices = ut.match(v.column_names, _col_dict[k])
