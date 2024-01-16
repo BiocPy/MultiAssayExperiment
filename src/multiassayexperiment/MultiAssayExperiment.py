@@ -1063,7 +1063,7 @@ class MultiAssayExperiment:
     def columnnames(self) -> Dict[str, Optional[ut.Names]]:
         """Alias for :py:attr:`~get_column_names`, provided for back-compatibility."""
         return self.get_column_names()
-    
+
     @property
     def colnames(self) -> Dict[str, Optional[ut.Names]]:
         """Alias for :py:attr:`~get_column_names`, provided for back-compatibility."""
@@ -1297,11 +1297,12 @@ class MultiAssayExperiment:
             metadata=input.uns,
         )
 
+
 @ut.extract_row_names.register(MultiAssayExperiment)
-def _rownames_bframe(x: MultiAssayExperiment):
+def _rownames_mae(x: MultiAssayExperiment):
     return x.get_row_names()
 
 
 @ut.extract_column_names.register(MultiAssayExperiment)
-def _colnames_bframe(x: MultiAssayExperiment):
+def _colnames_mae(x: MultiAssayExperiment):
     return x.get_column_names()
