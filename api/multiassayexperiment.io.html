@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Contributing" href="../contributing.html" /><link rel="prev" title="multiassayexperiment package" href="multiassayexperiment.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>multiassayexperiment.io package - MultiAssayExperiment 0.4.0 documentation</title>
+        <title>multiassayexperiment.io package - MultiAssayExperiment 0.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">MultiAssayExperiment 0.4.0 documentation</div></a>
+      <a href="../index.html"><div class="brand">MultiAssayExperiment 0.4.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -146,7 +146,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.0 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -217,7 +217,7 @@
 <dt class="sig sig-object py" id="multiassayexperiment.io.h5ad.read_h5ad">
 <span class="sig-prename descclassname"><span class="pre">multiassayexperiment.io.h5ad.</span></span><span class="sig-name descname"><span class="pre">read_h5ad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/io/h5ad.html#read_h5ad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.io.h5ad.read_h5ad" title="Link to this definition">#</a></dt>
 <dd><p>Create a <a class="reference internal" href="multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a> from a H5AD file.</p>
-<p>This function reads the h5ad at the <code class="docutils literal notranslate"><span class="pre">path</span></code> using <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.read_h5ad.html#anndata.read_h5ad" title="(in anndata v0.11.0.dev37+g63e6b29)"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_h5ad()</span></code></a> and converts
+<p>This function reads the h5ad at the <code class="docutils literal notranslate"><span class="pre">path</span></code> using <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.read_h5ad.html#anndata.read_h5ad" title="(in anndata v0.1.dev50+gc1afc3e)"><code class="xref py py-func docutils literal notranslate"><span class="pre">read_h5ad()</span></code></a> and converts
 it into an MAE using <code class="xref py py-func docutils literal notranslate"><span class="pre">from_anndata()</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -236,9 +236,9 @@ it into an MAE using <code class="xref py py-func docutils literal notranslate">
 <dt class="sig sig-object py" id="multiassayexperiment.io.interface.make_mae">
 <span class="sig-prename descclassname"><span class="pre">multiassayexperiment.io.interface.</span></span><span class="sig-name descname"><span class="pre">make_mae</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/io/interface.html#make_mae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.io.interface.make_mae" title="Link to this definition">#</a></dt>
 <dd><p>Create an <a class="reference internal" href="multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a> from a dictionary of
-experiment objects. Each experiment is either an <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.11.0.dev37+g63e6b29)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a> object or a subclass of
-<a class="reference external" href="https://biocpy.github.io/SummarizedExperiment/api/summarizedexperiment.html#summarizedexperiment.SummarizedExperiment.SummarizedExperiment" title="(in SummarizedExperiment v0.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SummarizedExperiment</span></code></a>. <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.11.0.dev37+g63e6b29)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a> objects
-will be converted to a <a class="reference external" href="https://biocpy.github.io/SingleCellExperiment/api/singlecellexperiment.html#singlecellexperiment.SingleCellExperiment.SingleCellExperiment" title="(in SingleCellExperiment v0.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleCellExperiment</span></code></a>.</p>
+experiment objects. Each experiment is either an <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.1.dev50+gc1afc3e)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a> object or a subclass of
+<a class="reference external" href="https://biocpy.github.io/SummarizedExperiment/api/summarizedexperiment.html#summarizedexperiment.SummarizedExperiment.SummarizedExperiment" title="(in SummarizedExperiment v0.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SummarizedExperiment</span></code></a>. <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.1.dev50+gc1afc3e)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a> objects
+will be converted to a <a class="reference external" href="https://biocpy.github.io/SingleCellExperiment/api/singlecellexperiment.html#singlecellexperiment.SingleCellExperiment.SingleCellExperiment" title="(in SingleCellExperiment v0.4.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SingleCellExperiment</span></code></a>.</p>
 <p>The import naively creates sample mapping, with each <code class="docutils literal notranslate"><span class="pre">experiment</span></code> considered to be a
 independent <cite>sample</cite>. We add a sample to
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">col_data</span></code>
@@ -249,7 +249,7 @@ considered to be from the same sample and is reflected in
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>experiments</strong> – <p>A dictionary of experiments with experiment names as keys and the
 experiments as values.</p>
-<p>Each <code class="docutils literal notranslate"><span class="pre">experiment</span></code> can be either a <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.11.0.dev37+g63e6b29)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a> object or a
+<p>Each <code class="docutils literal notranslate"><span class="pre">experiment</span></code> can be either a <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.1.dev50+gc1afc3e)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a> object or a
 subclass of <a class="reference external" href="https://biocpy.github.io/SummarizedExperiment/api/summarizedexperiment.html#summarizedexperiment.SummarizedExperiment.SummarizedExperiment" title="(in SummarizedExperiment v0.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SummarizedExperiment</span></code></a>.</p>
 </p>
 </dd>
@@ -349,7 +349,7 @@ subclass of <a class="reference external" href="https://biocpy.github.io/Summari
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=6c02275b"></script>
+</div><script src="../_static/documentation_options.js?v=c87aa342"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=32e29ea5"></script>

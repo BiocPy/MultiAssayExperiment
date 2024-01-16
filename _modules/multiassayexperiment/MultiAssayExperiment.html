@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>multiassayexperiment.MultiAssayExperiment - MultiAssayExperiment 0.4.0 documentation</title>
+        <title>multiassayexperiment.MultiAssayExperiment - MultiAssayExperiment 0.4.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">MultiAssayExperiment 0.4.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">MultiAssayExperiment 0.4.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.0 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.1 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -278,7 +278,10 @@
     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_expt_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">smap_unique_assays</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span>
         <span class="n">unique_expt_names</span> <span class="o">!=</span> <span class="n">smap_unique_assays</span>
     <span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;assays&#39; mismatch between `sample_map` and `experiments`.&quot;</span><span class="p">)</span>
+        <span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;&#39;experiments&#39; contains names not represented in &#39;sample_map&#39; or vice-versa.&quot;</span><span class="p">,</span>
+            <span class="ne">UserWarning</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="c1"># check if colnames exist</span>
     <span class="n">agroups</span> <span class="o">=</span> <span class="n">sample_map</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;assay&quot;</span><span class="p">)</span>
@@ -724,6 +727,16 @@
         <span class="k">return</span> <span class="n">expt</span></div>
 
 
+<div class="viewcode-block" id="MultiAssayExperiment.get_with_column_data">
+<a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_with_column_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_with_column_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias to :py:meth:`~experiment`.</span>
+
+<span class="sd">        Consistency with Bioconductor&#39;s naming of the same function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">with_sample_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
     <span class="c1">############################</span>
     <span class="c1">######&gt;&gt; sample map &lt;&lt;######</span>
     <span class="c1">############################</span>
@@ -817,8 +830,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">column_data</span> <span class="o">=</span> <span class="n">_sanitize_frame</span><span class="p">(</span><span class="n">column_data</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_column_data</span><span class="p">(</span><span class="n">column_data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_sample_map_with_column_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sample_map</span><span class="p">,</span> <span class="n">column_data</span><span class="p">)</span>
+        <span class="n">_validate_column_data</span><span class="p">(</span><span class="n">column_data</span><span class="p">)</span>
+        <span class="n">_validate_sample_map_with_column_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sample_map</span><span class="p">,</span> <span class="n">column_data</span><span class="p">)</span>
 
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_define_output</span><span class="p">(</span><span class="n">in_place</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">_column_data</span> <span class="o">=</span> <span class="n">column_data</span>
@@ -904,6 +917,28 @@
     <span class="c1">######&gt;&gt; subset &lt;&lt;#######</span>
     <span class="c1">#########################</span>
 
+    <span class="k">def</span> <span class="nf">_normalize_column_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="nb">slice</span><span class="p">]):</span>
+        <span class="n">_scalar</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">columns</span> <span class="o">!=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">columns</span><span class="p">,</span> <span class="n">_scalar</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">normalize_subscript</span><span class="p">(</span>
+                <span class="n">columns</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="o">.</span><span class="n">row_names</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">columns</span><span class="p">,</span> <span class="n">_scalar</span>
+
+    <span class="k">def</span> <span class="nf">_filter_sample_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="nb">slice</span><span class="p">]):</span>
+        <span class="n">_samples_to_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">[</span><span class="n">columns</span><span class="p">,]</span><span class="o">.</span><span class="n">row_names</span>
+
+        <span class="n">column_names_to_keep</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_names</span><span class="p">:</span>
+            <span class="n">column_names_to_keep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_map</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;primary&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">_samples_to_filter</span><span class="p">:</span>
+                <span class="n">column_names_to_keep</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;assay&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;colname&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">column_names_to_keep</span>
+
 <div class="viewcode-block" id="MultiAssayExperiment.subset_experiments">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_experiments">[docs]</a>
     <span class="k">def</span> <span class="nf">subset_experiments</span><span class="p">(</span>
@@ -923,14 +958,14 @@
 <span class="sd">                :py:meth:`~biocutils.normalize_subscript.normalize_subscript`.</span>
 
 <span class="sd">            columns:</span>
-<span class="sd">                Column indices to subset.</span>
+<span class="sd">                Column indices (from :py:attr:`~column_data`) to subset.</span>
 
 <span class="sd">                Integer indices, a boolean filter, or (if the current object is</span>
 <span class="sd">                named) names specifying the ranges to be extracted, see</span>
-<span class="sd">                :py:meth:`~biocutils.normalize_subscript.normalize_subsc</span>
+<span class="sd">                :py:meth:`~biocutils.normalize_subscript.normalize_subscript`.</span>
 
 <span class="sd">            experiment_names:</span>
-<span class="sd">                Experiment name to keep.</span>
+<span class="sd">                Experiment names to keep.</span>
 
 <span class="sd">                Integer indices, a boolean filter, or (if the current object is</span>
 <span class="sd">                named) names specifying the ranges to be extracted, see</span>
@@ -959,9 +994,21 @@
 
             <span class="n">_expts_copy</span> <span class="o">=</span> <span class="n">new_expt</span>
 
-        <span class="k">if</span> <span class="n">rows</span> <span class="o">!=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">columns</span> <span class="o">!=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">rows</span> <span class="o">!=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_expts_copy</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">_expts_copy</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">]</span>
+                <span class="n">_expts_copy</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">rows</span><span class="p">,]</span>
+
+        <span class="n">columns</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_column_slice</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">columns</span> <span class="o">!=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">_col_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_sample_map</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_expts_copy</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">_col_dict</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_col_dict</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">_matched_indices</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">_col_dict</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">v</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">_matched_indices</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">_expts_copy</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[:,</span> <span class="nb">list</span><span class="p">(</span><span class="n">_matched_indices</span><span class="p">)]</span>
 
         <span class="k">return</span> <span class="n">_expts_copy</span></div>
 
@@ -1008,6 +1055,10 @@
 
         <span class="k">if</span> <span class="n">columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">columns</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">columns</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalize_column_slice</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+
+        <span class="c1"># filter column_data</span>
+        <span class="n">_new_column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">[</span><span class="n">columns</span><span class="p">,]</span>
 
         <span class="k">if</span> <span class="n">experiments</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">experiments</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -1021,19 +1072,14 @@
         <span class="k">for</span> <span class="n">expname</span><span class="p">,</span> <span class="n">expt</span> <span class="ow">in</span> <span class="n">_new_experiments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_map</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;assay&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">expname</span> <span class="ow">and</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;colname&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">expt</span><span class="o">.</span><span class="n">column_names</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">row</span><span class="p">[</span><span class="s2">&quot;assay&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">expname</span>
+                    <span class="ow">and</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;primary&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">_new_column_data</span><span class="o">.</span><span class="n">row_names</span>
+                    <span class="ow">and</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;colname&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">expt</span><span class="o">.</span><span class="n">column_names</span>
+                <span class="p">):</span>
                     <span class="n">smap_indices_to_keep</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
                 <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">_new_sample_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_map</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">smap_indices_to_keep</span><span class="p">)),]</span>
-
-        <span class="c1"># filter column_data</span>
-        <span class="n">subset_primary</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">_new_sample_map</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s2">&quot;primary&quot;</span><span class="p">)))</span>
-        <span class="n">coldata_indices_to_keep</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="o">.</span><span class="n">_row_names</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">subset_primary</span><span class="p">:</span>
-                <span class="n">coldata_indices_to_keep</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
-
-        <span class="n">_new_column_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">coldata_indices_to_keep</span><span class="p">)),]</span>
 
         <span class="k">return</span> <span class="n">SlicerResult</span><span class="p">(</span><span class="n">_new_experiments</span><span class="p">,</span> <span class="n">_new_sample_map</span><span class="p">,</span> <span class="n">_new_column_data</span><span class="p">)</span>
 
@@ -1179,7 +1225,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Identify samples that have data across all experiments.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A boolean vector same as the number of samples in column_data,</span>
+<span class="sd">            A boolean vector same as the number of samples in &#39;column_data&#39;,</span>
 <span class="sd">            where each element is True if sample is present in all experiments or False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">vec</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1192,7 +1238,6 @@
                     <span class="n">smap_indices_to_keep</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rdx</span><span class="p">)</span>
 
             <span class="n">subset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_map</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">smap_indices_to_keep</span><span class="p">)),]</span>
-
             <span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">subset</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s2">&quot;assay&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_names</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">vec</span></div>
@@ -1208,15 +1253,14 @@
 <span class="sd">            are keys and values specify if the sample is replicated within each experiment.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">replicates</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">all_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_data</span><span class="o">.</span><span class="n">row_names</span>
+        <span class="n">all_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="o">.</span><span class="n">row_names</span>
         <span class="k">for</span> <span class="n">expname</span><span class="p">,</span> <span class="n">expt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">expname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">replicates</span><span class="p">:</span>
                 <span class="n">replicates</span><span class="p">[</span><span class="n">expname</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
                 <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_samples</span><span class="p">:</span>
-                    <span class="n">replicates</span><span class="p">[</span><span class="n">expname</span><span class="p">][</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">replicates</span><span class="p">[</span><span class="n">expname</span><span class="p">][</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">expt</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-            <span class="n">colnames</span> <span class="o">=</span> <span class="n">expt</span><span class="o">.</span><span class="n">column_names</span>
             <span class="n">smap_indices_to_keep</span> <span class="o">=</span> <span class="p">[]</span>
 
             <span class="n">_assay</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_map</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s2">&quot;assay&quot;</span><span class="p">)</span>
@@ -1226,17 +1270,11 @@
 
             <span class="n">subset_smap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_map</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">smap_indices_to_keep</span><span class="p">)),]</span>
 
-            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">colnames</span><span class="p">:</span>
-                <span class="n">_subset_smap_colnames</span> <span class="o">=</span> <span class="n">subset_smap</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s2">&quot;colname&quot;</span><span class="p">)</span>
-                <span class="n">_indices</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="n">cdx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">_subset_smap_colnames</span><span class="p">)):</span>
-                    <span class="k">if</span> <span class="n">_subset_smap_colnames</span><span class="p">[</span><span class="n">cdx</span><span class="p">]</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
-                        <span class="n">_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cdx</span><span class="p">)</span>
-
-                <span class="n">__subset_smap</span> <span class="o">=</span> <span class="n">subset_smap</span><span class="p">[</span><span class="n">_indices</span><span class="p">,]</span>
-
-                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">all_samples</span><span class="p">:</span>
-                    <span class="n">replicates</span><span class="p">[</span><span class="n">expname</span><span class="p">][</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">__subset_smap</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s2">&quot;primary&quot;</span><span class="p">))</span>
+            <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">subset_smap</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;assay&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">expname</span><span class="p">:</span>
+                    <span class="n">replicates</span><span class="p">[</span><span class="n">expname</span><span class="p">][</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;primary&quot;</span><span class="p">]][</span><span class="n">counter</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="k">return</span> <span class="n">replicates</span></div>
 
@@ -1508,7 +1546,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=6c02275b"></script>
+</div><script src="../../_static/documentation_options.js?v=c87aa342"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
