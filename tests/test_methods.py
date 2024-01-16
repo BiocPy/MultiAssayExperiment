@@ -232,6 +232,7 @@ def test_with_sample_data():
     print(expt_with_sample_data.column_data)
     assert expt_with_sample_data.column_data.get_column("samples") is not None
 
+
 def test_MAE_intersect_methods():
     tsce = SingleCellExperiment(
         assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
@@ -249,13 +250,11 @@ def test_MAE_intersect_methods():
         sample_map=sample_map,
         metadata={"could be": "anything"},
     )
-    
 
     row_mae = mae.intersect_rows()
     assert row_mae is not None
     assert isinstance(row_mae, MultiAssayExperiment)
     assert row_mae.experiment_names == mae.experiment_names
-
 
 
 def test_MAE_names():
@@ -276,12 +275,11 @@ def test_MAE_names():
         metadata={"could be": "anything"},
     )
 
-
     rownames = mae.rownames
     colnames = mae.column_names
 
     assert rownames is not None
     assert len(rownames) == len(mae.experiments)
-    
+
     assert colnames is not None
     assert len(colnames) == len(mae.experiments)
