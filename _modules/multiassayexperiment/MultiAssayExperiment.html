@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>multiassayexperiment.MultiAssayExperiment - MultiAssayExperiment 0.4.1 documentation</title>
+        <title>multiassayexperiment.MultiAssayExperiment - MultiAssayExperiment 0.4.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">MultiAssayExperiment 0.4.1 documentation</div></a>
+      <a href="../../index.html"><div class="brand">MultiAssayExperiment 0.4.2 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,7 +145,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.1 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.2 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -1279,6 +1279,91 @@
         <span class="k">return</span> <span class="n">replicates</span></div>
 
 
+<div class="viewcode-block" id="MultiAssayExperiment.find_common_row_names">
+<a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.find_common_row_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">find_common_row_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds common row names across all experiments.&quot;&quot;&quot;</span>
+
+        <span class="n">_common</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">expt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">_common</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_common</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">expt</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_common</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">expt</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">_common</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">_common</span></div>
+
+
+<div class="viewcode-block" id="MultiAssayExperiment.intersect_rows">
+<a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.intersect_rows">[docs]</a>
+    <span class="k">def</span> <span class="nf">intersect_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds common row names across all experiments and filters the MAE to these rows.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A new sliced `MultiAssayExperiment` object with the filtered rows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_common_row_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_common_row_names</span><span class="p">()</span>
+        <span class="n">sresult</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generic_slice</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="n">_common_row_names</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span>
+            <span class="n">sresult</span><span class="o">.</span><span class="n">experiments</span><span class="p">,</span>
+            <span class="n">sresult</span><span class="o">.</span><span class="n">column_data</span><span class="p">,</span>
+            <span class="n">sresult</span><span class="o">.</span><span class="n">sample_map</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1">####################################</span>
+    <span class="c1">######&gt;&gt; row or column names &lt;&lt;#####</span>
+    <span class="c1">####################################</span>
+
+<div class="viewcode-block" id="MultiAssayExperiment.get_row_names">
+<a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_row_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_row_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ut</span><span class="o">.</span><span class="n">Names</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary, with experiment names as keys, and row names as values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_all_row_names</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">expname</span><span class="p">,</span> <span class="n">expt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">_all_row_names</span><span class="p">[</span><span class="n">expname</span><span class="p">]</span> <span class="o">=</span> <span class="n">expt</span><span class="o">.</span><span class="n">row_names</span>
+
+        <span class="k">return</span> <span class="n">_all_row_names</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rownames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ut</span><span class="o">.</span><span class="n">Names</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:attr:`~get_row_names`, provided for back-compatibility.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_row_names</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MultiAssayExperiment.get_column_names">
+<a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_column_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ut</span><span class="o">.</span><span class="n">Names</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary, with experiment names as keys, and the column names as values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_all_row_names</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">expname</span><span class="p">,</span> <span class="n">expt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">_all_row_names</span><span class="p">[</span><span class="n">expname</span><span class="p">]</span> <span class="o">=</span> <span class="n">expt</span><span class="o">.</span><span class="n">column_names</span>
+
+        <span class="k">return</span> <span class="n">_all_row_names</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">columnnames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ut</span><span class="o">.</span><span class="n">Names</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:attr:`~get_column_names`, provided for back-compatibility.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_column_names</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">colnames</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ut</span><span class="o">.</span><span class="n">Names</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:attr:`~get_column_names`, provided for back-compatibility.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_column_names</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">column_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ut</span><span class="o">.</span><span class="n">Names</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :py:attr:`~get_column_names`, provided for back-compatibility.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_column_names</span><span class="p">()</span>
+
     <span class="c1">#################################</span>
     <span class="c1">######&gt;&gt; add experiment &lt;&lt;#######</span>
     <span class="c1">#################################</span>
@@ -1514,6 +1599,16 @@
         <span class="p">)</span></div>
 </div>
 
+
+
+<span class="nd">@ut</span><span class="o">.</span><span class="n">extract_row_names</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">MultiAssayExperiment</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_rownames_mae</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">MultiAssayExperiment</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">get_row_names</span><span class="p">()</span>
+
+
+<span class="nd">@ut</span><span class="o">.</span><span class="n">extract_column_names</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">MultiAssayExperiment</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_colnames_mae</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">MultiAssayExperiment</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">get_column_names</span><span class="p">()</span>
 </pre></div>
         </article>
       </div>
@@ -1546,7 +1641,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=c87aa342"></script>
+</div><script src="../../_static/documentation_options.js?v=ff822928"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
