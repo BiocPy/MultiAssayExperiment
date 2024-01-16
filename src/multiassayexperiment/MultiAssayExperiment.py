@@ -979,9 +979,8 @@ class MultiAssayExperiment:
                 replicates[expname] = {}
 
                 for s in all_samples:
-                    replicates[expname][s] = []
+                    replicates[expname][s] = [False] * expt.shape[1]
 
-            colnames = expt.column_names
             smap_indices_to_keep = []
 
             _assay = self._sample_map.get_column("assay")
@@ -991,17 +990,11 @@ class MultiAssayExperiment:
 
             subset_smap = self.sample_map[list(set(smap_indices_to_keep)),]
 
-            for x in colnames:
-                _subset_smap_colnames = subset_smap.get_column("colname")
-                _indices = []
-                for cdx in range(len(_subset_smap_colnames)):
-                    if _subset_smap_colnames[cdx] == x:
-                        _indices.append(cdx)
-
-                __subset_smap = subset_smap[_indices,]
-
-                for s in all_samples:
-                    replicates[expname][s].append(__subset_smap.get_column("primary"))
+            counter = 0
+            for _, row in subset_smap:
+                if row["assay"] == expname:
+                    replicates[expname][row["primary"]][counter] = True
+                counter += 1
 
         return replicates
 
