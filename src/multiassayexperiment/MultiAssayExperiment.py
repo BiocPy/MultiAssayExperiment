@@ -1001,6 +1001,79 @@ class MultiAssayExperiment:
 
         return replicates
 
+    def find_common_row_names(self) -> List[str]:
+        """Finds common row names across all experiments."""
+
+        _common = None
+        for _, expt in self._experiments.items():
+            if _common is None:
+                _common = set(expt.row_names)
+            else:
+                _common = set(expt.row_names).intersection(_common)
+
+        return _common
+
+    def intersect_rows(self) -> "MultiAssayExperiment":
+        """Finds common row names across all experiments and filters the MAE to these rows.
+
+        Returns:
+            A new sliced `MultiAssayExperiment` object with the filtered rows.
+        """
+        _common_row_names = self.find_common_row_names()
+        sresult = self._generic_slice(rows=_common_row_names)
+        return MultiAssayExperiment(
+            sresult.experiments,
+            sresult.column_data,
+            sresult.sample_map,
+            self.metadata,
+        )
+
+    ####################################
+    ######>> row or column names <<#####
+    ####################################
+
+    def get_row_names(self) -> Dict[str, Optional[ut.Names]]:
+        """
+        Returns:
+            Dictionary, with experiment names as keys, and row names as values.
+        """
+        _all_row_names = {}
+        for expname, expt in self._experiments.items():
+            _all_row_names[expname] = expt.row_names
+
+        return _all_row_names
+
+    @property
+    def rownames(self) -> Dict[str, Optional[ut.Names]]:
+        """Alias for :py:attr:`~get_row_names`, provided for back-compatibility."""
+        return self.get_row_names()
+
+    def get_column_names(self) -> Dict[str, Optional[ut.Names]]:
+        """
+        Returns:
+            Dictionary, with experiment names as keys, and the column names as values.
+        """
+        _all_row_names = {}
+        for expname, expt in self._experiments.items():
+            _all_row_names[expname] = expt.column_names
+
+        return _all_row_names
+
+    @property
+    def columnnames(self) -> Dict[str, Optional[ut.Names]]:
+        """Alias for :py:attr:`~get_column_names`, provided for back-compatibility."""
+        return self.get_column_names()
+
+    @property
+    def colnames(self) -> Dict[str, Optional[ut.Names]]:
+        """Alias for :py:attr:`~get_column_names`, provided for back-compatibility."""
+        return self.get_column_names()
+
+    @property
+    def column_names(self) -> Dict[str, Optional[ut.Names]]:
+        """Alias for :py:attr:`~get_column_names`, provided for back-compatibility."""
+        return self.get_column_names()
+
     #################################
     ######>> add experiment <<#######
     #################################
@@ -1223,3 +1296,13 @@ class MultiAssayExperiment:
             sample_map=sample_map,
             metadata=input.uns,
         )
+
+
+@ut.extract_row_names.register(MultiAssayExperiment)
+def _rownames_mae(x: MultiAssayExperiment):
+    return x.get_row_names()
+
+
+@ut.extract_column_names.register(MultiAssayExperiment)
+def _colnames_mae(x: MultiAssayExperiment):
+    return x.get_column_names()
