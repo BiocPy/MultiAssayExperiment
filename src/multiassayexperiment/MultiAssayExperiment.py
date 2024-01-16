@@ -1035,7 +1035,7 @@ class MultiAssayExperiment:
     def get_row_names(self) -> Dict[str, Optional[ut.Names]]:
         """
         Returns:
-            Dictionary of row names for each experiment.
+            Dictionary, with experiment names as keys, and row names as values.
         """
         _all_row_names = {}
         for expname, expt in self._experiments.items():
@@ -1051,7 +1051,7 @@ class MultiAssayExperiment:
     def get_column_names(self) -> Dict[str, Optional[ut.Names]]:
         """
         Returns:
-            Dictionary of row names for each experiment.
+            Dictionary, with experiment names as keys, and the column names as values.
         """
         _all_row_names = {}
         for expname, expt in self._experiments.items():
