@@ -1296,3 +1296,12 @@ class MultiAssayExperiment:
             sample_map=sample_map,
             metadata=input.uns,
         )
+
+@ut.extract_row_names.register(MultiAssayExperiment)
+def _rownames_bframe(x: MultiAssayExperiment):
+    return x.get_row_names()
+
+
+@ut.extract_column_names.register(MultiAssayExperiment)
+def _colnames_bframe(x: MultiAssayExperiment):
+    return x.get_column_names()
