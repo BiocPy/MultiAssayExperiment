@@ -43,7 +43,7 @@ def test_MAE_slice():
     assert len(set(muMAE.sample_map["assay"])) == 3
     assert len(set(muMAE.sample_map["primary"])) == 3
 
-    sliced_MAE = muMAE[1:3, 1:3]
+    sliced_MAE = muMAE[1:3, 1:2]
     assert sliced_MAE is not None
     assert isinstance(sliced_MAE, mae.MultiAssayExperiment)
 
@@ -53,7 +53,8 @@ def test_MAE_slice():
 
     assert len(set(sliced_MAE.sample_map["assay"])) == 3
     assert len(set(sliced_MAE.sample_map["primary"])) == 3
-    assert sliced_MAE.sample_map.shape[0] == 6
+    assert sliced_MAE.sample_map.shape[0] != muMAE.sample_map.shape[0]
+    assert sliced_MAE.sample_map.shape[0] == 2030
 
     sliced_MAE_assay = muMAE[None, None, ["rna", "spatial"]]
     assert sliced_MAE_assay is not None

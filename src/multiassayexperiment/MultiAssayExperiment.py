@@ -650,6 +650,29 @@ class MultiAssayExperiment:
     ######>> subset <<#######
     #########################
 
+    def _normalize_column_slice(self, columns: Union[str, int, bool, Sequence, slice]):
+        _scalar = None
+        if columns != slice(None):
+            columns, _scalar = ut.normalize_subscript(
+                columns, len(self._column_data), self._column_data.row_names
+            )
+
+        return columns, _scalar
+
+    def _filter_sample_map(self, columns: Union[str, int, bool, Sequence, slice]):
+        _samples_to_filter = [self._column_data.row_names[i] for i in columns]
+        _primary = self._sample_map.get_column("primary")
+
+        column_names_to_keep = {}
+        for i in _samples_to_filter:
+            column_names_to_keep[i] = []
+
+        for rdx in range(len(_primary)):
+            if _primary[rdx] in _samples_to_filter:
+                column_names_to_keep[_primary[rdx]].append(rdx)
+
+        return column_names_to_keep
+
     def subset_experiments(
         self,
         rows: Optional[Union[str, int, bool, Sequence]],
@@ -667,7 +690,7 @@ class MultiAssayExperiment:
                 :py:meth:`~biocutils.normalize_subscript.normalize_subscript`.
 
             columns:
-                Column indices to subset.
+                Column indices (from :py:attr:`~column_data`) to subset.
 
                 Integer indices, a boolean filter, or (if the current object is
                 named) names specifying the ranges to be extracted, see
@@ -703,9 +726,18 @@ class MultiAssayExperiment:
 
             _expts_copy = new_expt
 
-        if rows != slice(None) and columns != slice(None):
+        if rows != slice(None):
             for k, v in _expts_copy.items():
-                _expts_copy[k] = v[rows, columns]
+                _expts_copy[k] = v[rows, :]
+
+        columns, _ = self._normalize_column_slice(columns)
+        if columns != slice(None):
+            _col_dict = self._filter_sample_map(columns)
+            
+            for k, v in _expts_copy.items():
+                if k in _col_dict:
+                    _matched_indices = ut.match(v.column_names, _col_dict[k])
+                    _expts_copy[k] = v[:, list(_matched_indices)]
 
         return _expts_copy
 
@@ -751,6 +783,9 @@ class MultiAssayExperiment:
 
         if columns is None:
             columns = slice(None)
+        columns, _ = self._normalize_column_slice(columns)
+
+        print("columns::", columns)
 
         if experiments is None:
             experiments = slice(None)
