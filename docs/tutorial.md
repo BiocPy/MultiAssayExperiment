@@ -6,7 +6,7 @@ kernelspec:
 
 # Multiple experiments
 
-`MultiAssayExperiment` (MAE) simplifies the management of multiple experimental assays conducted on a shared set of specimens. 
+`MultiAssayExperiment` (MAE) simplifies the management of multiple experimental assays conducted on a shared set of specimens.
 
 :::{note}
 These classes follow a functional paradigm for accessing or setting properties, with further details discussed in [functional paradigm](https://biocpy.github.io/tutorial/chapters/philosophy.html#functional-discipline) section.
@@ -115,9 +115,9 @@ print(mae)
 
 ### No sample mapping?
 
-If both `column_data` and `sample_map` are `None`, the constructor naively creates sample mapping, with each `experiment` considered to be a independent `sample`. We add a sample to `column_data` in this pattern - ``unknown_sample_{experiment_name}``. 
+If both `column_data` and `sample_map` are `None`, the constructor naively creates sample mapping, with each `experiment` considered to be a independent `sample`. We add a sample to `column_data` in this pattern - ``unknown_sample_{experiment_name}``.
 
-All cells from the each experiment are considered to be from the same sample and is reflected in `sample_map`. 
+All cells from the each experiment are considered to be from the same sample and is reflected in `sample_map`.
 
 :::{important}
 ***This is not a recommended approach, but if you don’t have sample mapping, then it doesn’t matter***.
