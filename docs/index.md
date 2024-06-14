@@ -15,7 +15,7 @@ pip install multiassayexperiment
 ```{toctree}
 :maxdepth: 2
 
-Tutorial <tutorial>
+Overview <overview>
 Module Reference <api/modules>
 Contributions & Help <contributing>
 License <license>
