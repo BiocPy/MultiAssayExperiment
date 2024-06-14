@@ -4,11 +4,11 @@
 
 # MultiAssayExperiment
 
-Container class to represent and manage multi-omics genomic experiments. Follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
+Container class to represent and manage multi-omics genomic experiments. `MultiAssayExperiment` (MAE) simplifies the management of multiple experimental assays conducted on a shared set of specimens, follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
 
 ## Install
 
-Package is published to [PyPI](https://pypi.org/project/multiassayexperiment/)
+To get started, install the package from [PyPI](https://pypi.org/project/multiassayexperiment/)
 
 ```shell
 pip install multiassayexperiment
@@ -16,7 +16,20 @@ pip install multiassayexperiment
 
 ## Usage
 
-First create mock sample data
+An MAE contains three main entities,
+
+- **Primary information** (`column_data`): Bio-specimen/sample information. The `column_data` may provide information about patients, cell lines, or other biological units. Each row in this table represents an independent biological unit. It must contain an `index` that maps to the 'primary' in `sample_map`.
+
+- **Experiments** (`experiments`): Genomic data from each experiment. either a `SingleCellExperiment`, `SummarizedExperiment`, `RangedSummarizedExperiment` or any class that extends a `SummarizedExperiment`.
+
+- **Sample Map** (`sample_map`): Map biological units from `column_data` to the list of `experiments`. Must contain columns,
+    - **assay** provides the names of the different experiments performed on the biological units. All experiment names from experiments must be present in this column.
+    - **primary** contains the sample name. All names in this column must match with row labels from col_data.
+    - **colname** is the mapping of samples/cells within each experiment back to its biosample information in col_data.
+
+    Each sample in ``column_data`` may map to one or more columns per assay.
+
+Let's start by first creating few experiments:
 
 ```python
 from random import random
@@ -67,7 +80,7 @@ sample_map = BiocFrame({
 sample_data = BiocFrame({"samples": ["sample1", "sample2"]}, row_names= ["sample1", "sample2"])
 ```
 
-Now we can create an instance of an MAE -
+Finally, we can create an `MultiAssayExperiment` object:
 
 ```python
 from multiassayexperiment import MultiAssayExperiment
