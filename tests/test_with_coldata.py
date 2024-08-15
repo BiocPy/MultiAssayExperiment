@@ -106,3 +106,15 @@ def test_access_expt_with_column_data():
     assert sce.shape == tsce.shape
 
     assert len(sce.column_data.columns) >= len(tsce.column_data.columns)
+
+
+def test_access_expt_with_int_index():
+    assert mae is not None
+
+    se = mae.experiment(0)
+    assert se.shape == tse2.shape
+
+    sce = mae.experiment(1, with_sample_data=True)
+    assert sce.shape == tsce.shape
+
+    assert len(sce.column_data.columns) >= len(tsce.column_data.columns)
