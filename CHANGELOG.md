@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 0.4.1 - 0.4.4
+## Version 0.4.1 - 0.4.3
 
 - Access an experiment by index.
 - Helper methods to create sample mapping if not provided.
