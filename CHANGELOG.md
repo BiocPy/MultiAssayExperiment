@@ -1,7 +1,8 @@
 # Changelog
 
-## Version 0.4.1 - 0.4.3
+## Version 0.4.1 - 0.4.4
 
+- Access an experiment by index.
 - Helper methods to create sample mapping if not provided.
 - Subset operations on samples.
 - Update sphinx configuration to run snippets in the documentation.
