@@ -450,12 +450,12 @@ class MultiAssayExperiment:
     ######>> experiment accessor <<######
     #####################################
 
-    def experiment(self, name: str, with_sample_data: bool = False) -> Any:
+    def experiment(self, name: Union[int, str], with_sample_data: bool = False) -> Any:
         """Get an experiment by name.
 
         Args:
             name:
-                Experiment name.
+                Name or index position of the experiment.
 
             with_sample_data:
                 Whether to merge column data of the experiment with
@@ -463,19 +463,40 @@ class MultiAssayExperiment:
 
                 Defaults to False.
 
+        Raises:
+            AttributeError:
+                If the experiment name does not exist.
+            IndexError:
+                If index is greater than the number of experiments.
+
         Returns:
             The experiment object.
 
             If ``with_sample_data`` is `True`, a copy of the experiment object is returned.
         """
-        if name not in self._experiments:
-            raise ValueError(f"'{name}' is not a valid experiment name.")
+        _name = name
+        if isinstance(name, int):
+            if name < 0:
+                raise IndexError("Index cannot be negative.")
 
-        expt = self.experiments[name]
+            if name > len(self.experiment_names):
+                raise IndexError("Index greater than the number of assays.")
+
+            _name = self.experiment_names[name]
+            expt = self._experiments[_name]
+        elif isinstance(name, str):
+            if name not in self._experiments:
+                raise ValueError(f"'{name}' is not a valid experiment name.")
+
+            expt = self.experiments[name]
+        else:
+            raise TypeError(
+                f"'experiment' must be a string or integer, provided '{type(name)}'."
+            )
 
         if with_sample_data is True:
             assay_splits = self.sample_map.split("assay", only_indices=True)
-            subset_map = self.sample_map[assay_splits[name],]
+            subset_map = self.sample_map[assay_splits[_name],]
             subset_map = subset_map.set_row_names(subset_map.get_column("colname"))
 
             expt_column_data = expt.column_data
