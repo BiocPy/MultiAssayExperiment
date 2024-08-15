@@ -5,11 +5,12 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="multiassayexperiment.io package" href="multiassayexperiment.io.html" /><link rel="prev" title="multiassayexperiment" href="modules.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>multiassayexperiment package - MultiAssayExperiment 0.4.2 documentation</title>
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+        <title>multiassayexperiment package - MultiAssayExperiment 0.4.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     
     
 
@@ -68,7 +69,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -83,22 +84,63 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -112,6 +154,8 @@
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
 
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
 
 
 <div class="page">
@@ -123,13 +167,14 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">MultiAssayExperiment 0.4.2 documentation</div></a>
+      <a href="../index.html"><div class="brand">MultiAssayExperiment 0.4.3 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
         <button class="theme-toggle">
           <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
@@ -146,7 +191,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.2 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.3 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -155,12 +200,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html#construct-an-multiassayexperiment">Construct an <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html#accessors">Accessors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html#slice-a-multiassayexperiment">Slice a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html#helper-methods">Helper methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">Module Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Module Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#">multiassayexperiment package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of multiassayexperiment package</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="multiassayexperiment.io.html">multiassayexperiment.io package</a></li>
@@ -191,11 +231,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/api/multiassayexperiment.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
 <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
@@ -205,11 +251,11 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="multiassayexperiment-package">
-<h1>multiassayexperiment package<a class="headerlink" href="#multiassayexperiment-package" title="Link to this heading">#</a></h1>
+<h1>multiassayexperiment package<a class="headerlink" href="#multiassayexperiment-package" title="Link to this heading">¶</a></h1>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="multiassayexperiment.io.html">multiassayexperiment.io package</a><ul>
@@ -229,13 +275,13 @@
 </div>
 </section>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
 </section>
 <section id="module-multiassayexperiment.MultiAssayExperiment">
-<span id="multiassayexperiment-multiassayexperiment-module"></span><h2>multiassayexperiment.MultiAssayExperiment module<a class="headerlink" href="#module-multiassayexperiment.MultiAssayExperiment" title="Link to this heading">#</a></h2>
+<span id="multiassayexperiment-multiassayexperiment-module"></span><h2>multiassayexperiment.MultiAssayExperiment module<a class="headerlink" href="#module-multiassayexperiment.MultiAssayExperiment" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">multiassayexperiment.MultiAssayExperiment.</span></span><span class="sig-name descname"><span class="pre">MultiAssayExperiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">multiassayexperiment.MultiAssayExperiment.</span></span><span class="sig-name descname"><span class="pre">MultiAssayExperiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Container class for representing and managing multi-omics genomic experiments.</p>
 <p>Checkout the
@@ -243,7 +289,7 @@
 for more information.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__copy__">
-<span class="sig-name descname"><span class="pre">__copy__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.__copy__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__copy__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__copy__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.__copy__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__copy__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A shallow copy of the current <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code>.</p>
@@ -253,7 +299,7 @@ for more information.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__deepcopy__">
-<span class="sig-name descname"><span class="pre">__deepcopy__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_nil</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.__deepcopy__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__deepcopy__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__deepcopy__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_nil</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.__deepcopy__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__deepcopy__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A deep copy of the current <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code>.</p>
@@ -263,11 +309,11 @@ for more information.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__getitem__">
-<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#tuple" title="(in Python v3.9)"><span class="pre">tuple</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__getitem__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__getitem__" title="Link to this definition">¶</a></dt>
 <dd><p>Subset a <cite>MultiAssayExperiment</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>args</strong> – <p>Tuple containing slices along dimensions (rows, columns, experiments).</p>
+<dd class="field-odd"><p><strong>args</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></span>) – <p>Tuple containing slices along dimensions (rows, columns, experiments).</p>
 <p>Each element in the tuple, might be either a integer vector (integer positions),
 boolean vector or <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#slice" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">slice</span></code></a> object. Defaults to None.</p>
 </p>
@@ -275,25 +321,31 @@ boolean vector or <a class="reference external" href="https://docs.python.org/3.
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.9/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – Too many or too few slices.</p>
 </dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A new sliced <cite>MultiAssayExperiment</cite> object with the subsets.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new sliced <cite>MultiAssayExperiment</cite> object with the subsets.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__repr__">
-<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.__repr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__repr__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.__repr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__repr__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A string representation.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string representation.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.add_experiment">
-<span class="sig-name descname"><span class="pre">add_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.add_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.add_experiment" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">add_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.add_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.add_experiment" title="Link to this definition">¶</a></dt>
 <dd><p>Add a new experiment to <cite>MultiAssayExperiment</cite>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">sample_map</span></code> must be provided to map the columns from this experiment to
 <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">column_data</span></code></a>.
@@ -303,18 +355,21 @@ This will be appended to the existing
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – Name of the new experiment.</p></li>
-<li><p><strong>experiment</strong> – The experiment to add.</p></li>
-<li><p><strong>sample_map</strong> – Sample map to append to the MAE.</p></li>
-<li><p><strong>column_data</strong> – <p>Sample data to append to the MAE.</p>
+<li><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Name of the new experiment.</p></li>
+<li><p><strong>experiment</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – The experiment to add.</p></li>
+<li><p><strong>sample_map</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span>) – Sample map to append to the MAE.</p></li>
+<li><p><strong>column_data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Optional" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a>]</span>) – <p>Sample data to append to the MAE.</p>
 <p>Defaults to None.</p>
 </p></li>
-<li><p><strong>in_place</strong> – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.
+<li><p><strong>in_place</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.
 Defaults to False.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
 or as a reference to the (in-place-modified) original.</p>
 </dd>
 </dl>
@@ -322,41 +377,44 @@ or as a reference to the (in-place-modified) original.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.assays">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">assays</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.assays" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">assays</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.assays" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiments" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiments"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_experiments()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.colnames">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">colnames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Names</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.colnames" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">colnames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://biocpy.github.io/BiocUtils/api/biocutils.html#biocutils.Names.Names" title="(in biocutils v0.1.5)"><span class="pre">Names</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.colnames" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names"><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_column_names</span></code></a>, provided for back-compatibility.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">column_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">column_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><span class="pre">BiocFrame</span></a></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_data" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_column_data()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_names">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">column_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Names</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_names" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">column_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://biocpy.github.io/BiocUtils/api/biocutils.html#biocutils.Names.Names" title="(in biocutils v0.1.5)"><span class="pre">Names</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_names" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names"><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_column_names</span></code></a>, provided for back-compatibility.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.columnnames">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">columnnames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Names</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.columnnames" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">columnnames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://biocpy.github.io/BiocUtils/api/biocutils.html#biocutils.Names.Names" title="(in biocutils v0.1.5)"><span class="pre">Names</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.columnnames" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names"><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_column_names</span></code></a>, provided for back-compatibility.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.complete_cases">
-<span class="sig-name descname"><span class="pre">complete_cases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.complete_cases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.complete_cases" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">complete_cases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.complete_cases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.complete_cases" title="Link to this definition">¶</a></dt>
 <dd><p>Identify samples that have data across all experiments.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A boolean vector same as the number of samples in ‘column_data’,
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A boolean vector same as the number of samples in ‘column_data’,
 where each element is True if sample is present in all experiments or False.</p>
 </dd>
 </dl>
@@ -364,23 +422,32 @@ where each element is True if sample is present in all experiments or False.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.copy" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.copy" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__copy__" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.__copy__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__copy__()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment">
-<span class="sig-name descname"><span class="pre">experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_sample_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_sample_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment" title="Link to this definition">¶</a></dt>
 <dd><p>Get an experiment by name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – Experiment name.</p></li>
-<li><p><strong>with_sample_data</strong> – <p>Whether to merge column data of the experiment with
+<li><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Union" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Name or index position of the experiment.</p></li>
+<li><p><strong>with_sample_data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – <p>Whether to merge column data of the experiment with
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">sample_data</span></code> from the MAE.</p>
 <p>Defaults to False.</p>
 </p></li>
 </ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3.9/library/exceptions.html#AttributeError" title="(in Python v3.9)"><strong>AttributeError</strong></a> – If the experiment name does not exist.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3.9/library/exceptions.html#IndexError" title="(in Python v3.9)"><strong>IndexError</strong></a> – If index is greater than the number of experiments.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span></p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p>The experiment object.</p>
@@ -392,27 +459,32 @@ where each element is True if sample is present in all experiments or False.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment_names">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">experiment_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.List" title="(in Python v3.9)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment_names" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">experiment_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.List" title="(in Python v3.9)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment_names" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiment_names" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiment_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_experiment_names()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">experiments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">experiments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiments" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiments"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_experiments()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.find_common_row_names">
-<span class="sig-name descname"><span class="pre">find_common_row_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.List" title="(in Python v3.9)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.find_common_row_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.find_common_row_names" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">find_common_row_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.find_common_row_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.find_common_row_names" title="Link to this definition">¶</a></dt>
 <dd><p>Finds common row names across all experiments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.List" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.from_anndata">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_anndata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.1.dev50+gc1afc3e)"><span class="pre">anndata.AnnData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'unknown'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.from_anndata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.from_anndata" title="Link to this definition">#</a></dt>
-<dd><p>Create a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> from <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.1.dev50+gc1afc3e)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a>.</p>
-<p>Since <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.1.dev50+gc1afc3e)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a> does not contain sample information,
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_anndata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'unknown'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.from_anndata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.from_anndata" title="Link to this definition">¶</a></dt>
+<dd><p>Create a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> from <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.1.dev50+gdedc0b4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a>.</p>
+<p>Since <a class="reference external" href="https://anndata.readthedocs.io/en/latest/generated/anndata.AnnData.html#anndata.AnnData" title="(in anndata v0.1.dev50+gdedc0b4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></a> does not contain sample information,
 sample named <code class="docutils literal notranslate"><span class="pre">&quot;unknown_sample&quot;</span></code> will be added to
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">col_data</span></code>.
 All cells are considered to be extracted from this sample and is reflected in
@@ -420,21 +492,24 @@ All cells are considered to be extracted from this sample and is reflected in
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>input</strong> – An <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> object.</p></li>
-<li><p><strong>name</strong> – <p>Name for the experiment.</p>
+<li><p><strong>input</strong> (<span class="sphinx_autodoc_typehints-type">anndata.AnnData</span>) – An <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> object.</p></li>
+<li><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – <p>Name for the experiment.</p>
 <p>Defaults to “unknown”.</p>
 </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code>.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type">MultiAssayExperiment</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.from_mudata">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_mudata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">mudata.MuData</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.from_mudata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.from_mudata" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_mudata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.from_mudata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.from_mudata" title="Link to this definition">¶</a></dt>
 <dd><p>Create a <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object from <code class="xref py py-class docutils literal notranslate"><span class="pre">MuData</span></code>.</p>
 <p>The import naively creates sample mapping, each <code class="docutils literal notranslate"><span class="pre">experiment</span></code> is considered to be a <cite>sample</cite>.
 We add a sample with the following pattern - <code class="docutils literal notranslate"><span class="pre">&quot;unknown_sample_{experiment_name}&quot;</span></code> to
@@ -442,56 +517,71 @@ We add a sample with the following pattern - <code class="docutils literal notra
 the same sample and is reflected in <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sample_map</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input</strong> – MuData object.</p>
+<dd class="field-odd"><p><strong>input</strong> (<span class="sphinx_autodoc_typehints-type">mudata.MuData</span>) – MuData object.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.9/library/exceptions.html#Exception" title="(in Python v3.9)"><strong>Exception</strong></a> – If <code class="docutils literal notranslate"><span class="pre">mudata</span></code> object is read in backed mode <code class="xref py py-attr docutils literal notranslate"><span class="pre">isbacked</span></code>.</p>
 </dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type">MultiAssayExperiment</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_data">
-<span class="sig-name descname"><span class="pre">get_column_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_column_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_data" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_column_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_column_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_data" title="Link to this definition">¶</a></dt>
 <dd><p>Get sample metadata.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A <a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a> containing sample metadata.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a> containing sample metadata.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names">
-<span class="sig-name descname"><span class="pre">get_column_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Names</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_column_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_column_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_column_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_column_names" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Dictionary, with experiment names as keys, and the column names as values.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Optional" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://biocpy.github.io/BiocUtils/api/biocutils.html#biocutils.Names.Names" title="(in biocutils v0.1.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Names</span></code></a>]]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary, with experiment names as keys, and the column names as values.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiment_names">
-<span class="sig-name descname"><span class="pre">get_experiment_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.List" title="(in Python v3.9)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_experiment_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiment_names" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_experiment_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_experiment_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiment_names" title="Link to this definition">¶</a></dt>
 <dd><p>Get experiment names.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of experiment names.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.List" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of experiment names.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiments">
-<span class="sig-name descname"><span class="pre">get_experiments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_experiments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiments" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_experiments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_experiments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_experiments" title="Link to this definition">¶</a></dt>
 <dd><p>Access experiments.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary of all experiments, with experiment
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary of all experiments, with experiment
 names as keys and experiment data as value.</p>
 </dd>
 </dl>
@@ -499,66 +589,86 @@ names as keys and experiment data as value.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_metadata">
-<span class="sig-name descname"><span class="pre">get_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_metadata" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_metadata" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Dictionary of metadata for this object.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of metadata for this object.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_row_names">
-<span class="sig-name descname"><span class="pre">get_row_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Names</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_row_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_row_names" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_row_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_row_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_row_names" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Dictionary, with experiment names as keys, and row names as values.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Optional" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://biocpy.github.io/BiocUtils/api/biocutils.html#biocutils.Names.Names" title="(in biocutils v0.1.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Names</span></code></a>]]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary, with experiment names as keys, and row names as values.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_sample_map">
-<span class="sig-name descname"><span class="pre">get_sample_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_sample_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_sample_map" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_sample_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_sample_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_sample_map" title="Link to this definition">¶</a></dt>
 <dd><p>Acess sample map.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A <a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a> with sample mapping information.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a> with sample mapping information.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_with_column_data">
-<span class="sig-name descname"><span class="pre">get_with_column_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_with_column_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_with_column_data" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_with_column_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.get_with_column_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_with_column_data" title="Link to this definition">¶</a></dt>
 <dd><p>Alias to <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment"><code class="xref py py-meth docutils literal notranslate"><span class="pre">experiment()</span></code></a>.</p>
 <p>Consistency with Bioconductor’s naming of the same function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.intersect_rows">
-<span class="sig-name descname"><span class="pre">intersect_rows</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.intersect_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.intersect_rows" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">intersect_rows</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.intersect_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.intersect_rows" title="Link to this definition">¶</a></dt>
 <dd><p>Finds common row names across all experiments and filters the MAE to these rows.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A new sliced <cite>MultiAssayExperiment</cite> object with the filtered rows.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new sliced <cite>MultiAssayExperiment</cite> object with the filtered rows.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.metadata">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.metadata" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.metadata" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_metadata" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_metadata</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.replicated">
-<span class="sig-name descname"><span class="pre">replicated</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.replicated"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.replicated" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">replicated</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.replicated"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.replicated" title="Link to this definition">¶</a></dt>
 <dd><p>Identify samples with replicates within each experiment.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary where experiment names
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>]]]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary where experiment names
 are keys and values specify if the sample is replicated within each experiment.</p>
 </dd>
 </dl>
@@ -566,29 +676,32 @@ are keys and values specify if the sample is replicated within each experiment.<
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.rownames">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rownames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Names</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.rownames" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rownames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://biocpy.github.io/BiocUtils/api/biocutils.html#biocutils.Names.Names" title="(in biocutils v0.1.5)"><span class="pre">Names</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.rownames" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_row_names" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_row_names"><code class="xref py py-attr docutils literal notranslate"><span class="pre">get_row_names</span></code></a>, provided for back-compatibility.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sample_map</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sample_map</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><span class="pre">BiocFrame</span></a></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.sample_map" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_sample_map" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.get_sample_map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_sample_map()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_column_data">
-<span class="sig-name descname"><span class="pre">set_column_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_column_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_column_data" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_column_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_column_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_column_data" title="Link to this definition">¶</a></dt>
 <dd><p>Set new sample metadata.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>column_data</strong> – New sample metadata.</p></li>
-<li><p><strong>in_place</strong> – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
+<li><p><strong>column_data</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span>) – New sample metadata.</p></li>
+<li><p><strong>in_place</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
 or as a reference to the (in-place-modified) original.</p>
 </dd>
 </dl>
@@ -596,17 +709,20 @@ or as a reference to the (in-place-modified) original.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_experiment_names">
-<span class="sig-name descname"><span class="pre">set_experiment_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.List" title="(in Python v3.9)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_experiment_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_experiment_names" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_experiment_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_experiment_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_experiment_names" title="Link to this definition">¶</a></dt>
 <dd><p>Replace <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiments"><code class="xref py py-attr docutils literal notranslate"><span class="pre">experiments</span></code></a>’s names.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>names</strong> – New names.</p></li>
-<li><p><strong>in_place</strong> – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
+<li><p><strong>names</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.List" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – New names.</p></li>
+<li><p><strong>in_place</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
 or as a reference to the (in-place-modified) original.</p>
 </dd>
 </dl>
@@ -614,22 +730,25 @@ or as a reference to the (in-place-modified) original.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_experiments">
-<span class="sig-name descname"><span class="pre">set_experiments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_experiments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_experiments" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_experiments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_experiments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_experiments" title="Link to this definition">¶</a></dt>
 <dd><p>Set new experiments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>experiments</strong> – <p>New experiments to set. A dictionary of experiments with experiment names as keys and
+<li><p><strong>experiments</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span>) – <p>New experiments to set. A dictionary of experiments with experiment names as keys and
 the experiments as values.</p>
 <p>Each <code class="docutils literal notranslate"><span class="pre">experiment</span></code> may be either a
-<a class="reference external" href="https://biocpy.github.io/SummarizedExperiment/api/summarizedexperiment.html#summarizedexperiment.SummarizedExperiment.SummarizedExperiment" title="(in SummarizedExperiment v0.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SummarizedExperiment</span></code></a>
+<a class="reference external" href="https://biocpy.github.io/SummarizedExperiment/api/summarizedexperiment.html#summarizedexperiment.SummarizedExperiment.SummarizedExperiment" title="(in SummarizedExperiment v0.4.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SummarizedExperiment</span></code></a>
 or any class that extends <code class="docutils literal notranslate"><span class="pre">SummarizedExperiment</span></code>.</p>
 </p></li>
-<li><p><strong>in_place</strong> – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
+<li><p><strong>in_place</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
 or as a reference to the (in-place-modified) original.</p>
 </dd>
 </dl>
@@ -637,17 +756,20 @@ or as a reference to the (in-place-modified) original.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_metadata">
-<span class="sig-name descname"><span class="pre">set_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="(in Python v3.9)"><span class="pre">dict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_metadata" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_metadata" title="Link to this definition">¶</a></dt>
 <dd><p>Set additional metadata.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>metadata</strong> – New metadata for this object.</p></li>
-<li><p><strong>in_place</strong> – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
+<li><p><strong>metadata</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span>) – New metadata for this object.</p></li>
+<li><p><strong>in_place</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
 or as a reference to the (in-place-modified) original.</p>
 </dd>
 </dl>
@@ -655,17 +777,20 @@ or as a reference to the (in-place-modified) original.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_sample_map">
-<span class="sig-name descname"><span class="pre">set_sample_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.7)"><span class="pre">BiocFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_sample_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_sample_map" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_sample_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.set_sample_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_sample_map" title="Link to this definition">¶</a></dt>
 <dd><p>Set new sample mapping.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sample_map</strong> – New sample map.</p></li>
-<li><p><strong>in_place</strong> – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
+<li><p><strong>sample_map</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://biocpy.github.io/BiocFrame/api/biocframe.html#biocframe.BiocFrame.BiocFrame" title="(in BiocFrame v0.5.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiocFrame</span></code></a></span>) – New sample map.</p></li>
+<li><p><strong>in_place</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to modify the <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> in place.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A modified <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object, either as a copy of the original
 or as a reference to the (in-place-modified) original.</p>
 </dd>
 </dl>
@@ -673,77 +798,86 @@ or as a reference to the (in-place-modified) original.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_column">
-<span class="sig-name descname"><span class="pre">subset_by_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><span class="pre">Sequence</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.subset_by_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_column" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subset_by_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.subset_by_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_column" title="Link to this definition">¶</a></dt>
 <dd><p>Subset by column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>columns</strong> – <p>Columns to be extracted.</p>
+<dd class="field-odd"><p><strong>columns</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Union" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>]</span>) – <p>Columns to be extracted.</p>
 <p>Integer indices, a boolean filter, or (if the current object is
 named) names specifying the ranges to be extracted, see
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">normalize_subscript()</span></code>.</p>
 </p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A new <cite>MultiAssayExperiment</cite> with the subsetted columns.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A new <cite>MultiAssayExperiment</cite> with the subsetted columns.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_experiments">
-<span class="sig-name descname"><span class="pre">subset_by_experiments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><span class="pre">Sequence</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.subset_by_experiments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_experiments" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subset_by_experiments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.subset_by_experiments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_experiments" title="Link to this definition">¶</a></dt>
 <dd><p>Subset by experiment(s).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>experiments</strong> – <p>Experiments to extract.</p>
+<dd class="field-odd"><p><strong>experiments</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Union" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>]</span>) – <p>Experiments to extract.</p>
 <p>Integer indices, a boolean filter, or (if the current object is
 named) names specifying the ranges to be extracted, see
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">normalize_subscript()</span></code>.</p>
 <p>Check <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment_names" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.experiment_names"><code class="xref py py-attr docutils literal notranslate"><span class="pre">experiment_names</span></code></a> for a list of valid experiment names.</p>
 </p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A new <cite>MultiAssayExperiment</cite> with the subset experiments.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A new <cite>MultiAssayExperiment</cite> with the subset experiments.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_row">
-<span class="sig-name descname"><span class="pre">subset_by_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><span class="pre">Sequence</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><span class="pre">MultiAssayExperiment</span></a></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.subset_by_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_row" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subset_by_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.subset_by_row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_row" title="Link to this definition">¶</a></dt>
 <dd><p>Subset by rows.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>rows</strong> – <p>Rows to be extracted.</p>
+<dd class="field-odd"><p><strong>rows</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Union" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>]</span>) – <p>Rows to be extracted.</p>
 <p>Integer indices, a boolean filter, or (if the current object is
 named) names specifying the ranges to be extracted, see
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">normalize_subscript()</span></code>.</p>
 </p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A new <cite>MultiAssayExperiment</cite> with the subsetted rows.</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A new <cite>MultiAssayExperiment</cite> with the subsetted rows.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_experiments">
-<span class="sig-name descname"><span class="pre">subset_experiments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><span class="pre">Sequence</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><span class="pre">Sequence</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><span class="pre">Sequence</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.subset_experiments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_experiments" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subset_experiments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.subset_experiments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_experiments" title="Link to this definition">¶</a></dt>
 <dd><p>Subset experiments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rows</strong> – <p>Row indices to subset.</p>
+<li><p><strong>rows</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Union" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span>) – <p>Row indices to subset.</p>
 <p>Integer indices, a boolean filter, or (if the current object is
 named) names specifying the ranges to be extracted, see
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">normalize_subscript()</span></code>.</p>
 </p></li>
-<li><p><strong>columns</strong> – <p>Column indices (from <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">column_data</span></code></a>) to subset.</p>
+<li><p><strong>columns</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Union" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span>) – <p>Column indices (from <a class="reference internal" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data" title="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.column_data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">column_data</span></code></a>) to subset.</p>
 <p>Integer indices, a boolean filter, or (if the current object is
 named) names specifying the ranges to be extracted, see
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">normalize_subscript()</span></code>.</p>
 </p></li>
-<li><p><strong>experiment_names</strong> – <p>Experiment names to keep.</p>
+<li><p><strong>experiment_names</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Union" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Sequence" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>]</span>) – <p>Experiment names to keep.</p>
 <p>Integer indices, a boolean filter, or (if the current object is
 named) names specifying the ranges to be extracted, see
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">normalize_subscript()</span></code>.</p>
@@ -751,8 +885,11 @@ named) names specifying the ranges to be extracted, see
 </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dictionary with experiment names as keys
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Dict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.9/library/typing.html#typing.Any" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary with experiment names as keys
 and the subsetted experiment data as value.</p>
 </dd>
 </dl>
@@ -760,7 +897,7 @@ and the subsetted experiment data as value.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.to_mudata">
-<span class="sig-name descname"><span class="pre">to_mudata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.to_mudata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.to_mudata" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_mudata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multiassayexperiment/MultiAssayExperiment.html#MultiAssayExperiment.to_mudata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.to_mudata" title="Link to this definition">¶</a></dt>
 <dd><p>Transform <code class="docutils literal notranslate"><span class="pre">MultiAssayExperiment</span></code> object to <code class="xref py py-class docutils literal notranslate"><span class="pre">MuData</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -773,46 +910,46 @@ and the subsetted experiment data as value.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.SlicerResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">multiassayexperiment.MultiAssayExperiment.</span></span><span class="sig-name descname"><span class="pre">SlicerResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">multiassayexperiment.MultiAssayExperiment.</span></span><span class="sig-name descname"><span class="pre">SlicerResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.SlicerResult.__getnewargs__">
-<span class="sig-name descname"><span class="pre">__getnewargs__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.__getnewargs__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__getnewargs__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.__getnewargs__" title="Link to this definition">¶</a></dt>
 <dd><p>Return self as a plain tuple.  Used by copy and pickle.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.SlicerResult.__new__">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.__new__" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_map</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.__new__" title="Link to this definition">¶</a></dt>
 <dd><p>Create new instance of SlicerResult(experiments, sample_map, column_data)</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.SlicerResult.__repr__">
-<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.__repr__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.__repr__" title="Link to this definition">¶</a></dt>
 <dd><p>Return a nicely formatted representation string</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.SlicerResult.__slots__">
-<span class="sig-name descname"><span class="pre">__slots__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.__slots__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__slots__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.__slots__" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.SlicerResult.column_data">
-<span class="sig-name descname"><span class="pre">column_data</span></span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.column_data" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">column_data</span></span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.column_data" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for field number 2</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.SlicerResult.experiments">
-<span class="sig-name descname"><span class="pre">experiments</span></span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.experiments" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">experiments</span></span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.experiments" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="multiassayexperiment.MultiAssayExperiment.SlicerResult.sample_map">
-<span class="sig-name descname"><span class="pre">sample_map</span></span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.sample_map" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">sample_map</span></span><a class="headerlink" href="#multiassayexperiment.MultiAssayExperiment.SlicerResult.sample_map" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for field number 1</p>
 </dd></dl>
 
@@ -820,7 +957,7 @@ and the subsetted experiment data as value.</p>
 
 </section>
 <section id="module-multiassayexperiment">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-multiassayexperiment" title="Link to this heading">#</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-multiassayexperiment" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -951,9 +1088,9 @@ and the subsetted experiment data as value.</p>
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=ff822928"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+</div><script src="../_static/documentation_options.js?v=5bfaad31"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
 </html>

@@ -1,10 +1,10 @@
 # MultiAssayExperiment
 
-Container class to represent multiple experiments and assays performed over a set of samples. follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
+Container class to represent and manage multi-omics genomic experiments. `MultiAssayExperiment` (MAE) simplifies the management of multiple experimental assays conducted on a shared set of specimens, follows Bioconductor's [MAE R/Package](https://bioconductor.org/packages/release/bioc/html/MultiAssayExperiment.html).
 
 ## Install
 
-Package is published to [PyPI](https://pypi.org/project/multiassayexperiment/)
+To get started, install the package from [PyPI](https://pypi.org/project/multiassayexperiment/)
 
 ```shell
 pip install multiassayexperiment
@@ -15,8 +15,7 @@ pip install multiassayexperiment
 ```{toctree}
 :maxdepth: 2
 
-Overview <readme>
-Tutorial <tutorial>
+Overview <overview>
 Module Reference <api/modules>
 Contributions & Help <contributing>
 License <license>

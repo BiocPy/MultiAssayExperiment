@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 0.4.1 - 0.4.3
+
+- Access an experiment by index.
+- Helper methods to create sample mapping if not provided.
+- Subset operations on samples.
+- Update sphinx configuration to run snippets in the documentation.
+
 ## Version 0.4.0
 
 This is a complete rewrite of the package, following the functional paradigm from our [developer notes](https://github.com/BiocPy/developer_guide#use-functional-discipline).
