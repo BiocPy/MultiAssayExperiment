@@ -55,9 +55,7 @@ def _validate_sample_map_with_column_data(sample_map, column_data):
     _sample_set = set(_samples)
     _sample_diff = _sample_set.difference(column_data.row_names)
     if len(_sample_diff) > 0:
-        raise ValueError(
-            "`sample_map`'s 'primary' contains samples not represented by 'row_names' from `column_data`."
-        )
+        raise ValueError("`sample_map`'s 'primary' contains samples not represented by 'row_names' from `column_data`.")
 
     if len(_sample_set) != column_data.shape[0]:
         warn("'primary' from `sample_map` & `column_data` mismatch.", UserWarning)
@@ -68,9 +66,7 @@ def _validate_sample_map_with_expts(sample_map, experiments):
     smap_unique_assays = set(sample_map.get_column("assay"))
     unique_expt_names = set(list(experiments.keys()))
 
-    if (len(unique_expt_names) != len(smap_unique_assays)) or (
-        unique_expt_names != smap_unique_assays
-    ):
+    if (len(unique_expt_names) != len(smap_unique_assays)) or (unique_expt_names != smap_unique_assays):
         warn(
             "'experiments' contains names not represented in 'sample_map' or vice-versa.",
             UserWarning,
@@ -86,9 +82,7 @@ def _validate_sample_map_with_expts(sample_map, experiments):
             )
 
         if set(rows.get_column("colname")) != set(experiments[grp].column_names):
-            raise ValueError(
-                f"Experiment '{grp}' does not contain all columns mentioned in `sample_map`."
-            )
+            raise ValueError(f"Experiment '{grp}' does not contain all columns mentioned in `sample_map`.")
 
 
 def _validate_sample_map(sample_map, column_data, experiments):
@@ -99,9 +93,7 @@ def _validate_sample_map(sample_map, column_data, experiments):
         raise TypeError("'sample_map' is not a `BiocFrame` object.")
 
     if not set(["assay", "primary", "colname"]).issubset(sample_map.column_names):
-        raise ValueError(
-            "'sample_map' does not contain required columns: 'assay', 'primary' and 'colname'."
-        )
+        raise ValueError("'sample_map' does not contain required columns: 'assay', 'primary' and 'colname'.")
 
     _validate_column_data(column_data)
     _validate_sample_map_with_column_data(sample_map, column_data)
@@ -123,9 +115,7 @@ def _create_smap_from_experiments(experiments):
 
         samples.append(asy_sample)
 
-    sample_map = biocframe.BiocFrame(
-        {"assay": _all_assays, "primary": _all_primary, "colname": _all_colnames}
-    )
+    sample_map = biocframe.BiocFrame({"assay": _all_assays, "primary": _all_primary, "colname": _all_colnames})
     col_data = biocframe.BiocFrame({"samples": samples}, row_names=samples)
 
     return col_data, sample_map
@@ -215,9 +205,7 @@ class MultiAssayExperiment:
             self._column_data = _sanitize_frame(column_data)
         elif sample_map is None and column_data is None:
             # make a sample map
-            self._column_data, self._sample_map = _create_smap_from_experiments(
-                self._experiments
-            )
+            self._column_data, self._sample_map = _create_smap_from_experiments(self._experiments)
         else:
             raise ValueError(
                 "Either 'sample_map' or 'column_data' is `None`. Either both should be provided or set both to `None`."
@@ -305,7 +293,9 @@ class MultiAssayExperiment:
         for idx in range(len(self.experiment_names)):
             expt_name = self.experiment_names[idx]
             expt = self._experiments[expt_name]
-            output += f"[{idx}] {expt_name}: {type(expt).__name__} with {expt.shape[0]} rows and {expt.shape[1]} columns \n"  # noqa
+            output += (
+                f"[{idx}] {expt_name}: {type(expt).__name__} with {expt.shape[0]} rows and {expt.shape[1]} columns \n"  # noqa
+            )
 
         output += f"column_data columns({len(self._column_data.column_names)}): "
         output += f"{ut.print_truncated_list(self._column_data.column_names)}\n"
@@ -331,9 +321,7 @@ class MultiAssayExperiment:
 
         return self._experiments
 
-    def set_experiments(
-        self, experiments: Dict[str, Any], in_place: bool = False
-    ) -> "MultiAssayExperiment":
+    def set_experiments(self, experiments: Dict[str, Any], in_place: bool = False) -> "MultiAssayExperiment":
         """Set new experiments.
 
         Args:
@@ -399,9 +387,7 @@ class MultiAssayExperiment:
         """
         return list(self._experiments.keys())
 
-    def set_experiment_names(
-        self, names: List[str], in_place: bool = False
-    ) -> "MultiAssayExperiment":
+    def set_experiment_names(self, names: List[str], in_place: bool = False) -> "MultiAssayExperiment":
         """Replace :py:attr:`~experiments`'s names.
 
         Args:
@@ -417,9 +403,7 @@ class MultiAssayExperiment:
         """
         current_names = self.get_experiment_names()
         if len(names) != len(current_names):
-            raise ValueError(
-                "Length of 'names' does not match the number of `experiments`."
-            )
+            raise ValueError("Length of 'names' does not match the number of `experiments`.")
 
         new_experiments = OrderedDict()
         for idx in range(len(names)):
@@ -490,9 +474,7 @@ class MultiAssayExperiment:
 
             expt = self.experiments[name]
         else:
-            raise TypeError(
-                f"'experiment' must be a string or integer, provided '{type(name)}'."
-            )
+            raise TypeError(f"'experiment' must be a string or integer, provided '{type(name)}'.")
 
         if with_sample_data is True:
             assay_splits = self.sample_map.split("assay", only_indices=True)
@@ -500,13 +482,9 @@ class MultiAssayExperiment:
             subset_map = subset_map.set_row_names(subset_map.get_column("colname"))
 
             expt_column_data = expt.column_data
-            new_column_data = biocframe.merge(
-                [subset_map, expt_column_data], join="outer"
-            )
+            new_column_data = biocframe.merge([subset_map, expt_column_data], join="outer")
 
-            new_column_data = biocframe.merge(
-                [new_column_data, self._column_data], join="left"
-            )
+            new_column_data = biocframe.merge([new_column_data, self._column_data], join="left")
 
             return expt.set_column_data(new_column_data, in_place=False)
 
@@ -531,9 +509,7 @@ class MultiAssayExperiment:
         """
         return self._sample_map
 
-    def set_sample_map(
-        self, sample_map: biocframe.BiocFrame, in_place: bool = False
-    ) -> "MultiAssayExperiment":
+    def set_sample_map(self, sample_map: biocframe.BiocFrame, in_place: bool = False) -> "MultiAssayExperiment":
         """Set new sample mapping.
 
         Args:
@@ -583,9 +559,7 @@ class MultiAssayExperiment:
         """
         return self._column_data
 
-    def set_column_data(
-        self, column_data: biocframe.BiocFrame, in_place: bool = False
-    ) -> "MultiAssayExperiment":
+    def set_column_data(self, column_data: biocframe.BiocFrame, in_place: bool = False) -> "MultiAssayExperiment":
         """Set new sample metadata.
 
         Args:
@@ -636,9 +610,7 @@ class MultiAssayExperiment:
         """
         return self._metadata
 
-    def set_metadata(
-        self, metadata: dict, in_place: bool = False
-    ) -> "MultiAssayExperiment":
+    def set_metadata(self, metadata: dict, in_place: bool = False) -> "MultiAssayExperiment":
         """Set additional metadata.
 
         Args:
@@ -653,9 +625,7 @@ class MultiAssayExperiment:
             or as a reference to the (in-place-modified) original.
         """
         if not isinstance(metadata, dict):
-            raise TypeError(
-                f"`metadata` must be a dictionary, provided {type(metadata)}."
-            )
+            raise TypeError(f"`metadata` must be a dictionary, provided {type(metadata)}.")
         output = self._define_output(in_place)
         output._metadata = metadata
         return output
@@ -684,9 +654,7 @@ class MultiAssayExperiment:
     def _normalize_column_slice(self, columns: Union[str, int, bool, Sequence, slice]):
         _scalar = None
         if columns != slice(None):
-            columns, _scalar = ut.normalize_subscript(
-                columns, len(self._column_data), self._column_data.row_names
-            )
+            columns, _scalar = ut.normalize_subscript(columns, len(self._column_data), self._column_data.row_names)
 
         return columns, _scalar
 
@@ -744,9 +712,7 @@ class MultiAssayExperiment:
             experiment_names = slice(None)
 
         if experiment_names != slice(None):
-            expts, _ = ut.normalize_subscript(
-                experiment_names, len(self.experiment_names), self.experiment_names
-            )
+            expts, _ = ut.normalize_subscript(experiment_names, len(self.experiment_names), self.experiment_names)
 
             to_keep = [self.experiment_names[idx] for idx in expts]
 
@@ -824,9 +790,7 @@ class MultiAssayExperiment:
         if experiments is None:
             experiments = slice(None)
 
-        _new_experiments = self.subset_experiments(
-            experiment_names=experiments, rows=rows, columns=columns
-        )
+        _new_experiments = self.subset_experiments(experiment_names=experiments, rows=rows, columns=columns)
 
         # filter sample_map
         smap_indices_to_keep = []
@@ -844,9 +808,7 @@ class MultiAssayExperiment:
 
         return SlicerResult(_new_experiments, _new_sample_map, _new_column_data)
 
-    def subset_by_experiments(
-        self, experiments: Union[str, int, bool, Sequence]
-    ) -> "MultiAssayExperiment":
+    def subset_by_experiments(self, experiments: Union[str, int, bool, Sequence]) -> "MultiAssayExperiment":
         """Subset by experiment(s).
 
         Args:
@@ -863,13 +825,9 @@ class MultiAssayExperiment:
             A new `MultiAssayExperiment` with the subset experiments.
         """
         sresult = self._generic_slice(experiments=experiments)
-        return MultiAssayExperiment(
-            sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata
-        )
+        return MultiAssayExperiment(sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata)
 
-    def subset_by_row(
-        self, rows: Union[str, int, bool, Sequence]
-    ) -> "MultiAssayExperiment":
+    def subset_by_row(self, rows: Union[str, int, bool, Sequence]) -> "MultiAssayExperiment":
         """Subset by rows.
 
         Args:
@@ -884,13 +842,9 @@ class MultiAssayExperiment:
             A new `MultiAssayExperiment` with the subsetted rows.
         """
         sresult = self._generic_slice(rows=rows)
-        return MultiAssayExperiment(
-            sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata
-        )
+        return MultiAssayExperiment(sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata)
 
-    def subset_by_column(
-        self, columns: Union[str, int, bool, Sequence]
-    ) -> "MultiAssayExperiment":
+    def subset_by_column(self, columns: Union[str, int, bool, Sequence]) -> "MultiAssayExperiment":
         """Subset by column.
 
         Args:
@@ -905,9 +859,7 @@ class MultiAssayExperiment:
             A new `MultiAssayExperiment` with the subsetted columns.
         """
         sresult = self._generic_slice(columns=columns)
-        return MultiAssayExperiment(
-            sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata
-        )
+        return MultiAssayExperiment(sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata)
 
     def __getitem__(self, args: tuple) -> "MultiAssayExperiment":
         """Subset a `MultiAssayExperiment`.
@@ -948,9 +900,7 @@ class MultiAssayExperiment:
                     self.metadata,
                 )
             elif len(args) == 3:
-                sresult = self._generic_slice(
-                    rows=args[0], columns=args[1], experiments=args[2]
-                )
+                sresult = self._generic_slice(rows=args[0], columns=args[1], experiments=args[2])
                 return MultiAssayExperiment(
                     sresult.experiments,
                     sresult.column_data,
@@ -1250,9 +1200,7 @@ class MultiAssayExperiment:
 
             samples.append(asy_sample)
 
-        sample_map = biocframe.BiocFrame(
-            {"assay": _all_assays, "primary": _all_primary, "colname": _all_colnames}
-        )
+        sample_map = biocframe.BiocFrame({"assay": _all_assays, "primary": _all_primary, "colname": _all_colnames})
         col_data = biocframe.BiocFrame({"samples": samples}, row_names=samples)
 
         return cls(
@@ -1263,9 +1211,7 @@ class MultiAssayExperiment:
         )
 
     @classmethod
-    def from_anndata(
-        cls, input: "anndata.AnnData", name: str = "unknown"
-    ) -> "MultiAssayExperiment":
+    def from_anndata(cls, input: "anndata.AnnData", name: str = "unknown") -> "MultiAssayExperiment":
         """Create a ``MultiAssayExperiment`` from :py:class:`~anndata.AnnData`.
 
         Since :py:class:`~anndata.AnnData` does not contain sample information,
@@ -1292,9 +1238,7 @@ class MultiAssayExperiment:
 
         experiments = {name: scexpt}
 
-        col_data = biocframe.BiocFrame(
-            {"samples": ["unknown_sample"]}, row_names=["unknown_sample"]
-        )
+        col_data = biocframe.BiocFrame({"samples": ["unknown_sample"]}, row_names=["unknown_sample"])
 
         colnames = None
 

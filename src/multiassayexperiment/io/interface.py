@@ -46,9 +46,7 @@ def make_mae(experiments: Dict[str, Any]) -> MultiAssayExperiment:
 
     failedExpts = []
     for expname, expt in experiments.items():
-        if not (
-            isinstance(expt, AnnData) or issubclass(type(expt), SummarizedExperiment)
-        ):
+        if not (isinstance(expt, AnnData) or issubclass(type(expt), SummarizedExperiment)):
             failedExpts.append(expname)
 
     if len(failedExpts) > 0:
