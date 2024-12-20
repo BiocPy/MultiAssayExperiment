@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
-        <title>multiassayexperiment.MultiAssayExperiment - MultiAssayExperiment 0.4.4 documentation</title>
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>multiassayexperiment.MultiAssayExperiment - MultiAssayExperiment 0.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">MultiAssayExperiment 0.4.4 documentation</div></a>
+      <a href="../../index.html"><div class="brand">MultiAssayExperiment 0.5.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -190,7 +190,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   
-  <span class="sidebar-brand-text">MultiAssayExperiment 0.4.4 documentation</span>
+  <span class="sidebar-brand-text">MultiAssayExperiment 0.5.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -303,9 +303,7 @@
     <span class="n">_sample_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">_samples</span><span class="p">)</span>
     <span class="n">_sample_diff</span> <span class="o">=</span> <span class="n">_sample_set</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">column_data</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_sample_diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;`sample_map`&#39;s &#39;primary&#39; contains samples not represented by &#39;row_names&#39; from `column_data`.&quot;</span>
-        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`sample_map`&#39;s &#39;primary&#39; contains samples not represented by &#39;row_names&#39; from `column_data`.&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_sample_set</span><span class="p">)</span> <span class="o">!=</span> <span class="n">column_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
         <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;&#39;primary&#39; from `sample_map` &amp; `column_data` mismatch.&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
@@ -316,9 +314,7 @@
     <span class="n">smap_unique_assays</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">sample_map</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s2">&quot;assay&quot;</span><span class="p">))</span>
     <span class="n">unique_expt_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">experiments</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_expt_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">smap_unique_assays</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span>
-        <span class="n">unique_expt_names</span> <span class="o">!=</span> <span class="n">smap_unique_assays</span>
-    <span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_expt_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">smap_unique_assays</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">unique_expt_names</span> <span class="o">!=</span> <span class="n">smap_unique_assays</span><span class="p">):</span>
         <span class="n">warn</span><span class="p">(</span>
             <span class="s2">&quot;&#39;experiments&#39; contains names not represented in &#39;sample_map&#39; or vice-versa.&quot;</span><span class="p">,</span>
             <span class="ne">UserWarning</span><span class="p">,</span>
@@ -334,9 +330,7 @@
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">rows</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s2">&quot;colname&quot;</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">experiments</span><span class="p">[</span><span class="n">grp</span><span class="p">]</span><span class="o">.</span><span class="n">column_names</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Experiment &#39;</span><span class="si">{</span><span class="n">grp</span><span class="si">}</span><span class="s2">&#39; does not contain all columns mentioned in `sample_map`.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Experiment &#39;</span><span class="si">{</span><span class="n">grp</span><span class="si">}</span><span class="s2">&#39; does not contain all columns mentioned in `sample_map`.&quot;</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_validate_sample_map</span><span class="p">(</span><span class="n">sample_map</span><span class="p">,</span> <span class="n">column_data</span><span class="p">,</span> <span class="n">experiments</span><span class="p">):</span>
@@ -347,9 +341,7 @@
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;sample_map&#39; is not a `BiocFrame` object.&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">([</span><span class="s2">&quot;assay&quot;</span><span class="p">,</span> <span class="s2">&quot;primary&quot;</span><span class="p">,</span> <span class="s2">&quot;colname&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">sample_map</span><span class="o">.</span><span class="n">column_names</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;&#39;sample_map&#39; does not contain required columns: &#39;assay&#39;, &#39;primary&#39; and &#39;colname&#39;.&quot;</span>
-        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;sample_map&#39; does not contain required columns: &#39;assay&#39;, &#39;primary&#39; and &#39;colname&#39;.&quot;</span><span class="p">)</span>
 
     <span class="n">_validate_column_data</span><span class="p">(</span><span class="n">column_data</span><span class="p">)</span>
     <span class="n">_validate_sample_map_with_column_data</span><span class="p">(</span><span class="n">sample_map</span><span class="p">,</span> <span class="n">column_data</span><span class="p">)</span>
@@ -371,9 +363,7 @@
 
         <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asy_sample</span><span class="p">)</span>
 
-    <span class="n">sample_map</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">(</span>
-        <span class="p">{</span><span class="s2">&quot;assay&quot;</span><span class="p">:</span> <span class="n">_all_assays</span><span class="p">,</span> <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="n">_all_primary</span><span class="p">,</span> <span class="s2">&quot;colname&quot;</span><span class="p">:</span> <span class="n">_all_colnames</span><span class="p">}</span>
-    <span class="p">)</span>
+    <span class="n">sample_map</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span><span class="s2">&quot;assay&quot;</span><span class="p">:</span> <span class="n">_all_assays</span><span class="p">,</span> <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="n">_all_primary</span><span class="p">,</span> <span class="s2">&quot;colname&quot;</span><span class="p">:</span> <span class="n">_all_colnames</span><span class="p">})</span>
     <span class="n">col_data</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span><span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="n">samples</span><span class="p">},</span> <span class="n">row_names</span><span class="o">=</span><span class="n">samples</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">col_data</span><span class="p">,</span> <span class="n">sample_map</span>
@@ -465,9 +455,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span> <span class="o">=</span> <span class="n">_sanitize_frame</span><span class="p">(</span><span class="n">column_data</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">sample_map</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">column_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># make a sample map</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_map</span> <span class="o">=</span> <span class="n">_create_smap_from_experiments</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span>
-            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_map</span> <span class="o">=</span> <span class="n">_create_smap_from_experiments</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;Either &#39;sample_map&#39; or &#39;column_data&#39; is `None`. Either both should be provided or set both to `None`.&quot;</span>
@@ -567,7 +555,9 @@
         <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_names</span><span class="p">)):</span>
             <span class="n">expt_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_names</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
             <span class="n">expt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiments</span><span class="p">[</span><span class="n">expt_name</span><span class="p">]</span>
-            <span class="n">output</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">expt_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">expt</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> with </span><span class="si">{</span><span class="n">expt</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows and </span><span class="si">{</span><span class="n">expt</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns </span><span class="se">\n</span><span class="s2">&quot;</span>  <span class="c1"># noqa</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">expt_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">expt</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> with </span><span class="si">{</span><span class="n">expt</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> rows and </span><span class="si">{</span><span class="n">expt</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns </span><span class="se">\n</span><span class="s2">&quot;</span>  <span class="c1"># noqa</span>
+            <span class="p">)</span>
 
         <span class="n">output</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;column_data columns(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span><span class="si">}</span><span class="s2">): &quot;</span>
         <span class="n">output</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ut</span><span class="o">.</span><span class="n">print_truncated_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="o">.</span><span class="n">column_names</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -598,9 +588,7 @@
 
 <div class="viewcode-block" id="MultiAssayExperiment.set_experiments">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_experiments">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_experiments</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">experiments</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">set_experiments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">experiments</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set new experiments.</span>
 
 <span class="sd">        Args:</span>
@@ -672,9 +660,7 @@
 
 <div class="viewcode-block" id="MultiAssayExperiment.set_experiment_names">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_experiment_names">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_experiment_names</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">set_experiment_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Replace :py:attr:`~experiments`&#39;s names.</span>
 
 <span class="sd">        Args:</span>
@@ -690,9 +676,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">current_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_experiment_names</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_names</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Length of &#39;names&#39; does not match the number of `experiments`.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Length of &#39;names&#39; does not match the number of `experiments`.&quot;</span><span class="p">)</span>
 
         <span class="n">new_experiments</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)):</span>
@@ -766,9 +750,7 @@
 
             <span class="n">expt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiments</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;&#39;experiment&#39; must be a string or integer, provided &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;experiment&#39; must be a string or integer, provided &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">with_sample_data</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">assay_splits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_map</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;assay&quot;</span><span class="p">,</span> <span class="n">only_indices</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -776,13 +758,9 @@
             <span class="n">subset_map</span> <span class="o">=</span> <span class="n">subset_map</span><span class="o">.</span><span class="n">set_row_names</span><span class="p">(</span><span class="n">subset_map</span><span class="o">.</span><span class="n">get_column</span><span class="p">(</span><span class="s2">&quot;colname&quot;</span><span class="p">))</span>
 
             <span class="n">expt_column_data</span> <span class="o">=</span> <span class="n">expt</span><span class="o">.</span><span class="n">column_data</span>
-            <span class="n">new_column_data</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">subset_map</span><span class="p">,</span> <span class="n">expt_column_data</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span>
-            <span class="p">)</span>
+            <span class="n">new_column_data</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">subset_map</span><span class="p">,</span> <span class="n">expt_column_data</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s2">&quot;outer&quot;</span><span class="p">)</span>
 
-            <span class="n">new_column_data</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">new_column_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s2">&quot;left&quot;</span>
-            <span class="p">)</span>
+            <span class="n">new_column_data</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">merge</span><span class="p">([</span><span class="n">new_column_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">],</span> <span class="n">join</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="n">expt</span><span class="o">.</span><span class="n">set_column_data</span><span class="p">(</span><span class="n">new_column_data</span><span class="p">,</span> <span class="n">in_place</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
@@ -816,9 +794,7 @@
 
 <div class="viewcode-block" id="MultiAssayExperiment.set_sample_map">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_sample_map">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_sample_map</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">sample_map</span><span class="p">:</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">set_sample_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_map</span><span class="p">:</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set new sample mapping.</span>
 
 <span class="sd">        Args:</span>
@@ -874,9 +850,7 @@
 
 <div class="viewcode-block" id="MultiAssayExperiment.set_column_data">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_column_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_column_data</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">column_data</span><span class="p">:</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">set_column_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_data</span><span class="p">:</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set new sample metadata.</span>
 
 <span class="sd">        Args:</span>
@@ -933,9 +907,7 @@
 
 <div class="viewcode-block" id="MultiAssayExperiment.set_metadata">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.set_metadata">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_metadata</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">set_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">in_place</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set additional metadata.</span>
 
 <span class="sd">        Args:</span>
@@ -950,9 +922,7 @@
 <span class="sd">            or as a reference to the (in-place-modified) original.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;`metadata` must be a dictionary, provided </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
-            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;`metadata` must be a dictionary, provided </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_define_output</span><span class="p">(</span><span class="n">in_place</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="n">metadata</span>
         <span class="k">return</span> <span class="n">output</span></div>
@@ -982,9 +952,7 @@
     <span class="k">def</span> <span class="nf">_normalize_column_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="nb">slice</span><span class="p">]):</span>
         <span class="n">_scalar</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">columns</span> <span class="o">!=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
-            <span class="n">columns</span><span class="p">,</span> <span class="n">_scalar</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">normalize_subscript</span><span class="p">(</span>
-                <span class="n">columns</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="o">.</span><span class="n">row_names</span>
-            <span class="p">)</span>
+            <span class="n">columns</span><span class="p">,</span> <span class="n">_scalar</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">normalize_subscript</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column_data</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">columns</span><span class="p">,</span> <span class="n">_scalar</span>
 
@@ -1044,9 +1012,7 @@
             <span class="n">experiment_names</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">experiment_names</span> <span class="o">!=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
-            <span class="n">expts</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">normalize_subscript</span><span class="p">(</span>
-                <span class="n">experiment_names</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_names</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_names</span>
-            <span class="p">)</span>
+            <span class="n">expts</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">normalize_subscript</span><span class="p">(</span><span class="n">experiment_names</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_names</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">experiment_names</span><span class="p">)</span>
 
             <span class="n">to_keep</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_names</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">expts</span><span class="p">]</span>
 
@@ -1125,9 +1091,7 @@
         <span class="k">if</span> <span class="n">experiments</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">experiments</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
-        <span class="n">_new_experiments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset_experiments</span><span class="p">(</span>
-            <span class="n">experiment_names</span><span class="o">=</span><span class="n">experiments</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span>
-        <span class="p">)</span>
+        <span class="n">_new_experiments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset_experiments</span><span class="p">(</span><span class="n">experiment_names</span><span class="o">=</span><span class="n">experiments</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
 
         <span class="c1"># filter sample_map</span>
         <span class="n">smap_indices_to_keep</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1147,9 +1111,7 @@
 
 <div class="viewcode-block" id="MultiAssayExperiment.subset_by_experiments">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_experiments">[docs]</a>
-    <span class="k">def</span> <span class="nf">subset_by_experiments</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">experiments</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">subset_by_experiments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">experiments</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Subset by experiment(s).</span>
 
 <span class="sd">        Args:</span>
@@ -1166,16 +1128,12 @@
 <span class="sd">            A new `MultiAssayExperiment` with the subset experiments.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sresult</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generic_slice</span><span class="p">(</span><span class="n">experiments</span><span class="o">=</span><span class="n">experiments</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span>
-            <span class="n">sresult</span><span class="o">.</span><span class="n">experiments</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">column_data</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">sample_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span><span class="n">sresult</span><span class="o">.</span><span class="n">experiments</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">column_data</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">sample_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MultiAssayExperiment.subset_by_row">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_row">[docs]</a>
-    <span class="k">def</span> <span class="nf">subset_by_row</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">subset_by_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Subset by rows.</span>
 
 <span class="sd">        Args:</span>
@@ -1190,16 +1148,12 @@
 <span class="sd">            A new `MultiAssayExperiment` with the subsetted rows.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sresult</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generic_slice</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="n">rows</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span>
-            <span class="n">sresult</span><span class="o">.</span><span class="n">experiments</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">column_data</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">sample_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span><span class="n">sresult</span><span class="o">.</span><span class="n">experiments</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">column_data</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">sample_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MultiAssayExperiment.subset_by_column">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.subset_by_column">[docs]</a>
-    <span class="k">def</span> <span class="nf">subset_by_column</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">subset_by_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Subset by column.</span>
 
 <span class="sd">        Args:</span>
@@ -1214,9 +1168,7 @@
 <span class="sd">            A new `MultiAssayExperiment` with the subsetted columns.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sresult</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generic_slice</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span>
-            <span class="n">sresult</span><span class="o">.</span><span class="n">experiments</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">column_data</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">sample_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span><span class="n">sresult</span><span class="o">.</span><span class="n">experiments</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">column_data</span><span class="p">,</span> <span class="n">sresult</span><span class="o">.</span><span class="n">sample_map</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MultiAssayExperiment.__getitem__">
@@ -1260,9 +1212,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="n">sresult</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generic_slice</span><span class="p">(</span>
-                    <span class="n">rows</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">experiments</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-                <span class="p">)</span>
+                <span class="n">sresult</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generic_slice</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">experiments</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
                 <span class="k">return</span> <span class="n">MultiAssayExperiment</span><span class="p">(</span>
                     <span class="n">sresult</span><span class="o">.</span><span class="n">experiments</span><span class="p">,</span>
                     <span class="n">sresult</span><span class="o">.</span><span class="n">column_data</span><span class="p">,</span>
@@ -1589,9 +1539,7 @@
 
             <span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asy_sample</span><span class="p">)</span>
 
-        <span class="n">sample_map</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">(</span>
-            <span class="p">{</span><span class="s2">&quot;assay&quot;</span><span class="p">:</span> <span class="n">_all_assays</span><span class="p">,</span> <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="n">_all_primary</span><span class="p">,</span> <span class="s2">&quot;colname&quot;</span><span class="p">:</span> <span class="n">_all_colnames</span><span class="p">}</span>
-        <span class="p">)</span>
+        <span class="n">sample_map</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span><span class="s2">&quot;assay&quot;</span><span class="p">:</span> <span class="n">_all_assays</span><span class="p">,</span> <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="n">_all_primary</span><span class="p">,</span> <span class="s2">&quot;colname&quot;</span><span class="p">:</span> <span class="n">_all_colnames</span><span class="p">})</span>
         <span class="n">col_data</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span><span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="n">samples</span><span class="p">},</span> <span class="n">row_names</span><span class="o">=</span><span class="n">samples</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
@@ -1605,9 +1553,7 @@
 <div class="viewcode-block" id="MultiAssayExperiment.from_anndata">
 <a class="viewcode-back" href="../../api/multiassayexperiment.html#multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment.from_anndata">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_anndata</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="s2">&quot;anndata.AnnData&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_anndata</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="s2">&quot;anndata.AnnData&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MultiAssayExperiment&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a ``MultiAssayExperiment`` from :py:class:`~anndata.AnnData`.</span>
 
 <span class="sd">        Since :py:class:`~anndata.AnnData` does not contain sample information,</span>
@@ -1634,9 +1580,7 @@
 
         <span class="n">experiments</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">scexpt</span><span class="p">}</span>
 
-        <span class="n">col_data</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">(</span>
-            <span class="p">{</span><span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;unknown_sample&quot;</span><span class="p">]},</span> <span class="n">row_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;unknown_sample&quot;</span><span class="p">]</span>
-        <span class="p">)</span>
+        <span class="n">col_data</span> <span class="o">=</span> <span class="n">biocframe</span><span class="o">.</span><span class="n">BiocFrame</span><span class="p">({</span><span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;unknown_sample&quot;</span><span class="p">]},</span> <span class="n">row_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;unknown_sample&quot;</span><span class="p">])</span>
 
         <span class="n">colnames</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -1703,8 +1647,8 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=90733dfc"></script>
-    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+</div><script src="../../_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     </body>
