@@ -74,13 +74,9 @@ sample_map = pd.DataFrame(
     }
 )
 
-sample_data = pd.DataFrame(
-    {"samples": ["sample1", "sample2"]}, index=["sample1", "sample2"]
-)
+sample_data = pd.DataFrame({"samples": ["sample1", "sample2"]}, index=["sample1", "sample2"])
 
-tsce = SingleCellExperiment(
-    assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
-)
+tsce = SingleCellExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce)
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
