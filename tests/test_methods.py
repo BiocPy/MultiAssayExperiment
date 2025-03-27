@@ -47,12 +47,12 @@ gr = genomicranges.GenomicRanges.from_pandas(df_gr)
 
 column_data_sce = BiocFrame(
     {"treatment": ["ChIP", "Input"] * 3},
-    row_names=[f"sce_{i}" for i in range(6)],
+    row_names=[f"sam_{i}" for i in range(6)],
 )
 
 column_data_se = BiocFrame(
     {"treatment": ["ChIP", "Input"] * 3},
-    row_names=[f"se_{i}" for i in range(6)],
+    row_names=[f"sam_{i}" for i in range(6)],
 )
 
 sample_map = BiocFrame(
@@ -60,18 +60,18 @@ sample_map = BiocFrame(
         "assay": ["sce", "se"] * 6,
         "primary": ["sample1", "sample2"] * 6,
         "colname": [
-            "sce_0",
-            "se_0",
-            "sce_1",
-            "se_1",
-            "sce_2",
-            "se_2",
-            "sce_3",
-            "se_3",
-            "sce_4",
-            "se_4",
-            "sce_5",
-            "se_5",
+            "sam_0",
+            "sam_0",
+            "sam_1",
+            "sam_1",
+            "sam_2",
+            "sam_2",
+            "sam_3",
+            "sam_3",
+            "sam_4",
+            "sam_4",
+            "sam_5",
+            "sam_5",
         ],
     }
 )

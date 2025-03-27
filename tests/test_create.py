@@ -46,32 +46,41 @@ column_data_sce = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
-    index=["sce"] * 6,
+    index=[f"sam_{i}" for i in range(6)],
 )
 column_data_se = pd.DataFrame(
     {
         "treatment": ["ChIP", "Input"] * 3,
     },
-    index=["se"] * 6,
+    index=[f"sam_{i}" for i in range(6)],
 )
 
 sample_map = pd.DataFrame(
     {
         "assay": ["sce", "se"] * 6,
         "primary": ["sample1", "sample2"] * 6,
-        "colname": ["sce", "se"] * 6,
+        "colname": [
+            "sam_0",
+            "sam_0",
+            "sam_1",
+            "sam_1",
+            "sam_2",
+            "sam_2",
+            "sam_3",
+            "sam_3",
+            "sam_4",
+            "sam_4",
+            "sam_5",
+            "sam_5",
+        ],
     }
 )
 
-sample_data = pd.DataFrame(
-    {"samples": ["sample1", "sample2"]}, index=["sample1", "sample2"]
-)
+sample_data = pd.DataFrame({"samples": ["sample1", "sample2"]}, index=["sample1", "sample2"])
 
 
 def test_MAE_creation():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
-    )
+    tsce = SingleCellExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce)
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
@@ -91,9 +100,7 @@ def test_MAE_creation():
 
 
 def test_MAE_creation_with_alts():
-    tse = SummarizedExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_se
-    )
+    tse = SummarizedExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_se)
 
     tsce = SingleCellExperiment(
         assays={"counts": counts},
@@ -120,9 +127,7 @@ def test_MAE_creation_with_alts():
 
 
 def test_MAE_creation_fails():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
-    )
+    tsce = SingleCellExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce)
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
@@ -133,16 +138,14 @@ def test_MAE_creation_fails():
     with pytest.raises(Exception):
         MultiAssayExperiment(
             experiments={"sce": tsce, "se": tse2},
-            column_data=sample_data,
+            column_data=pd.DataFrame({"samples": ["sample1", "sample23"]}, index=["sample1", "sample23"]),
             sample_map=sample_map,
             metadata={"could be": "anything"},
         )
 
 
 def test_MAE_save():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
-    )
+    tsce = SingleCellExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce)
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
