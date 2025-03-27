@@ -1,9 +1,11 @@
 # Changelog
 
-## Version 0.5.0
+## Version 0.5.0 - 0.5.1
 
 - chore: Remove Python 3.8 (EOL)
 - precommit: Replace docformatter with ruff's formatter
+- Getter to access an experiment (`get_experiment`).
+- Switch to the trusted publisher workflow to publish packages to PyPI.
 
 ## Version 0.4.1 - 0.4.3
 

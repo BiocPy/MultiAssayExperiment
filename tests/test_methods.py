@@ -47,12 +47,12 @@ gr = genomicranges.GenomicRanges.from_pandas(df_gr)
 
 column_data_sce = BiocFrame(
     {"treatment": ["ChIP", "Input"] * 3},
-    row_names=[f"sce_{i}" for i in range(6)],
+    row_names=[f"sam_{i}" for i in range(6)],
 )
 
 column_data_se = BiocFrame(
     {"treatment": ["ChIP", "Input"] * 3},
-    row_names=[f"se_{i}" for i in range(6)],
+    row_names=[f"sam_{i}" for i in range(6)],
 )
 
 sample_map = BiocFrame(
@@ -60,31 +60,27 @@ sample_map = BiocFrame(
         "assay": ["sce", "se"] * 6,
         "primary": ["sample1", "sample2"] * 6,
         "colname": [
-            "sce_0",
-            "se_0",
-            "sce_1",
-            "se_1",
-            "sce_2",
-            "se_2",
-            "sce_3",
-            "se_3",
-            "sce_4",
-            "se_4",
-            "sce_5",
-            "se_5",
+            "sam_0",
+            "sam_0",
+            "sam_1",
+            "sam_1",
+            "sam_2",
+            "sam_2",
+            "sam_3",
+            "sam_3",
+            "sam_4",
+            "sam_4",
+            "sam_5",
+            "sam_5",
         ],
     }
 )
 
-sample_data = BiocFrame(
-    {"samples": ["sample1", "sample2"]}, row_names=["sample1", "sample2"]
-)
+sample_data = BiocFrame({"samples": ["sample1", "sample2"]}, row_names=["sample1", "sample2"])
 
 
 def test_MAE_creation():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
-    )
+    tsce = SingleCellExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce)
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
@@ -104,9 +100,7 @@ def test_MAE_creation():
 
 
 def test_MAE_creation_with_alts():
-    tse = SummarizedExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_se
-    )
+    tse = SummarizedExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_se)
 
     tsce = SingleCellExperiment(
         assays={"counts": counts},
@@ -149,9 +143,7 @@ def test_MAE_creation_with_alts():
 
 
 def test_MAE_completedcases():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
-    )
+    tsce = SingleCellExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce)
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
@@ -208,9 +200,7 @@ def test_MAE_replicated():
 
 
 def test_with_sample_data():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=gr.to_pandas(), column_data=column_data_sce
-    )
+    tsce = SingleCellExperiment(assays={"counts": counts}, row_data=gr.to_pandas(), column_data=column_data_sce)
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
@@ -234,9 +224,7 @@ def test_with_sample_data():
 
 
 def test_MAE_intersect_methods():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
-    )
+    tsce = SingleCellExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce)
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},
@@ -258,9 +246,7 @@ def test_MAE_intersect_methods():
 
 
 def test_MAE_names():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
-    )
+    tsce = SingleCellExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce)
 
     tse2 = SummarizedExperiment(
         assays={"counts": counts.copy()},

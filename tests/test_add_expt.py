@@ -77,9 +77,7 @@ sample_column_data_se = pd.DataFrame({"samples": ["sample2"]}, index=["sample2"]
 
 
 def test_MAE_addExpt():
-    tsce = SingleCellExperiment(
-        assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce
-    )
+    tsce = SingleCellExperiment(assays={"counts": counts}, row_data=df_gr, column_data=column_data_sce)
 
     mae = MultiAssayExperiment(
         experiments={"sce": tsce},
