@@ -1,6 +1,6 @@
 [![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
 [![PyPI-Server](https://img.shields.io/pypi/v/MultiAssayExperiment.svg)](https://pypi.org/project/MultiAssayExperiment/)
-![Unit tests](https://github.com/BiocPy/MultiAssayExperiment/actions/workflows/pypi-test.yml/badge.svg)
+![Unit tests](https://github.com/BiocPy/MultiAssayExperiment/actions/workflows/run-tests.yml/badge.svg)
 
 # MultiAssayExperiment
 
