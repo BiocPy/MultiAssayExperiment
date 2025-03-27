@@ -17,13 +17,13 @@ multiassayexperiment.MultiAssayExperiment module
 
 .. automodule:: multiassayexperiment.MultiAssayExperiment
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: multiassayexperiment
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

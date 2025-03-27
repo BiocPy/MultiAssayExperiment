@@ -24,12 +24,12 @@ pprint("column names:", mae.get_column_names())
 ------------------
 
 
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [0;32mIn[8], line 1[0m
-[0;32m----> 1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mrich[39;00m [38;5;28;01mimport[39;00m [38;5;28mprint[39m [38;5;28;01mas[39;00m pprint
-[1;32m      2[0m pprint([38;5;124m"[39m[38;5;124mrow names:[39m[38;5;124m"[39m, mae[38;5;241m.[39mget_row_names())
-[1;32m      3[0m pprint([38;5;124m"[39m[38;5;124mcolumn names:[39m[38;5;124m"[39m, mae[38;5;241m.[39mget_column_names())
+[31m---------------------------------------------------------------------------[39m
+[31mModuleNotFoundError[39m                       Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[8][39m[32m, line 1[39m
+[32m----> [39m[32m1[39m [38;5;28;01mfrom[39;00m[38;5;250m [39m[34;01mrich[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m [38;5;28mprint[39m [38;5;28;01mas[39;00m pprint
+[32m      2[39m pprint([33m"[39m[33mrow names:[39m[33m"[39m, mae.get_row_names())
+[32m      3[39m pprint([33m"[39m[33mcolumn names:[39m[33m"[39m, mae.get_column_names())
 
-[0;31mModuleNotFoundError[0m: No module named 'rich'
+[31mModuleNotFoundError[39m: No module named 'rich'
 

@@ -9,21 +9,21 @@ multiassayexperiment.io.h5ad module
 
 .. automodule:: multiassayexperiment.io.h5ad
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 multiassayexperiment.io.interface module
 ----------------------------------------
 
 .. automodule:: multiassayexperiment.io.interface
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: multiassayexperiment.io
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
