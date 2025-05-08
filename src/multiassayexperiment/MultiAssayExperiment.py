@@ -491,8 +491,8 @@ class MultiAssayExperiment:
         return expt
 
     def get_experiment(self, name: Union[int, str], with_sample_data: bool = False) -> Any:
-        """Alias for :py:meth:`~get_experiment`."""
-        return self.get_experiment(name=name, with_sample_data=with_sample_data)
+        """Alias for :py:meth:`~experiment`."""
+        return self.experiment(name=name, with_sample_data=with_sample_data)
 
     def get_with_column_data(self, name: str) -> Any:
         """Alias to :py:meth:`~experiment`.

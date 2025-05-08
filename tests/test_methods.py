@@ -127,6 +127,7 @@ def test_MAE_creation_with_alts():
 
     assert mae.experiments is not None
     assert mae.experiment("sce") is not None
+    assert mae.get_experiment(0) is not None
     assert mae.assays is not None
     assert mae.column_data is not None
     assert mae.sample_map is not None
