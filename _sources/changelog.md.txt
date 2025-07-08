@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.5.1 - 0.5.2
+
+- Bugfix to avoid an infinite recursion in the `get_experiment` method.
+
 ## Version 0.5.0 - 0.5.1
 
 - chore: Remove Python 3.8 (EOL)
