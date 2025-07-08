@@ -32,16 +32,16 @@ def test_MAE_from_mudata():
     y = np.dot(z, w.T)
 
     adata = AnnData(y)
-    adata.obs_names = [f"obs_{i+1}" for i in range(n)]
-    adata.var_names = [f"var_{j+1}" for j in range(d)]
+    adata.obs_names = [f"obs_{i + 1}" for i in range(n)]
+    adata.var_names = [f"var_{j + 1}" for j in range(d)]
 
     d2 = 50
     w2 = np.random.normal(size=(d2, k))
     y2 = np.dot(z, w2.T)
 
     adata2 = AnnData(y2)
-    adata2.obs_names = [f"obs_{i+1}" for i in range(n)]
-    adata2.var_names = [f"var2_{j+1}" for j in range(d2)]
+    adata2.obs_names = [f"obs_{i + 1}" for i in range(n)]
+    adata2.var_names = [f"var2_{j + 1}" for j in range(d2)]
 
     mdata = MuData({"A": adata, "B": adata2})
 
@@ -61,16 +61,16 @@ def test_MAE_make_mae():
     y = np.dot(z, w.T)
 
     adata = AnnData(y)
-    adata.obs_names = [f"obs_{i+1}" for i in range(n)]
-    adata.var_names = [f"var_{j+1}" for j in range(d)]
+    adata.obs_names = [f"obs_{i + 1}" for i in range(n)]
+    adata.var_names = [f"var_{j + 1}" for j in range(d)]
 
     d2 = 50
     w2 = np.random.normal(size=(d2, k))
     y2 = np.dot(z, w2.T)
 
     adata2 = AnnData(y2)
-    adata2.obs_names = [f"obs_{i+1}" for i in range(n)]
-    adata2.var_names = [f"var2_{j+1}" for j in range(d2)]
+    adata2.obs_names = [f"obs_{i + 1}" for i in range(n)]
+    adata2.var_names = [f"var2_{j + 1}" for j in range(d2)]
 
     adata3 = anndata.read_h5ad("tests/data/adata.h5ad")
 
