@@ -1,15 +1,12 @@
 # Changelog
 
-## Version 0.5.1 - 0.5.2
-
-- Bugfix to avoid an infinite recursion in the `get_experiment` method.
-
-## Version 0.5.0 - 0.5.1
+## Version 0.5.0 - 0.5.2
 
 - chore: Remove Python 3.8 (EOL)
 - precommit: Replace docformatter with ruff's formatter
 - Getter to access an experiment (`get_experiment`).
 - Switch to the trusted publisher workflow to publish packages to PyPI.
+- Bugfix to avoid an infinite recursion in the `get_experiment` method.
 
 ## Version 0.4.1 - 0.4.3
 
