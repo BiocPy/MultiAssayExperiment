@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 0.6.0
+
+- Class extends `BiocObject` from biocutils.
+- Github actions run from 3.10-3.14.
+- `validate` renamed to `_validate` for consistency.
+
 ## Version 0.5.0 - 0.5.2
 
 - chore: Remove Python 3.8 (EOL)
