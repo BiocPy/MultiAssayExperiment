@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections import OrderedDict, namedtuple
 from typing import Any, Dict, List, Optional, Sequence, Union
 from warnings import warn
@@ -15,7 +17,7 @@ SlicerResult = namedtuple("SlicerResult", ["experiments", "sample_map", "column_
 
 def _sanitize_frame(frame):
     if se._frameutils.is_pandas(frame):
-        frame = biocframe.from_pandas(frame)
+        frame = biocframe.BiocFrame.from_pandas(frame)
 
     return frame
 
@@ -121,7 +123,7 @@ def _create_smap_from_experiments(experiments):
     return col_data, sample_map
 
 
-class MultiAssayExperiment:
+class MultiAssayExperiment(ut.BiocObject):
     """Container class for representing and managing multi-omics genomic experiments.
 
     Checkout the
@@ -132,10 +134,10 @@ class MultiAssayExperiment:
     def __init__(
         self,
         experiments: Dict[str, Any],
-        column_data: biocframe.BiocFrame = None,
-        sample_map: biocframe.BiocFrame = None,
-        metadata: Optional[dict] = None,
-        validate: bool = True,
+        column_data: Optional[biocframe.BiocFrame] = None,
+        sample_map: Optional[biocframe.BiocFrame] = None,
+        metadata: Optional[Union[Dict[str, Any], ut.NamedList]] = None,
+        _validate: bool = True,
     ) -> None:
         """Initialize an instance of ``MultiAssayExperiment``.
 
@@ -194,11 +196,12 @@ class MultiAssayExperiment:
             metadata:
                 Additional study-level metadata. Defaults to None.
 
-            validate:
+            _validate:
                 Internal use only.
         """
+        super().__init__(metadata=metadata, _validate=_validate)
+
         self._experiments = experiments if experiments is not None else {}
-        self._metadata = metadata if metadata is not None else {}
 
         if sample_map is not None and column_data is not None:
             self._sample_map = _sanitize_frame(sample_map)
@@ -211,16 +214,10 @@ class MultiAssayExperiment:
                 "Either 'sample_map' or 'column_data' is `None`. Either both should be provided or set both to `None`."
             )
 
-        if validate:
+        if _validate:
             _validate_experiments(self._experiments)
             _validate_column_data(self._column_data)
             _validate_sample_map(self._sample_map, self._column_data, self._experiments)
-
-    def _define_output(self, in_place: bool = False) -> "MultiAssayExperiment":
-        if in_place is True:
-            return self
-        else:
-            return self.__copy__()
 
     #########################
     ######>> Copying <<######
@@ -244,6 +241,7 @@ class MultiAssayExperiment:
             column_data=_column_data_copy,
             sample_map=_sample_map_copy,
             metadata=_metadata_copy,
+            _validate=False,
         )
 
     def __copy__(self):
@@ -257,6 +255,7 @@ class MultiAssayExperiment:
             column_data=self._column_data,
             sample_map=self._sample_map,
             metadata=self._metadata,
+            _validate=False,
         )
 
     def copy(self):
@@ -321,7 +320,7 @@ class MultiAssayExperiment:
 
         return self._experiments
 
-    def set_experiments(self, experiments: Dict[str, Any], in_place: bool = False) -> "MultiAssayExperiment":
+    def set_experiments(self, experiments: Dict[str, Any], in_place: bool = False) -> MultiAssayExperiment:
         """Set new experiments.
 
         Args:
@@ -387,7 +386,7 @@ class MultiAssayExperiment:
         """
         return list(self._experiments.keys())
 
-    def set_experiment_names(self, names: List[str], in_place: bool = False) -> "MultiAssayExperiment":
+    def set_experiment_names(self, names: List[str], in_place: bool = False) -> MultiAssayExperiment:
         """Replace :py:attr:`~experiments`'s names.
 
         Args:
@@ -513,7 +512,7 @@ class MultiAssayExperiment:
         """
         return self._sample_map
 
-    def set_sample_map(self, sample_map: biocframe.BiocFrame, in_place: bool = False) -> "MultiAssayExperiment":
+    def set_sample_map(self, sample_map: biocframe.BiocFrame, in_place: bool = False) -> MultiAssayExperiment:
         """Set new sample mapping.
 
         Args:
@@ -563,7 +562,7 @@ class MultiAssayExperiment:
         """
         return self._column_data
 
-    def set_column_data(self, column_data: biocframe.BiocFrame, in_place: bool = False) -> "MultiAssayExperiment":
+    def set_column_data(self, column_data: biocframe.BiocFrame, in_place: bool = False) -> MultiAssayExperiment:
         """Set new sample metadata.
 
         Args:
@@ -602,54 +601,6 @@ class MultiAssayExperiment:
             UserWarning,
         )
         self.set_column_data(column_data, in_place=True)
-
-    ###########################
-    ######>> metadata <<#######
-    ###########################
-
-    def get_metadata(self) -> dict:
-        """
-        Returns:
-            Dictionary of metadata for this object.
-        """
-        return self._metadata
-
-    def set_metadata(self, metadata: dict, in_place: bool = False) -> "MultiAssayExperiment":
-        """Set additional metadata.
-
-        Args:
-            metadata:
-                New metadata for this object.
-
-            in_place:
-                Whether to modify the ``MultiAssayExperiment`` in place.
-
-        Returns:
-            A modified ``MultiAssayExperiment`` object, either as a copy of the original
-            or as a reference to the (in-place-modified) original.
-        """
-        if not isinstance(metadata, dict):
-            raise TypeError(f"`metadata` must be a dictionary, provided {type(metadata)}.")
-        output = self._define_output(in_place)
-        output._metadata = metadata
-        return output
-
-    @property
-    def metadata(self) -> dict:
-        """Alias for :py:attr:`~get_metadata`."""
-        return self.get_metadata()
-
-    @metadata.setter
-    def metadata(self, metadata: dict):
-        """Alias for :py:attr:`~set_metadata` with ``in_place = True``.
-
-        As this mutates the original object, a warning is raised.
-        """
-        warn(
-            "Setting property 'metadata' is an in-place operation, use 'set_metadata' instead",
-            UserWarning,
-        )
-        self.set_metadata(metadata, in_place=True)
 
     #########################
     ######>> subset <<#######
@@ -812,7 +763,7 @@ class MultiAssayExperiment:
 
         return SlicerResult(_new_experiments, _new_sample_map, _new_column_data)
 
-    def subset_by_experiments(self, experiments: Union[str, int, bool, Sequence]) -> "MultiAssayExperiment":
+    def subset_by_experiments(self, experiments: Union[str, int, bool, Sequence]) -> MultiAssayExperiment:
         """Subset by experiment(s).
 
         Args:
@@ -831,7 +782,7 @@ class MultiAssayExperiment:
         sresult = self._generic_slice(experiments=experiments)
         return MultiAssayExperiment(sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata)
 
-    def subset_by_row(self, rows: Union[str, int, bool, Sequence]) -> "MultiAssayExperiment":
+    def subset_by_row(self, rows: Union[str, int, bool, Sequence]) -> MultiAssayExperiment:
         """Subset by rows.
 
         Args:
@@ -848,7 +799,7 @@ class MultiAssayExperiment:
         sresult = self._generic_slice(rows=rows)
         return MultiAssayExperiment(sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata)
 
-    def subset_by_column(self, columns: Union[str, int, bool, Sequence]) -> "MultiAssayExperiment":
+    def subset_by_column(self, columns: Union[str, int, bool, Sequence]) -> MultiAssayExperiment:
         """Subset by column.
 
         Args:
@@ -865,7 +816,7 @@ class MultiAssayExperiment:
         sresult = self._generic_slice(columns=columns)
         return MultiAssayExperiment(sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata)
 
-    def __getitem__(self, args: tuple) -> "MultiAssayExperiment":
+    def __getitem__(self, args: tuple) -> MultiAssayExperiment:
         """Subset a `MultiAssayExperiment`.
 
         Args:
@@ -988,7 +939,7 @@ class MultiAssayExperiment:
 
         return _common
 
-    def intersect_rows(self) -> "MultiAssayExperiment":
+    def intersect_rows(self) -> MultiAssayExperiment:
         """Finds common row names across all experiments and filters the MAE to these rows.
 
         Returns:
@@ -1060,7 +1011,7 @@ class MultiAssayExperiment:
         sample_map: biocframe.BiocFrame,
         column_data: Optional[biocframe.BiocFrame] = None,
         in_place: bool = False,
-    ) -> "MultiAssayExperiment":
+    ) -> MultiAssayExperiment:
         """Add a new experiment to `MultiAssayExperiment`.
 
         ``sample_map`` must be provided to map the columns from this experiment to
@@ -1155,7 +1106,7 @@ class MultiAssayExperiment:
         return MuData(exptsList)
 
     @classmethod
-    def from_mudata(cls, input: "mudata.MuData") -> "MultiAssayExperiment":
+    def from_mudata(cls, input: "mudata.MuData") -> MultiAssayExperiment:
         """Create a ``MultiAssayExperiment`` object from :py:class:`~mudata.MuData`.
 
         The import naively creates sample mapping, each ``experiment`` is considered to be a `sample`.
@@ -1215,7 +1166,7 @@ class MultiAssayExperiment:
         )
 
     @classmethod
-    def from_anndata(cls, input: "anndata.AnnData", name: str = "unknown") -> "MultiAssayExperiment":
+    def from_anndata(cls, input: "anndata.AnnData", name: str = "unknown") -> MultiAssayExperiment:
         """Create a ``MultiAssayExperiment`` from :py:class:`~anndata.AnnData`.
 
         Since :py:class:`~anndata.AnnData` does not contain sample information,
