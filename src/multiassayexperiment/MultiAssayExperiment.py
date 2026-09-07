@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from collections import OrderedDict, namedtuple
-from typing import Any, Dict, List, Optional, Sequence, Union
+from collections.abc import Sequence
+from typing import Any
 from warnings import warn
 
 import biocframe
@@ -133,10 +134,10 @@ class MultiAssayExperiment(ut.BiocObject):
 
     def __init__(
         self,
-        experiments: Dict[str, Any],
-        column_data: Optional[biocframe.BiocFrame] = None,
-        sample_map: Optional[biocframe.BiocFrame] = None,
-        metadata: Optional[Union[Dict[str, Any], ut.NamedList]] = None,
+        experiments: dict[str, Any],
+        column_data: biocframe.BiocFrame | None = None,
+        sample_map: biocframe.BiocFrame | None = None,
+        metadata: dict[str, Any] | ut.NamedList | None = None,
         _validate: bool = True,
     ) -> None:
         """Initialize an instance of ``MultiAssayExperiment``.
@@ -293,7 +294,7 @@ class MultiAssayExperiment(ut.BiocObject):
             expt_name = self.experiment_names[idx]
             expt = self._experiments[expt_name]
             output += (
-                f"[{idx}] {expt_name}: {type(expt).__name__} with {expt.shape[0]} rows and {expt.shape[1]} columns \n"  # noqa
+                f"[{idx}] {expt_name}: {type(expt).__name__} with {expt.shape[0]} rows and {expt.shape[1]} columns \n"
             )
 
         output += f"column_data columns({len(self._column_data.column_names)}): "
@@ -310,7 +311,7 @@ class MultiAssayExperiment(ut.BiocObject):
     ######>> experiments <<######
     #############################
 
-    def get_experiments(self) -> Dict[str, Any]:
+    def get_experiments(self) -> dict[str, Any]:
         """Access experiments.
 
         Returns:
@@ -320,7 +321,7 @@ class MultiAssayExperiment(ut.BiocObject):
 
         return self._experiments
 
-    def set_experiments(self, experiments: Dict[str, Any], in_place: bool = False) -> MultiAssayExperiment:
+    def set_experiments(self, experiments: dict[str, Any], in_place: bool = False) -> MultiAssayExperiment:
         """Set new experiments.
 
         Args:
@@ -350,14 +351,14 @@ class MultiAssayExperiment(ut.BiocObject):
     @property
     def experiments(
         self,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Alias for :py:meth:`~get_experiments`."""
         return self.get_experiments()
 
     @experiments.setter
     def experiments(
         self,
-        experiments: Dict[str, Any],
+        experiments: dict[str, Any],
     ):
         """Alias for :py:meth:`~set_experiments` with ``in_place = True``.
 
@@ -370,7 +371,7 @@ class MultiAssayExperiment(ut.BiocObject):
         self.set_experiments(experiments, in_place=True)
 
     @property
-    def assays(self) -> Dict[str, Any]:
+    def assays(self) -> dict[str, Any]:
         """Alias for :py:meth:`~get_experiments`."""
         return self.get_experiments()
 
@@ -378,7 +379,7 @@ class MultiAssayExperiment(ut.BiocObject):
     ######>> experiment names <<######
     ##################################
 
-    def get_experiment_names(self) -> List[str]:
+    def get_experiment_names(self) -> list[str]:
         """Get experiment names.
 
         Returns:
@@ -386,7 +387,7 @@ class MultiAssayExperiment(ut.BiocObject):
         """
         return list(self._experiments.keys())
 
-    def set_experiment_names(self, names: List[str], in_place: bool = False) -> MultiAssayExperiment:
+    def set_experiment_names(self, names: list[str], in_place: bool = False) -> MultiAssayExperiment:
         """Replace :py:attr:`~experiments`'s names.
 
         Args:
@@ -413,12 +414,12 @@ class MultiAssayExperiment(ut.BiocObject):
         return output
 
     @property
-    def experiment_names(self) -> List[str]:
+    def experiment_names(self) -> list[str]:
         """Alias for :py:meth:`~get_experiment_names`."""
         return self.get_experiment_names()
 
     @experiment_names.setter
-    def experiment_names(self, names: List[str]):
+    def experiment_names(self, names: list[str]):
         """Alias for :py:meth:`~set_experiment_names` with ``in_place = True``.
 
         As this mutates the original object, a warning is raised.
@@ -433,7 +434,7 @@ class MultiAssayExperiment(ut.BiocObject):
     ######>> experiment accessor <<######
     #####################################
 
-    def experiment(self, name: Union[int, str], with_sample_data: bool = False) -> Any:
+    def experiment(self, name: int | str, with_sample_data: bool = False) -> Any:
         """Get an experiment by name.
 
         Args:
@@ -489,7 +490,7 @@ class MultiAssayExperiment(ut.BiocObject):
 
         return expt
 
-    def get_experiment(self, name: Union[int, str], with_sample_data: bool = False) -> Any:
+    def get_experiment(self, name: int | str, with_sample_data: bool = False) -> Any:
         """Alias for :py:meth:`~experiment`."""
         return self.experiment(name=name, with_sample_data=with_sample_data)
 
@@ -606,14 +607,14 @@ class MultiAssayExperiment(ut.BiocObject):
     ######>> subset <<#######
     #########################
 
-    def _normalize_column_slice(self, columns: Union[str, int, bool, Sequence, slice]):
+    def _normalize_column_slice(self, columns: str | int | bool | Sequence | slice):
         _scalar = None
         if columns != slice(None):
             columns, _scalar = ut.normalize_subscript(columns, len(self._column_data), self._column_data.row_names)
 
         return columns, _scalar
 
-    def _filter_sample_map(self, columns: Union[str, int, bool, Sequence, slice]):
+    def _filter_sample_map(self, columns: str | int | bool | Sequence | slice):
         _samples_to_filter = self._column_data[columns,].row_names
 
         column_names_to_keep = {}
@@ -628,10 +629,10 @@ class MultiAssayExperiment(ut.BiocObject):
 
     def subset_experiments(
         self,
-        rows: Optional[Union[str, int, bool, Sequence]],
-        columns: Optional[Union[str, int, bool, Sequence]],
-        experiment_names: Union[str, int, bool, Sequence],
-    ) -> Dict[str, Any]:
+        rows: str | int | bool | Sequence | None,
+        columns: str | int | bool | Sequence | None,
+        experiment_names: str | int | bool | Sequence,
+    ) -> dict[str, Any]:
         """Subset experiments.
 
         Args:
@@ -697,9 +698,9 @@ class MultiAssayExperiment(ut.BiocObject):
 
     def _generic_slice(
         self,
-        rows: Optional[Union[str, int, bool, Sequence]] = None,
-        columns: Optional[Union[str, int, bool, Sequence]] = None,
-        experiments: Optional[Union[str, int, bool, Sequence]] = None,
+        rows: str | int | bool | Sequence | None = None,
+        columns: str | int | bool | Sequence | None = None,
+        experiments: str | int | bool | Sequence | None = None,
     ) -> SlicerResult:
         """Slice ``MultiAssayExperiment`` along the rows and/or columns, based on their indices or names.
 
@@ -763,7 +764,7 @@ class MultiAssayExperiment(ut.BiocObject):
 
         return SlicerResult(_new_experiments, _new_sample_map, _new_column_data)
 
-    def subset_by_experiments(self, experiments: Union[str, int, bool, Sequence]) -> MultiAssayExperiment:
+    def subset_by_experiments(self, experiments: str | int | bool | Sequence) -> MultiAssayExperiment:
         """Subset by experiment(s).
 
         Args:
@@ -782,7 +783,7 @@ class MultiAssayExperiment(ut.BiocObject):
         sresult = self._generic_slice(experiments=experiments)
         return MultiAssayExperiment(sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata)
 
-    def subset_by_row(self, rows: Union[str, int, bool, Sequence]) -> MultiAssayExperiment:
+    def subset_by_row(self, rows: str | int | bool | Sequence) -> MultiAssayExperiment:
         """Subset by rows.
 
         Args:
@@ -799,7 +800,7 @@ class MultiAssayExperiment(ut.BiocObject):
         sresult = self._generic_slice(rows=rows)
         return MultiAssayExperiment(sresult.experiments, sresult.column_data, sresult.sample_map, self.metadata)
 
-    def subset_by_column(self, columns: Union[str, int, bool, Sequence]) -> MultiAssayExperiment:
+    def subset_by_column(self, columns: str | int | bool | Sequence) -> MultiAssayExperiment:
         """Subset by column.
 
         Args:
@@ -864,7 +865,7 @@ class MultiAssayExperiment(ut.BiocObject):
                 )
             else:
                 raise ValueError(
-                    f"`{type(self).__name__}` only supports 3-dimensional slicing along rows, columns and/or experiments."  # noqa
+                    f"`{type(self).__name__}` only supports 3-dimensional slicing along rows, columns and/or experiments."
                 )
 
         raise TypeError("'args' must be a tuple")
@@ -894,7 +895,7 @@ class MultiAssayExperiment(ut.BiocObject):
 
         return vec
 
-    def replicated(self) -> Dict[str, Dict[str, Sequence[bool]]]:
+    def replicated(self) -> dict[str, dict[str, Sequence[bool]]]:
         """Identify samples with replicates within each experiment.
 
         Returns:
@@ -927,7 +928,7 @@ class MultiAssayExperiment(ut.BiocObject):
 
         return replicates
 
-    def find_common_row_names(self) -> List[str]:
+    def find_common_row_names(self) -> list[str]:
         """Finds common row names across all experiments."""
 
         _common = None
@@ -958,7 +959,7 @@ class MultiAssayExperiment(ut.BiocObject):
     ######>> row or column names <<#####
     ####################################
 
-    def get_row_names(self) -> Dict[str, Optional[ut.Names]]:
+    def get_row_names(self) -> dict[str, ut.Names | None]:
         """
         Returns:
             Dictionary, with experiment names as keys, and row names as values.
@@ -970,11 +971,11 @@ class MultiAssayExperiment(ut.BiocObject):
         return _all_row_names
 
     @property
-    def rownames(self) -> Dict[str, Optional[ut.Names]]:
+    def rownames(self) -> dict[str, ut.Names | None]:
         """Alias for :py:attr:`~get_row_names`, provided for back-compatibility."""
         return self.get_row_names()
 
-    def get_column_names(self) -> Dict[str, Optional[ut.Names]]:
+    def get_column_names(self) -> dict[str, ut.Names | None]:
         """
         Returns:
             Dictionary, with experiment names as keys, and the column names as values.
@@ -986,17 +987,17 @@ class MultiAssayExperiment(ut.BiocObject):
         return _all_row_names
 
     @property
-    def columnnames(self) -> Dict[str, Optional[ut.Names]]:
+    def columnnames(self) -> dict[str, ut.Names | None]:
         """Alias for :py:attr:`~get_column_names`, provided for back-compatibility."""
         return self.get_column_names()
 
     @property
-    def colnames(self) -> Dict[str, Optional[ut.Names]]:
+    def colnames(self) -> dict[str, ut.Names | None]:
         """Alias for :py:attr:`~get_column_names`, provided for back-compatibility."""
         return self.get_column_names()
 
     @property
-    def column_names(self) -> Dict[str, Optional[ut.Names]]:
+    def column_names(self) -> dict[str, ut.Names | None]:
         """Alias for :py:attr:`~get_column_names`, provided for back-compatibility."""
         return self.get_column_names()
 
@@ -1009,7 +1010,7 @@ class MultiAssayExperiment(ut.BiocObject):
         name: str,
         experiment: Any,
         sample_map: biocframe.BiocFrame,
-        column_data: Optional[biocframe.BiocFrame] = None,
+        column_data: biocframe.BiocFrame | None = None,
         in_place: bool = False,
     ) -> MultiAssayExperiment:
         """Add a new experiment to `MultiAssayExperiment`.
@@ -1106,7 +1107,7 @@ class MultiAssayExperiment(ut.BiocObject):
         return MuData(exptsList)
 
     @classmethod
-    def from_mudata(cls, input: "mudata.MuData") -> MultiAssayExperiment:
+    def from_mudata(cls, input: mudata.MuData) -> MultiAssayExperiment:
         """Create a ``MultiAssayExperiment`` object from :py:class:`~mudata.MuData`.
 
         The import naively creates sample mapping, each ``experiment`` is considered to be a `sample`.
@@ -1166,7 +1167,7 @@ class MultiAssayExperiment(ut.BiocObject):
         )
 
     @classmethod
-    def from_anndata(cls, input: "anndata.AnnData", name: str = "unknown") -> MultiAssayExperiment:
+    def from_anndata(cls, input: anndata.AnnData, name: str = "unknown") -> MultiAssayExperiment:
         """Create a ``MultiAssayExperiment`` from :py:class:`~anndata.AnnData`.
 
         Since :py:class:`~anndata.AnnData` does not contain sample information,

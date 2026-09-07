@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from typing import Any, Dict
+from typing import Any
 
 from ..MultiAssayExperiment import MultiAssayExperiment, _create_smap_from_experiments
 
@@ -8,7 +8,7 @@ __copyright__ = "jkanche"
 __license__ = "MIT"
 
 
-def make_mae(experiments: Dict[str, Any]) -> MultiAssayExperiment:
+def make_mae(experiments: dict[str, Any]) -> MultiAssayExperiment:
     """Create an :py:class:`~multiassayexperiment.MultiAssayExperiment.MultiAssayExperiment` from a dictionary of
     experiment objects. Each experiment is either an :py:class:`~anndata.AnnData` object or a subclass of
     :py:class:`~summarizedexperiment.SummarizedExperiment.SummarizedExperiment`. :py:class:`~anndata.AnnData` objects
@@ -37,8 +37,8 @@ def make_mae(experiments: Dict[str, Any]) -> MultiAssayExperiment:
     Returns:
         An MAE from the experiments.
     """
-    from singlecellexperiment import SingleCellExperiment
     from anndata import AnnData
+    from singlecellexperiment import SingleCellExperiment
     from summarizedexperiment import SummarizedExperiment
 
     if not isinstance(experiments, dict):
