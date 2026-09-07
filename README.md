@@ -44,40 +44,60 @@ ncols = 6
 counts = np.random.rand(nrows, ncols)
 gr = GenomicRanges(
     seqnames=[
-            "chr1",
-            "chr2",
-            "chr2",
-            "chr2",
-            "chr1",
-            "chr1",
-            "chr3",
-            "chr3",
-            "chr3",
-            "chr3",
-        ] * 20,
+        "chr1",
+        "chr2",
+        "chr2",
+        "chr2",
+        "chr1",
+        "chr1",
+        "chr3",
+        "chr3",
+        "chr3",
+        "chr3",
+    ]
+    * 20,
     ranges=IRanges(range(100, 300), range(110, 310)),
-    strand = ["-", "+", "+", "*", "*", "+", "+", "+", "-", "-"] * 20,
-    mcols=BiocFrame({
-        "score": range(0, 200),
-        "GC": [random() for _ in range(10)] * 20,
-    })
+    strand=["-", "+", "+", "*", "*", "+", "+", "+", "-", "-"] * 20,
+    mcols=BiocFrame(
+        {
+            "score": range(0, 200),
+            "GC": [random() for _ in range(10)] * 20,
+        }
+    ),
 )
 
-col_data_sce = BiocFrame({"treatment": ["ChIP", "Input"] * 3},
+col_data_sce = BiocFrame(
+    {"treatment": ["ChIP", "Input"] * 3},
     row_names=[f"sce_{i}" for i in range(6)],
 )
 
-col_data_se = BiocFrame({"treatment": ["ChIP", "Input"] * 3},
+col_data_se = BiocFrame(
+    {"treatment": ["ChIP", "Input"] * 3},
     row_names=[f"se_{i}" for i in range(6)],
 )
 
-sample_map = BiocFrame({
-    "assay": ["sce", "se"] * 6,
-    "primary": ["sample1", "sample2"] * 6,
-    "colname": ["sce_0", "se_0", "sce_1", "se_1", "sce_2", "se_2", "sce_3", "se_3", "sce_4", "se_4", "sce_5", "se_5"]
-})
+sample_map = BiocFrame(
+    {
+        "assay": ["sce", "se"] * 6,
+        "primary": ["sample1", "sample2"] * 6,
+        "colname": [
+            "sce_0",
+            "se_0",
+            "sce_1",
+            "se_1",
+            "sce_2",
+            "se_2",
+            "sce_3",
+            "se_3",
+            "sce_4",
+            "se_4",
+            "sce_5",
+            "se_5",
+        ],
+    }
+)
 
-sample_data = BiocFrame({"samples": ["sample1", "sample2"]}, row_names= ["sample1", "sample2"])
+sample_data = BiocFrame({"samples": ["sample1", "sample2"]}, row_names=["sample1", "sample2"])
 ```
 
 Finally, we can create an `MultiAssayExperiment` object:
@@ -87,9 +107,7 @@ from multiassayexperiment import MultiAssayExperiment
 from singlecellexperiment import SingleCellExperiment
 from summarizedexperiment import SummarizedExperiment
 
-tsce = SingleCellExperiment(
-    assays={"counts": counts}, row_data=gr.to_pandas(), column_data=col_data_sce
-)
+tsce = SingleCellExperiment(assays={"counts": counts}, row_data=gr.to_pandas(), column_data=col_data_sce)
 
 tse2 = SummarizedExperiment(
     assays={"counts": counts.copy()},
